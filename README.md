@@ -1,6 +1,8 @@
 # ProtoIt
 Educational software to get on with robotics via prototyping without the need of coding (Dutch language)
 
+Download the setup file from: ProtoIt Setup/ProtoIt_1.0_win32_nl.exe
+
 ProtoIt delivers a gui in which users drag and drop sensor signals into screen tiles of the required actuators and functions.
 A robot program evolves step by step literally when the user adds steps with such tiles in it to operate the robot.
 When finished, ProtoIt will create code, compile it and upload it to the robot.
