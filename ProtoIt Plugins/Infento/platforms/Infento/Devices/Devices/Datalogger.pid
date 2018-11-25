@@ -1,0 +1,92 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Datalogger
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/data
+<GLOBAL>
+int* DATA;
+long REFTIME;
+long CURTIME;
+long REFSEC;
+long REFMIN;
+<PRIVATE>
+	COUNT, Aantal, 0
+	TRIGGER, Trigger
+<CALIBRATE>
+	MAX, Maximum, 100
+<SIGNALIN>
+	SIGNALA, Waarde A, #P Te schrijven waardes
+	SIGNALB, Waarde B
+	SIGNALC, Waarde C
+	SIGNALD, Waarde D
+	LOGNOW, Frequentie, #P Frequentie
+<CONSTANT>
+	PER1MIN, Iedere minuut, -1, #P FREQUENTIE
+	PER5MIN, Iedere 5 min, -5
+	PER15MIN, Iedere 15 min, -15
+	PER60MIN, Ieder uur, -60
+<SETUP>
+	DATA = new int[4*(int) MAX];
+	CURTIME = REFTIME = millis() / 1000;
+	REFSEC = 60;
+	REFMIN = 0;
+<SENSORUPDATE>
+	if ( RTCMD == "RTCMDDATA" ) {
+		for ( int i = 0; i < (int) COUNT; i++ ) {
+			Serial.print( DATA[i*4+0]);
+			Serial.print( ';');
+			Serial.print( DATA[i*4+1]);
+			Serial.print( ';');
+			Serial.print( DATA[i*4+2]);
+			Serial.print( ';');
+			Serial.println( DATA[i*4+3]);
+		}
+		COUNT = 0;
+		RTCMD = "";
+	}
+<ACTUATORUPDATE>
+	TRIGGER = 0;
+	if ( (int) LOGNOW < 0 ) {
+		int per = - (int) LOGNOW;
+		CURTIME = millis() / 1000;
+		long sec = (CURTIME - REFTIME) - ((CURTIME - REFTIME)/60)*60;
+		if ( sec < REFSEC ) {
+			REFMIN += 1;
+			if ( REFMIN >= per ) {
+				TRIGGER = 1;
+				REFMIN = 0;
+			}
+		}
+		REFSEC = sec;
+	}
+	else
+		TRIGGER = (int) LOGNOW;
+	if ( (int) TRIGGER ) {
+		if ( (int) COUNT < (int) MAX ) {
+			DATA[4*(int)COUNT+0] = (int) SIGNALA;
+			DATA[4*(int)COUNT+1] = (int) SIGNALB;
+			DATA[4*(int)COUNT+2] = (int) SIGNALC;
+			DATA[4*(int)COUNT+3] = (int) SIGNALD;
+			COUNT += 1;
+		}
+	}
+<END>

@@ -1,0 +1,55 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, CheckSensoren
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	tekstscherm.png
+<ALIAS>
+	CheckSensoren
+<PORT>
+	PORTT, Tastsensor, 1
+	PORTS, Geluidsensor, 2
+	PORTL, Lichtsensor, 3
+	PORTU, Afstandsensor, 4
+<SETUP>
+	PORTT.num -= 1;
+	PORTL.num -= 1;
+	PORTS.num -= 1;
+	PORTU.num -= 1;
+	SetSensorTouch( PORTT.num);
+	SetSensorLight( PORTL.num);
+	SetSensorSound( PORTS.num);
+	SetSensorLowspeed( PORTU.num);
+	ClearScreen();
+	TextOut( 10, LCD_LINE1, "Tastsensor");
+	TextOut( 10, LCD_LINE3, "Geluidsensor");
+	TextOut( 10, LCD_LINE5, "Lichtsensor");
+	TextOut( 10, LCD_LINE7, "Afstandsensor");
+<SENSORUPDATE>
+	TextOut( 20, LCD_LINE2, "        ");
+	TextOut( 20, LCD_LINE4, "        ");
+	TextOut( 20, LCD_LINE6, "        ");
+	TextOut( 20, LCD_LINE8, "        ");
+	NumOut( 20, LCD_LINE2, Sensor( PORTT.num));
+	NumOut( 20, LCD_LINE4, Sensor( PORTS.num));
+	NumOut( 20, LCD_LINE6, Sensor( PORTL.num));
+	NumOut( 20, LCD_LINE8, SensorUS( PORTU.num));
+<END>

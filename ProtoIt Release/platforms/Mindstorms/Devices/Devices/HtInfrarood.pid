@@ -1,0 +1,153 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, IRsensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	htinfrarood.png
+<PORT>
+	PORT, Poort
+<CALIBRATE>
+	MINSTRENGTH, Min. sterkte (%), 30
+<SIGNALOUT>
+	INFRONT, Recht voor
+	ATLEFT, Linkerkant
+	ATRIGHT, Rechterkant
+	ANGLE, Hoek (°), #P
+	IS30, Hoek 30°, #P
+	IS60, Hoek 60°
+	IS90, Hoek 90°
+	IS120, Hoek 120°
+	STRENGTH, Sterkte (%), #P
+<GLOBAL>
+int direction;
+<ROUTINE>
+void IRSeekerV2(const byte  port, int &dir, int &strength)
+{
+  // code comes from the HiTechnic download page
+  int cResp;
+  byte cmdBuf[] = {0x10, 0x43};  // Read DC signal strengths (skip the dir)
+  byte respBuf[];                 // Response Buffer
+  bool fSuccess;
+  int i, iMax;
+  long dcSigSum, dcStr;
+
+  dir = 0;
+  strength = 0;
+
+  // Read DC mode
+  cResp=6;
+  fSuccess = I2CBytes(port, cmdBuf, cResp, respBuf);
+  if (fSuccess) {
+    // Find the max DC sig strength
+    iMax = 0;
+    for (i=1; i<5; i++) if (respBuf[i] > respBuf[iMax]) iMax = i;
+    // Calc base DC direction value
+    dir = iMax*2+1;
+    // Set base dcStrength based on max signal and average
+    dcSigSum = respBuf[iMax] + respBuf[5];
+    // Check signal strength of neighboring sensor elements
+    if ((iMax > 0) && (respBuf[iMax-1] > respBuf[iMax]/2)) {
+        dir--;
+        dcSigSum += respBuf[iMax-1];
+    }
+    if ((iMax < 4) && (respBuf[iMax+1] > respBuf[iMax]/2)) {
+        dir++;
+        dcSigSum += respBuf[iMax+1];
+    }
+    // Make DC strength compatible with AC strength. use: sqrt(dcSigSum*500)
+    dcSigSum *= 500; dcStr = 1;
+    repeat(10) dcStr = (dcSigSum/dcStr + dcStr) / 2;  // sqrt approx
+    strength = dcStr;
+    // Decide if using DC strength or should read and use AC strength
+    if (strength <= 200) {
+      // Use AC Dir
+      dir = 0; strength = 0;
+      cmdBuf[1] = 0x49; // Recycle rest of cmdBuf from the DC read operation
+      cResp=6;
+      fSuccess = I2CBytes(port, cmdBuf, cResp, respBuf);
+      if (fSuccess) {
+        dir = respBuf[0];
+        // Sum the sensor elements to get strength
+        if (dir > 0) for (i=1; i<=5; i++) strength += respBuf[i];
+      }
+    }
+  }
+  strength = strength * 100 / 352;
+}
+<SETUP>
+	SetInteger( PORT, PORT.num - 1);
+	if ( PORT.num < 0 || PORT.num > 3 ) {
+	  ClearScreen();
+	  TextOut( 0, LCD_LINE1, "Fout: geen poort");
+	  TextOut( 0, LCD_LINE2, "(IR-sensor)");
+	  while( true);
+	}
+	SetSensorLowspeed( PORT.num);
+<SENSORUPDATE>
+	IRSeekerV2( PORT.num, direction, STRENGTH.num);
+	SetInteger( ANGLE, 180);
+	SetInteger( INFRONT, 0);
+	SetInteger( ATLEFT, 0);
+	SetInteger( ATRIGHT, 0);
+	SetInteger( IS30, 0);
+	SetInteger( IS60, 0);
+	SetInteger( IS90, 0);
+	SetInteger( IS120, 0);
+	if ( STRENGTH.num > MINSTRENGTH.num ) {
+		switch ( direction) {
+			case 1 :	SetInteger( IS120, 1);
+						SetInteger( ANGLE, 120);
+						SetInteger( ATLEFT, 1);
+						break;
+			case 2 :	SetInteger( IS90, 1);
+						SetInteger( ANGLE, 90);
+						SetInteger( ATLEFT, 1);
+						break;
+			case 3 :	SetInteger( IS60, 1);
+						SetInteger( ANGLE, 60);
+						SetInteger( ATLEFT, 1);
+						break;
+			case 4 :	SetInteger( IS30, 1);
+						SetInteger( ANGLE, 30);
+						SetInteger( ATLEFT, 1);
+						break;
+			case 5 :	SetInteger( ANGLE, 0);
+						SetInteger( INFRONT, 1);
+						break;
+			case 6 :	SetInteger( IS30, 1);
+						SetInteger( ANGLE, 30);
+						SetInteger( ATRIGHT, 1);
+						break;
+			case 7 :	SetInteger( IS60, 1);
+						SetInteger( ANGLE, 60);
+						SetInteger( ATRIGHT, 1);
+						break;
+			case 8 :	SetInteger( IS90, 1);
+						SetInteger( ANGLE, 90);
+						SetInteger( ATRIGHT, 1);
+						break;
+			case 9 :	SetInteger( IS120, 1);
+						SetInteger( ANGLE, 120);
+						SetInteger( ATRIGHT, 1);
+						break;
+		}
+	}
+<END>

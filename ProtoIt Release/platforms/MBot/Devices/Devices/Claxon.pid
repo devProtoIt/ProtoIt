@@ -1,0 +1,67 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MBOT
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Claxon
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Claxon
+<ICON>
+	claxon.png
+<SIGNALIN>
+	TONE, Toonhoogte (Hz)
+	DURATION, Hoe lang? (ms)
+	START, Start wanneer?, > Direct, #P Start en stop, #E
+	STOP, Stop wanneer?, > Nooit, #E
+<CONSTANT>
+	SET_NOW, Direct, 1, #P START EN STOP
+	SET_NEVER, Nooit, 0
+<PRIVATE>
+	ACTIVE, actief, 0;
+	PIN, Pin D8, 8
+<ROUTINE>
+void makeTone( int pin, int frequency, int duration)
+{
+  int period = 1000000L / frequency;
+  int pulse = period / 2;
+  for ( long i = 0; i < duration * 1000L; i += period ) 
+  {
+    digitalWrite( pin, HIGH);
+    delayMicroseconds( pulse);
+    digitalWrite( pin, LOW);
+    delayMicroseconds( pulse);
+  }
+}
+void stopTone( int pin)
+{
+  digitalWrite( pin, LOW);
+}
+<STEPINIT>
+	ACTIVE = 0;
+<ACTUATORUPDATE>
+	if ( (int) STOP ) {
+		stopTone( (int) PIN);
+		ACTIVE = 0;
+	}
+	if ( (int) START && !(int) ACTIVE ) {
+		makeTone( (int) PIN, (int) TONE, (int) DURATION);
+		stopTone( (int) PIN);
+		ACTIVE = 1;
+	}
+<END>

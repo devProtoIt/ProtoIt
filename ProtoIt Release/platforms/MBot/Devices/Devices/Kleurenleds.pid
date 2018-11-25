@@ -1,0 +1,107 @@
+/ Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MBOT
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+
+<DEVICE>
+	ACTUATOR, Ledstrip
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Kleurenleds
+<ICON>
+	kleurenleds.png
+<SIGNALIN>
+	R1, Rood (%), 0, #P Led rechts
+	G1, Groen (%), 0
+	B1, Blauw (%), 0
+	R2, Rood (%), 0, #P Led links
+	G2, Groen (%), 0
+	B2, Blauw (%), 0
+	EFFECT, Effect, > Geen, #P Effect, #E
+	START, Start wanneer?, > Direct, #P Start en stop, #E
+	STOP, Stop wanneer?, > Nooit, #E
+<CONSTANT>
+	SET_NONE, Geen, 0, #P EFFECT
+	SET_BLINK, Knipper, 1
+	SET_FBLINK, Knipper snel, 2
+	SET_SWITCH, Wissel, 3
+	SET_FSWITCH, Wissel snel, 4
+	SET_FADE, Vervaag, 5
+	SET_FFADE, Vervaag snel, 6
+	SET_NOW, Direct, 1, #P START EN STOP
+	SET_NEVER, Nooit, 0
+<PRIVATE>
+	ACTIVE, actief, 0
+	CUREFFECT, effect, 0
+<INCLUDE>
+#include "LedStrip.h"
+<LIBRARY>
+LedStrip
+<GLOBAL>
+LedStrip leds( 13, 2);
+RGB rgb1, rgb1cur, rgb2, rgb2cur;
+long ledstm, ledsdt;
+<STEPINIT>
+	ACTIVE = 0;
+	ledstm = millis();
+<SETUP>
+	leds.setColorAll( RGB());
+<ACTUATORUPDATE>
+	if ( (int) STOP ) {
+		#ifdef LED_EFFECTS
+		leds.setEffect( LedStrip::etOff);
+		#endif
+		rgb1 = rgb1cur = rgb2 = rgb2cur = RGB();
+		leds.setColorAll( rgb1);
+		ACTIVE = 0;
+	}
+	if ( (int) START && !(int) ACTIVE )
+		ACTIVE = 1;
+	if ( (int) ACTIVE ) {
+		#ifdef LED_EFFECTS
+		if ( EFFECT != CUREFFECT ) {
+			switch ( (int) EFFECT ) {
+				case 1 :	ledsdt = 600; leds.setEffect( LedStrip::etBlink); break;
+				case 2 :	ledsdt = 300; leds.setEffect( LedStrip::etBlink); break;
+				case 3 :	ledsdt = 600; leds.setEffect( LedStrip::etLeft); break;
+				case 4 :	ledsdt = 300; leds.setEffect( LedStrip::etLeft); break;
+				case 5 :	ledsdt = 40; leds.setEffect( LedStrip::etFade, 15); break;
+				case 6 :	ledsdt = 20; leds.setEffect( LedStrip::etFade, 15); break;
+				default :	leds.setEffect( LedStrip::etOff);
+			}
+			CUREFFECT = EFFECT;
+		}
+		if ( ledstm + ledsdt < millis() ) {
+			leds.updateEffect();
+			ledstm = millis();
+		}
+		#endif
+		rgb1 = RGB( (int) R1 * 255 / 100, (int) G1 * 255 / 100, (int) B1 * 255 / 100);
+		rgb2 = RGB( (int) R2 * 255 / 100, (int) G2 * 255 / 100, (int) B2 * 255 / 100);
+		if ( rgb1 != rgb1cur ) {
+			  leds.setColor( 0, rgb1);
+			rgb1cur = rgb1;
+		}
+		if ( rgb2 != rgb2cur ) {
+			leds.setColor( 1, rgb2);
+			rgb2cur = rgb2;
+		}
+		if ( !(int) EFFECT )
+			leds.updateColors();
+	}
+<END>

@@ -1,0 +1,53 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, PIR-sensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	bewegingsensor.png
+<PORT>
+	ADDRESS, Adres, 11
+<SIGNALOUT>
+	AHEAD, Ziet obstakel, #P
+	CLEAR, Geen obstakel
+<GLOBAL>
+	InfentoMotion id;
+<ROUTINE>
+void setMotion()
+{
+	if ( id.objectAhead() ) {
+		AHEAD = 1;
+		CLEAR = 0;
+		id.signalObjectAhead( CONST_RELEASED);
+	}
+	else {
+		AHEAD = 0;
+		CLEAR = 1;
+		id.signalObjectAhead();
+	}
+}
+<SETUP>
+	id.connect( (int) ADDRESS);
+<STEPINIT>
+	setMotion();
+<SENSORUPDATE>
+	if ( id.signal() )
+		setMotion();
+<END>

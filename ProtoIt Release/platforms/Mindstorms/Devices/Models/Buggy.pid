@@ -1,0 +1,221 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Buggy
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Buggy
+<ICON>
+	buggy.png
+<CALIBRATE>
+	OBTUSE, Flauwe bocht (%), 10
+	NORMAL, Normale bocht (%), 40
+	SHARP, Scherpe bocht (%), 70
+	ACUTE, Haakse bocht (%), 100
+<SIGNALIN>
+	DIRECTION, Richting, #P Besturing
+	STEER, Stuur
+	SHARPNESS, Bocht (%)
+	SPEED, Snelheid (%)
+	START, Start wanneer?, > Direct, #P Start en stop, #E
+	STOP, Stop wanneer?, > Nooit, #E
+<CONSTANT>
+	SET_OFF, Stop, 0, #P RICHTING
+	SET_FORWARD, Vooruit, 1
+	SET_BACKWARD, Achteruit, 2
+	SET_STRAIGHT, Rechtdoor, 0, #P STUUR
+	SET_LEFT, Naar links, 1
+	SET_RIGHT, Naar rechts, 2
+	SET_AHEAD, Geen bocht, 0, #P BOCHT
+	SET_OBTUSE, Flauwe bocht, 1
+	SET_NORMAL, Normale bocht, 2
+	SET_SHARP, Scherpe bocht, 3
+	SET_ACUTE, Haakse bocht, 4
+	SET_NOW, Direct, 1, #P START EN STOP
+	SET_NEVER, Nooit, 0
+<PRIVATE>
+	ACTIVE, Actief, 0
+<SETUP>
+	SET_OBTUSE = OBTUSE;
+	SET_NORMAL = NORMAL;
+	SET_SHARP = SHARP;
+	SET_ACUTE = ACUTE;
+	Off( OUT_BC);
+	DIRECTION = SET_OFF;
+	STEER = SET_STRAIGHT;
+	SetInteger( SHARPNESS, 0);
+	SetInteger( SPEED, 0);
+<STEPINIT>
+	SetInteger( START, 0);
+	SetInteger( STOP, 0);
+	SetInteger( ACTIVE, 0);
+<FUNCTIONUPDATE>
+	if ( START.num )
+		{ SetInteger( ACTIVE, 1); }
+	if ( STOP.num )
+		{ SetInteger( ACTIVE, 0); }
+<ACTUATORUPDATE>
+	if ( ACTIVE.num ) {
+		if ( SPEED.num > 100 ) { SetInteger( SPEED, 100); }
+		if ( SPEED.num < 0 ) { SetInteger( SPEED, 0); }
+		switch ( DIRECTION.num ) {
+			case 1 : { // forward
+						switch ( STEER.num ) {
+							case 1 : OnFwd( OUT_B, SPEED.num);
+									 OnFwd( OUT_C, SPEED.num * (100 - SHARPNESS.num) / 100);
+									 break;
+							case 2 : OnFwd( OUT_B, SPEED.num * (100 - SHARPNESS.num) / 100);
+									 OnFwd( OUT_C, SPEED.num);
+									 break;
+							default: OnFwd( OUT_BC, SPEED.num); break;
+						}
+						break;
+					 }
+			case 2 : { // backward
+						switch ( STEER.num ) {
+							case 1 : OnRev( OUT_B, SPEED.num);
+									 OnRev( OUT_C, SPEED.num * (100 - SHARPNESS.num) / 100);
+									 break;
+							case 2 : OnRev( OUT_B, SPEED.num * (100 - SHARPNESS.num) / 100);
+									 OnRev( OUT_C, SPEED.num);
+									 break;
+							default: OnRev( OUT_BC, SPEED.num); break;
+						}
+						break;
+					 }
+			default: Off( OUT_BC);
+		}
+	}
+	else Off( OUT_BC);
+<END>
+
+<DEVICE>
+	SENSOR, Geluidsensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Geluid
+<ICON>
+	geluidsensor.png
+<CALIBRATE>
+	WEAK, Stilte (%), 33
+	LOUD, Lawaai (%), 67
+<SIGNALOUT>
+	SOUND, Geluidsterkte (%), 0
+	ISWEAK, Stilte, 0, #P
+	ISNORMAL, Rumoer, 0
+	ISLOUD, Lawaai, 0
+<SETUP>
+	SetSensorSound( S2);
+<SENSORUPDATE>
+	SetInteger( SOUND, Sensor( S2));
+	if ( SOUND.num < WEAK.num ) {
+		SetInteger( ISWEAK, 1);
+		SetInteger( ISNORMAL, 0);
+		SetInteger( ISLOUD, 0);
+	}
+	else
+	if ( SOUND.num > LOUD.num ) {
+		SetInteger( ISWEAK, 0);
+		SetInteger( ISNORMAL, 0);
+		SetInteger( ISLOUD, 1);
+	}
+	else {
+		SetInteger( ISWEAK, 0);
+		SetInteger( ISNORMAL, 1);
+		SetInteger( ISLOUD, 0);
+	}
+<END>
+
+<DEVICE>
+	SENSOR, Lichtsensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Licht
+<ICON>
+	lichtsensor.png
+<CALIBRATE>
+	WHITETONE, Wit(%), 67
+	BLACKTONE, Zwart (%), 33
+<SIGNALOUT>
+	LIGHT, Lichtsterkte (%), 0
+	ISBLACK, Op zwart, 0, #P
+	ISGRAY, Op grijs, 0
+	ISWHITE, Op wit, 0
+<SETUP>
+	SetSensorLight( S3);
+<SENSORUPDATE>
+	SetInteger( LIGHT, Sensor( S3));
+	if ( LIGHT.num < BLACKTONE.num ) {
+		SetInteger( ISBLACK, 1);
+		SetInteger( ISGRAY, 0);
+		SetInteger( ISWHITE, 0);
+	}
+	else
+	if ( LIGHT.num > WHITETONE.num ) {
+		SetInteger( ISBLACK, 0);
+		SetInteger( ISGRAY, 0);
+		SetInteger( ISWHITE, 1);
+	}
+	else {
+		SetInteger( ISBLACK, 0);
+		SetInteger( ISGRAY, 1);
+		SetInteger( ISWHITE, 0);
+	}
+<END>
+
+<DEVICE>
+	SENSOR, Ultrasone-sensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Afstand
+<ICON>
+	ultrasonesensor.png
+<CALIBRATE>
+	CLOSE, Dichtbij (cm), 25
+	AWAY, Veraf (cm), 75
+<SIGNALOUT>
+	DISTANCE, Afstand (cm), 0
+	ISCLOSE, Dichtbij, 0, #P
+	ISNORMAL, Normaal, 0
+	ISAWAY, Veraf, 0
+<SETUP>
+	SetSensorLowspeed( S4);
+<SENSORUPDATE>
+	SetInteger( DISTANCE, SensorUS( S4));
+	if ( DISTANCE.num < CLOSE.num ) {
+		SetInteger( ISCLOSE, 1);
+		SetInteger( ISNORMAL, 0);
+		SetInteger( ISAWAY, 0);
+	}
+	else
+	if ( DISTANCE.num > AWAY.num ) {
+		SetInteger( ISCLOSE, 0);
+		SetInteger( ISNORMAL, 0);
+		SetInteger( ISAWAY, 1);
+	}
+	else {
+		SetInteger( ISCLOSE, 0);
+		SetInteger( ISNORMAL, 1);
+		SetInteger( ISAWAY, 0);
+	}
+<END>

@@ -1,0 +1,71 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Knoppen
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	knoppen.png
+<PORT>
+	ADDRESS, Adres, 12
+<SIGNALOUT>
+	BUT1, Knop 1, #P KNOPPEN
+	BUT2, Knop 2
+	BUT3, Knop 3
+	BUT4, Knop 4
+	BUT5, Knop 5
+	BUT6, Knop 6
+	BUT7, Knop 7
+	BUT8, Knop 8
+	CLOSED, Wel ingedrukt, #P STOOTRING
+	OPEN, Niet ingedrukt
+<GLOBAL>
+	InfentoSwitchPack id;
+	InfentoConstant pack;
+<ROUTINE>
+void setPosition()
+{
+	BUT1 = BUT2 = BUT3 = BUT4 = BUT5 = BUT6 = BUT7 = BUT8 = 0;
+	pack = id.position();
+	if ( pack ) {
+		OPEN = 0;
+		CLOSED = 1;
+		if ( pack & CONST_SWITCH_1 ) BUT1 = 1;
+		if ( pack & CONST_SWITCH_2 ) BUT2 = 1;
+		if ( pack & CONST_SWITCH_3 ) BUT3 = 1;
+		if ( pack & CONST_SWITCH_4 ) BUT4 = 1;
+		if ( pack & CONST_SWITCH_5 ) BUT5 = 1;
+		if ( pack & CONST_SWITCH_6 ) BUT6 = 1;
+		if ( pack & CONST_SWITCH_7 ) BUT7 = 1;
+		if ( pack & CONST_SWITCH_8 ) BUT8 = 1;
+	}
+	else {
+		CLOSED = 0;
+		OPEN = 1;
+	}
+	id.signalPosition( CONST_ALL, CONST_CHANGED);
+}
+<SETUP>
+	id.connect( (int) ADDRESS);
+<STEPINIT>
+	setPosition();
+<SENSORUPDATE>
+	if ( id.signal() )
+		setPosition();
+<END>

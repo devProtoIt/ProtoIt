@@ -1,0 +1,76 @@
+// Copyright (C) 2014 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Afstandsensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	afstandsensor.png
+<PORT>
+	ADDRESS, Adres, 11
+<CALIBRATE>
+	CLOSE, Dichtbij (cm), 50
+	AWAY, Veraf (cm), 100
+<SIGNALIN>
+	METHOD, Manier, #P Bestemming bereikt als
+	MEASURE, Afstand (cm)
+<SIGNALOUT>
+	DISTANCE, Afstand (cm)
+	ISCLOSE, Dichtbij, 0, #P
+	ISNORMAL, Normaal, 0
+	ISAWAY, Veraf, 0
+	READY, Bestemming bereikt, #P
+<CONSTANT>
+	SET_LEAVE, Verwijdering, 4, #P MANIER
+	SET_APPROACH, Benadering, 8
+	SET_REACHED, Alle beweging, 1
+	SET_CLOSE, Dichtbij, 50, #P AFSTAND
+	SET_AWAY, Veraf, 100
+<GLOBAL>
+	InfentoDistance id;
+<SETUP>
+	id.connect( (int) ADDRESS);
+	id.setDistanceUnit( UNIT_CM);
+	id.setRange( 50);
+	SET_CLOSE = CLOSE;
+	SET_AWAY = AWAY;
+<STEPINIT>
+	if ( (int) METHOD != 0 )
+		id.signalDistance( (int) MEASURE * 10, (InfentoConstant) (int) METHOD);
+<SENSORUPDATE>
+	if ( id.signal() )
+		READY = 1;
+	DISTANCE = id.distance() / 10;
+	if ( DISTANCE < CLOSE ) {
+		ISCLOSE = 1;
+		ISNORMAL = 0;
+		ISAWAY = 0;
+	}
+	else
+	if ( DISTANCE > AWAY ) {
+		ISCLOSE = 0;
+		ISNORMAL = 0;
+		ISAWAY = 1;
+	}
+	else {
+		ISCLOSE = 0;
+		ISNORMAL = 1;
+		ISAWAY = 0;
+	}
+<END>

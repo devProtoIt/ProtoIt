@@ -1,0 +1,88 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Lijnvolger
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	lijnvolger.png
+<PORT>
+	ADDRESS, Adres, 11
+<CALIBRATE>
+	LINE, Helderheid lijn (%), 30
+	GROUND, Helderheid grond (%), 70
+<SIGNALOUT>
+	POSITION, Positie
+	FARLEFT, Ver links, #P
+	LEFT, Links
+	CENTRE, Midden
+	RIGHT, Rechts
+	FARRIGHT, Ver rechts
+	ONLINE, Op de lijn, #P
+	FROMLINE, Naast de lijn
+<GLOBAL>
+	InfentoLineFollow id;
+	InfentoConstant pos;
+<SETUP>
+	id.connect( (int) ADDRESS);
+	id.setLuminance( (int) LINE, (int) GROUND);
+<STEPINIT>
+	id.signalPosition();
+<SENSORUPDATE>
+	if ( id.signal() ) {
+		POSITION = 0;
+		FARLEFT = 0;
+		LEFT = 0;
+		CENTRE = 0;
+		RIGHT = 0;
+		FARRIGHT = 0;
+		ONLINE = 1;
+		FROMLINE = 0;
+		pos = id.position();
+		if ( pos & CONST_FARLEFT ) {
+			POSITION = CONST_FARLEFT;
+			FARLEFT = 1;
+		}
+		else
+		if ( pos & CONST_FARRIGHT ) {
+			POSITION = CONST_FARRIGHT;
+			FARRIGHT = 1;
+		}
+		else
+		if ( pos & CONST_LEFT ) {
+			POSITION = CONST_LEFT;
+			LEFT = 1;
+		}
+		else
+		if ( pos & CONST_RIGHT ) {
+			POSITION = CONST_RIGHT;
+			RIGHT = 1;
+		}
+		else
+		if ( pos & CONST_CENTRE ) {
+			POSITION = CONST_CENTRE;
+			CENTRE = 1;
+		}
+		else {
+			ONLINE = 0;
+			FROMLINE = 1;
+		}
+		id.signalPosition();
+	}
+<END>

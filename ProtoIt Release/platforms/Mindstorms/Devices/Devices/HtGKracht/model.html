@@ -1,0 +1,57 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>HtGKracht</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform: MINDSTORMS</b></td><td><img src="HtGyro.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Het betreft hier de krachtsensor van HiTechnic. Deze sensor zendt de draaisnelheid in &deg;/sec (graden per seconde) uit. Negatieve waardes zijn linksom en positieve waardes rechtsom. Hoewel de sensor bij het starten van een programma automatisch wordt gekalibreerd, moeten waardes tussen -2&deg;/sec en +2&deg;/sec worden opgevat als stilstand.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Gyro
+</p>
+<hr/>
+
+<h4><img src="htgyro.png" width=50> Gyro</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Poort</b></td><td>Om met de krachtsensor te kunnen werken, moet je de Poort invullen. Dit is het nummer van de poort op de Nxt Brick, waar je de sensor op aansluit (1, 2, 3 of 4).</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Draaiing (°/sec)</b></td><td>De draaisnelheid in &deg;/sec. Waardes van -2&deg;/sec tot en met +2&deg;/sec gelden als stilstand.</td></tr>
+<tr><td class="left"><b>Linksom</b></td><td>Wordt uitgezonden als de sensor linksom (tegen de wijzers van een klok in) draait.</td></tr>
+<tr><td class="left"><b>Rechtsom</b></td><td>Wordt uitgezonden als de sensor rechtsom (met de wijzers van een klok mee) draait.</td></tr>
+<tr><td class="left"><b>Draait snel</b></td><td>Wordt uitgezonde als de sensor 25&deg;/sec of sneller draait.</td></tr>
+<tr><td class="left"><b>Draait normaal</b></td><td>Wordt uitgezonde als de sensor tussen 15&deg;/sec en 25&deg;/sec draait.</td></tr>
+<tr><td class="left"><b>Draait langzaam</b></td><td>Wordt uitgezonde als de sensor langzamer dan 15&deg;/sec draait.</td></tr>
+<tr><td class="left"><b>Draait niet</b></td><td>Wordt uitgezonden als er geen draaiing wordt waargenomen door de sensor. Dit is bij waardes van -2&deg;/sec tot en met +2&deg;/sec.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

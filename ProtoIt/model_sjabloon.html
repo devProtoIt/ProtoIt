@@ -1,0 +1,61 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+
+</head>
+
+<body>
+
+
+<table>
+<tr><td><h1>{modelnaam}</h1><br/><b>Platform: <i>{platform}</i></b></td><td><img src="{modelnaam}.png" height=100 /></td></tr>
+</table>
+
+<p>
+De {modelnaam} bestaat uit de volgende onderdelen:<br/><i><b>{...}</b></i>, <i><b>{...}</b></i> en </i><i><b>{...}</b></i>.<br/>
+</p>
+
+<h4><img src="{onderdeel}.png" width=50> {onderdeel}</h4>
+<p>
+{korte beschrijving}
+</p>
+<u>Te ontvangen signalen:</u>
+<table>
+<tr><td class="left"><b>{signaal}</b></td><td>{hoe in te vullen}</td></tr>
+<tr><td class="left"><b>{signaal}</b></td><td>{hoe in te vullen}</td></tr>
+</table><br/>
+<u>Uitgezonden signalen:</u>
+<table>
+<tr><td class="left"><b>{signaal}</b></td><td>{wanneer en wat uit te zenden}</td></tr>
+<tr><td class="left"><b>{signaal}</b></td><td>{wanneer en wat uit te zenden}</td></tr>
+</table>
+<u>Constante signalen:</u>
+<table>
+<tr><td class="left"><b>{signaal}</b></td><td>{welke waarde}</td></tr>
+<tr><td class="left"><b>{signaal}</b></td><td>{welke waarde}</td></tr>
+</table>
+
+<h4>Modelgegevens</h4>
+<table>
+<tr><td class="left">Ontwerp:</td><td class="right"><b>{ontwerper}</b></td></tr>
+<tr><td class="left">Jaar:</td><td class="right"><b>{jaar}</b></td></tr>
+<tr><td class="left">Licentie:</td><td class="right"><b>GNU-GPL (Open source)</b></td></tr>
+</table>
+
+<br/>
+</body>
+
+</html>

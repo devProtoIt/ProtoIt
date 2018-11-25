@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>actuatoren.png</file>
+        <file>addtab.png</file>
+        <file>addtile.png</file>
+        <file>background.png</file>
+        <file>backward.png</file>
+        <file>calculator.png</file>
+        <file>chooser.png</file>
+        <file>clear.png</file>
+        <file>clearbutton.png</file>
+        <file>clock.png</file>
+        <file>comparator.png</file>
+        <file>counter.png</file>
+        <file>data.png</file>
+        <file>find.png</file>
+        <file>forward.png</file>
+        <file>list.png</file>
+        <file>pause.png</file>
+        <file>play.png</file>
+        <file>ProtoIt.png</file>
+        <file>sensoren.png</file>
+        <file>spreader.png</file>
+        <file>stepper.png</file>
+        <file>switcher.png</file>
+        <file>timer.png</file>
+        <file>upload.png</file>
+        <file>lock.png</file>
+    </qresource>
+</RCC>

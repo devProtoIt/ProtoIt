@@ -1,0 +1,44 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MBOT
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Analoge Ingang
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	pinin.png
+<PORT>
+	PIN, Pin
+<SIGNALOUT>
+	VALUE, Signaal (‰)
+<CALIBRATE>
+	MAXVOLT, Op 3.3V of 5V, 3.3V
+<PRIVATE>
+	MAXVAL, Max. waarde
+<SETUP>
+	PIN += A0;
+	pinMode( PIN, INPUT);
+	if ( MAXVOLT.toString().substring( 0, 1) == "3" )
+		MAXVAL = 675;	// 0-3.3V gives 0-675
+	else
+		MAXVAL = 1023;	// 0-5V gives 0-1023
+<SENSORUPDATE>
+	VALUE = (int) ((int) MAXVAL - analogRead( PIN)) * 1000 / (int) MAXVAL;
+	if ( (int) VALUE < 0 ) VALUE = (int) 0;
+	if ( (int) VALUE > 1000 ) VALUE = (int) 1000;
+<END>

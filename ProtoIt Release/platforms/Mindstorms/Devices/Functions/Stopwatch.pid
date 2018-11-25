@@ -1,0 +1,63 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	FUNCTION, Stopwatch
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/timer
+<PRIVATE>
+	REFTIME, RefTime
+	CURTIME, CurTime
+	ACTIVE, Active
+<SIGNALIN>
+	TRIGGER, Tijd (ms)
+	START, Start wanneer?
+<SIGNALOUT>
+	READY, Klaar
+	TIMETOGO, Te gaan (ms)
+	TIMEGONE, Verstreken (ms)
+<CONSTANT>
+	SET_NOW, Direct, 1
+<STEPINIT>
+	SetInteger( ACTIVE, 0);
+	SetInteger( READY, 0);
+	SetInteger( TIMETOGO, 0);
+	SetInteger( TIMEGONE, 0);
+	SetInteger( REFTIME, 0);
+	SetInteger( CURTIME, 0);
+<SENSORUPDATE>
+	if ( ACTIVE.num ) {
+		SetInteger( CURTIME, CurrentTick());
+		SetInteger( TIMEGONE, CURTIME.num - REFTIME.num);
+		SetInteger( TIMETOGO, TRIGGER.num - TIMEGONE.num);
+		if ( TIMETOGO.num <= 0 ) {
+			TIMEGONE = TRIGGER;
+			SetInteger( TIMETOGO, 0);
+			SetInteger( READY, 1);
+		}
+	}
+<FUNCTIONUPDATE>
+	if ( START.num && !ACTIVE.num ) {
+		SetInteger( CURTIME, CurrentTick());
+		REFTIME = CURTIME;
+		TIMETOGO = TRIGGER;
+		SetInteger( ACTIVE, 1);
+	}
+<END>

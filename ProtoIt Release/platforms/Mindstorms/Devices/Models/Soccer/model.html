@@ -1,0 +1,95 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Soccer</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   MINDSTORMS</b></td><td><img src="voet.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Soccer is een uitbreiding van de buggy met een kompas, een balsensor en een voet om de bal mee te schoppen.
+Let erop dat het kompas minimaal 20 cm van een motor verwijderd moet zijn.
+De balsensor is bedoeld om een infraroodbal te vinden.<br/><br/>
+LET OP! Zorg ervoor dat de buggy voor het eigen doel met de voet richting het doel van de tegenpartij staat,
+wanneer het programma wordt gestart. Dit wordt voor de duur van het programma herkend als <i>Heen</i>, terwijl
+de richting van het eigen doel wordt herkend als <i>Terug</i>.
+<br/><br/>
+Aansluitingen:
+<li>Motor voet: poort A.
+<li>Balsensor, poort 2.
+<li>Kompas, poort 4.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Voet, Kompas, Balsensor, Licht, Afstand
+</p>
+<hr/>
+
+<h4><img src="voet.png" width=50> Voet</h4>
+<p>
+
+</p>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Schop wanneer?</b></td><td>Sleep hier een signaal naar toe dat ervoor zorgt dat de robot de bal schopt. Dit kan het signaal <i>Direct</i> zijn onder de <i>Constante signalen</i>.</td></tr>
+</table><br/>
+
+<h4><img src="htkompas.png" width=50> Kompas</h4>
+<p>
+
+</p>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Azimut (°)</b></td><td>Dit is de richting van het kompas in booggraden.</td></tr>
+<tr><td class="left"><b>Windroos</b></td><td>De windrichting, weergegevens als &eacute;&eacute;n van de <i>Constant signaal</i>: Dit kan zijn: <i>Noord</i>, <i>Noordoost</i>, <i>Oost</i>, enz.</td></tr>
+<tr><td class="left"><b>Heen</b></td><td>Dit signaal wordt uitgezonden als de buggy in de richting van het doel van de tegenstander rijdt. Zie de opmerking onder de <i>Beschrijving</i>.</td></tr>
+<tr><td class="left"><b>Terug</b></td><td>Dit signaal wordt uitgezonden als de buggy in de richting van het eigen doel rijdt. Zie de opmerking onder de <i>Beschrijving</i>.</td></tr>
+</table><br/>
+
+<h4><img src="htinfrarood.png" width=50> Balsensor</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Min. sterkte (%)</b></td><td>De minimale sterkte waarmee de bal moet zijn waargenomen om te garanderen dat de balrichting geldig is.
+Hoe verder de bal verwijderd is, des te slechter hij wordt waargenomen. Bij te kleine sterktes kan er verwarring met achtergrond licht op treden.
+</br>Standaard op 30% ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Bal voor</b></td><td>Dit signaal wordt uitgezonden als de bal recht voor de buggy wordt waargenomen.</td></tr>
+<tr><td class="left"><b>Bal links</b></td><td>Dit signaal wordt uitgezonden als de bal links van de buggy wordt waargenomen.</td></tr>
+<tr><td class="left"><b>Bal rechts</b></td><td>Dit signaal wordt uitgezonden als de bal rechts van de buggy wordt waargenomen.</td></tr>
+<tr><td class="left"><b>Bal achter</b></td><td>Dit signaal wordt uitgezonden als de bal niet wordt waargenomen. In dat geval moet de bal zich achter de buggy bevinden.</td></tr>
+<tr><td class="left"><b>Hoek 30°</b></td><td>Dit signaal wordt uitgezonden als de bal zich onder een hoek van ongeveer 30&deg; links dan wel rechts voor de buggy bevindt.</td></tr>
+<tr><td class="left"><b>Hoek 60°</b></td><td>Dit signaal wordt uitgezonden als de bal zich onder een hoek van ongeveer 60&deg; links dan wel rechts voor de buggy bevindt.</td></tr>
+<tr><td class="left"><b>Hoek 90°</b></td><td>Dit signaal wordt uitgezonden als de bal zich onder een hoek van ongeveer 90&deg; links dan wel rechts voor de buggy bevindt.</td></tr>
+<tr><td class="left"><b>Hoek 120°</b></td><td>Dit signaal wordt uitgezonden als de bal zich onder een hoek van ongeveer 120&deg; links dan wel rechts voor de buggy bevindt.</td></tr>
+<tr><td class="left"><b>Hoek (°)</b></td><td>Dit signaal bevat de hoek waar de bal zich links dan wel rechts voor de buggy bevindt. Dit kan zijn: 0&deg; (recht voor), 30&deg;, 60&deg;, 90&deg; of 120&deg;.</td></tr>
+<tr><td class="left"><b>Sterkte (%)</b></td><td>Dit signaal geeft aan hoe goed de bal wordt waargenomen. Hoe verder de bal verwijderd is, des te slechter hij wordt waargenomen. Bij te kleine sterktes kan er verwarring met achtergrond licht op treden. Zie de <i>Instellingen</i>.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

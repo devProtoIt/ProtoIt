@@ -1,0 +1,31 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RGB	KEYWORD1
+LedStrip	KEYWORD1
+EffectType	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+red	KEYWORD1
+green	KEYWORD1
+blue	KEYWORD1
+getColor	KEYWORD1
+setColor	KEYWORD1
+setColorAll	KEYWORD1
+updateColors	KEYWORD1
+setEffect	KEYWORD1
+updateEffect	KEYWORD1
+
+#######################################
+# Literals (KEYWORD2)
+#######################################
+
+etOff	KEYWORD2
+etBlink	KEYWORD2
+etLeft	KEYWORD2
+etRight	KEYWORD2
+etFade	KEYWORD2

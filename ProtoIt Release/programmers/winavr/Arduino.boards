@@ -1,0 +1,4 @@
+[board,mmcu,programmer,variant]
+Arduino Uno, atmega328p, arduino, standard
+Arduino Mega 2560/ADK, atmega2560, wiring, mega
+Arduino Mega 2560, atmega2560, wiring, mega

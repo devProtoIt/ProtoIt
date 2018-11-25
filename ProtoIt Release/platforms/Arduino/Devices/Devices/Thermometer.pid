@@ -1,0 +1,72 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	ARDUINO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Dallas Thermometer
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	thermometer.png
+<PORT>
+	PIN, Pin
+<ADDRESS>
+	INDEX, Index
+<CALIBRATE>
+	COLD, Koud (°C), 15
+	WARM, Warm (°C), 25
+<SIGNALOUT>
+	CELCIUS, Temperatuur (°C), #P Temperatuur
+	FAHRENH, Temperatuur (°F)
+	KELVIN, Temperatuur (K)
+	ISFREEZING, Vorst, #P Klimaat
+	ISCOLD, Koud
+	ISNORMAL, Normaal
+	ISWARM, Warm
+<CONSTANT>
+	SETOFF, Uit, 0
+	SETON, Aan, 1
+	SETLO, Laag, 0
+	SETHI, Hoog, 1
+<INCLUDE>
+#include "DallasTemperature.h"
+<LIBRARY>
+DallasTemperature
+<GLOBAL>
+OneWire oneWire;
+DallasTemperature sensors( &oneWire);
+DeviceAddress deviceAddress;
+<SETUP>
+	if ( INDEX.toString() == "" ) INDEX = "0";
+	oneWire.set_pin( (int) PIN);
+	sensors.begin();
+<SENSORUPDATE>
+	sensors.requestTemperaturesByIndex( (int) INDEX);
+	CELCIUS = sensors.getTempCByIndex( (int) INDEX);
+	KELVIN = (double) CELCIUS + 273;
+	FAHRENH = DallasTemperature::toFahrenheit( (int) CELCIUS);
+	ISCOLD = ISNORMAL = ISWARM = 0;
+	ISFREEZING = 0;
+	if ( CELCIUS < COLD )
+		ISCOLD = 1;
+	else
+	if ( CELCIUS > WARM )
+		ISWARM = 1;
+	else
+		ISNORMAL = 1;
+	ISFREEZING = ((double) CELCIUS < 0);
+<END>

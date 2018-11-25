@@ -1,0 +1,46 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Claxon
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	claxon.png
+<GLOBAL>
+	bool active;
+<SIGNALIN>
+	TONE, Toonhoogte (Hz)
+	VOLUME, Volume
+	DURATION, Hoe lang? (ms)
+	START, Start wanneer?, #P Start, #E
+<CONSTANT>
+	SET_DIM, Zacht, 0, #P VOLUME
+	SET_HALFDIM, Half zacht, 1
+	SET_NORMAL, Normaal, 2
+	SET_HALFLOUD, Half luid, 3
+	SET_LOUD, Luid, 4
+	SET_NOW, Start direct, 1, #P START
+<STEPINIT>
+	active = false;
+<ACTUATORUPDATE>
+	if ( START.num && !active ) {
+		PlayToneEx( TONE.num, DURATION.num, VOLUME.num, false);
+		active = true;
+	}
+<END>

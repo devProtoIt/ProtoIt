@@ -1,0 +1,77 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Kompas
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	htkompas.png
+<PORT>
+	PORT, Poort
+<SIGNALOUT>
+	AZIM, Azimut (°)
+	CARD, Windroos
+	GOAL, Start-richting, #P
+<CONSTANT>
+	CARD_N, Noord, 0
+	CARD_NE, Noordoost, 45
+	CARD_E, Oost, 90
+	CARD_SE, Zuidoost, 135
+	CARD_S, Zuid, 180
+	CARD_SW, Zuidwest, 225
+	CARD_W, West, 270
+	CARD_NW, Noordwest, 315
+<ROUTINE>
+int Compass( const byte  port)
+{
+	byte cmdBuf[] = {0x02, 0x42};
+	byte respBuf[];
+	int	 cResp = 2;
+	LowspeedWrite( port, cResp, cmdBuf);
+	cResp = LowspeedBytesReady( port);
+	if ( cResp > 0 ) {
+		cResp = LowspeedRead( port, cResp, respBuf);
+		return 2*respBuf[0] + respBuf[1];
+	}
+	return -1;
+}
+<SETUP>
+	SetInteger( PORT, PORT.num - 1);
+	if ( PORT.num < 0 || PORT.num > 3 ) {
+	  ClearScreen();
+	  TextOut( 0, LCD_LINE1, "Fout: geen poort");
+	  TextOut( 0, LCD_LINE2, "(Kompassensor)");
+	  while( true);
+	}
+	SetSensorLowspeed( PORT.num);
+	GOAL.num = 0;
+	for ( int i = 0; i < 10; i++ )
+		GOAL.num += Compass( PORT.num);
+	SetInteger( GOAL, GOAL.num / 10);
+<SENSORUPDATE>
+	SetInteger( AZIM, Compass( PORT.num));
+	if ( AZIM.num < 23 || AZIM.num > 337 ) CARD = CARD_N;
+	else if ( AZIM.num < 68 ) CARD = CARD_NE;
+	else if ( AZIM.num < 113 ) CARD = CARD_E;
+	else if ( AZIM.num < 158 ) CARD = CARD_SE;
+	else if ( AZIM.num < 203 ) CARD = CARD_S;
+	else if ( AZIM.num < 248 ) CARD = CARD_SW;
+	else if ( AZIM.num < 293 ) CARD = CARD_W;
+	else if ( AZIM.num < 338 ) CARD = CARD_NW;
+<END>

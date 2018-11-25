@@ -1,0 +1,216 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	ARDUINO
+<AUTHOR>
+	RoboTiles
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Tekstregels
+<COPYRIGHT>
+	2018, RoboTiles
+<ALIAS>
+	Tekstregels
+<ICON>
+	tekstregels.png
+<INCLUDE>
+#include "Brick.h";
+<PRIVATE>
+	SETDEC, Decimaal positie
+	SETLEN, Gewenste lengte
+<ROUTINE>
+Brick brick;
+
+void parse( String str, Variant &dec, Variant &len)
+{
+	String fmt;
+	dec = 0;
+	brick.setColor( COLOR_DARK);
+	brick.setAlign( ALIGN_LEFT);
+	brick.setTab( 0);
+	while ( str.startsWith( "#") ) {
+		int i = str.indexOf( ' ');
+		if ( i > 0 ) {
+			fmt = str.substring( 0, i);
+			str = str.substring( i + 1);
+		}
+		else {
+			fmt = str;
+			str = "";
+		}
+		if ( fmt.length() > 2 ) {
+			fmt.toUpperCase();
+			switch ( fmt.charAt( 1) ) {
+				case 'F' : brick.setColor( (fmt.charAt( 2) == 'L' ? COLOR_LIGHT : COLOR_DARK)); break;
+				case 'A' : brick.setAlign( (fmt.charAt( 2) == 'L' ? ALIGN_LEFT : ALIGN_RIGHT)); break;
+				case 'T' : {
+							char tab[3];
+							fmt.substring( 2).toCharArray( tab, 3);
+							brick.setTab( atoi( tab));
+							break;
+						   }
+				case 'D' : {
+							char tab[3];
+							fmt.substring( 2).toCharArray( tab, 3);
+							dec = atoi( tab);
+							break;
+						   }
+				case 'L' : {
+							char tab[3];
+							fmt.substring( 2).toCharArray( tab, 3);
+							len = atoi( tab);
+							break;
+						   }
+			}
+		}
+	}
+}
+<SIGNALIN>
+	LN1, Regel 1
+	LN2, Regel 2
+	LN3, Regel 3
+	LN4, Regel 4
+	LN5, Regel 5
+	LN6, Regel 6
+	LN7, Regel 7
+	LN8, Regel 8
+	STEPCLR, Begin leeg, ##
+	CLRNOW, Wis scherm als
+<CONSTANT>
+	SET_CLRYES, Ja, 1
+	SET_CLRNO, Nee, 0
+<SETUP>
+	brick.initBrick();
+<STEPINIT>
+	if ( (int) STEPCLR )
+		brick.clear();
+<ACTUATORUPDATE>
+	if ( (int) CLRNOW )
+		brick.clear();
+	brick.setFont( FONT_TEXT);
+	SETLEN = LN1.length();
+	parse( Opmaak_LN1.toString(), SETDEC, SETLEN);
+	brick.printText( 1, LN1.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN2.length();
+	parse( Opmaak_LN2.toString(), SETDEC, SETLEN);
+	brick.printText( 2, LN2.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN3.length();
+	parse( Opmaak_LN3.toString(), SETDEC, SETLEN);
+	brick.printText( 3, LN3.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN4.length();
+	parse( Opmaak_LN4.toString(), SETDEC, SETLEN);
+	brick.printText( 4, LN4.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN5.length();
+	parse( Opmaak_LN5.toString(), SETDEC, SETLEN);
+	brick.printText( 5, LN5.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN6.length();
+	parse( Opmaak_LN6.toString(), SETDEC, SETLEN);
+	brick.printText( 6, LN6.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN7.length();
+	parse( Opmaak_LN7.toString(), SETDEC, SETLEN);
+	brick.printText( 7, LN7.toString( (int) SETDEC), (int) SETLEN);
+	SETLEN = LN8.length();
+	parse( Opmaak_LN8.toString(), SETDEC, SETLEN);
+	brick.printText( 8, LN8.toString( (int) SETDEC), (int) SETLEN);
+<END>
+
+<DEVICE>
+	ACTUATOR, Tekstopmaak
+<ALIAS>
+	Opmaak
+<ICON>
+	tekstregels.png
+<SIGNALIN>
+	LN1, Regel 1
+	LN2, Regel 2
+	LN3, Regel 3
+	LN4, Regel 4
+	LN5, Regel 5
+	LN6, Regel 6
+	LN7, Regel 7
+	LN8, Regel 8
+<END>
+
+<DEVICE>
+	ACTUATOR, Display
+<ALIAS>
+	Display
+<ICON>
+	display.png
+<PRIVATE>
+	SETDEC, Decimaal positie
+	SETLEN, Gewenste lengte
+<SIGNALIN>
+	TLN1, Getal r1
+	LLN1, Opmaak r1
+	TLN2, Getal r2, ##
+	LLN2, Opmaak r2
+	TLN3, Getal r3, ##
+	LLN3, Opmaak r3
+	STEPCLR, Begin leeg, ##
+	CLRNOW, Wis scherm als
+<CONSTANT>
+	SET_CLRYES, Ja, 1
+	SET_CLRNO, Nee, 0
+<STEPINIT>
+	if ( (int) STEPCLR )
+		brick.clear();
+<ACTUATORUPDATE>
+	if ( (int) CLRNOW )
+		brick.clear();
+	brick.setFont( FONT_NUM);
+	parse( LLN1.toString(), SETDEC, SETLEN);
+	brick.printText( 1, TLN1.toString( (int) SETDEC), (int) SETLEN);
+	parse( LLN2.toString(), SETDEC, SETLEN);
+	brick.printText( 2, TLN2.toString( (int) SETDEC), (int) SETLEN);
+	parse( LLN3.toString(), SETDEC, SETLEN);
+	brick.printText( 3, TLN3.toString( (int) SETDEC), (int) SETLEN);
+<END>
+
+<DEVICE>
+	ACTUATOR, Meter
+<ALIAS>
+	Meter
+<ICON>
+	meter.png
+<SIGNALIN>
+	CURVAL, Huidige waarde
+	MAXVAL, Maximum waarde
+<ACTUATORUPDATE>
+	brick.drawProgress( 300, 5, 10, 175, ((int) CURVAL * 100) / (int) MAXVAL );
+<END>
+
+<DEVICE>
+	SENSOR, Knoppen
+<ALIAS>
+	Knoppen
+<ICON>
+	knoppen.png
+<PRIVATE>
+	BUTTON, Knop
+<SIGNALOUT>
+	BTNL, Links ingedrukt
+	BTNR, Rechts ingedrukt
+	BTNM, Menu ingedrukt
+	BTNS, Start ingedrukt
+<SENSORUPDATE>
+	BUTTON = brick.getButton();
+	BTNL = BTNR = BTNM = BTNS = 0;
+	switch ( (int) BUTTON ) {
+		case 1 : BTNS = 1; break;
+		case 2 : BTNM = 1; break;
+		case 3 : BTNL = 1; break;
+		case 4 : BTNR = 1; break;
+	}xxx
+<END>

@@ -1,0 +1,119 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	FUNCTION, Berekenen
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/calculator
+<SIGNALIN>
+	SIGNALA, Waarde A, #P Waardes
+	SIGNALB, Waarde B
+	CALC, Functie, #P Berekening
+<SIGNALOUT>
+	ANSWER, Antwoord
+<CONSTANT>
+	SET_ADD, A + B, 0
+	SET_SUBTRACT, A - B, 1
+	SET_MULTIPLY, A x B, 2
+	SET_DIVIDE, A : B, 3
+	SET_POWER, A ^ B, 4
+	SET_ROOT, Wortel( A² + B²), 5
+	SET_RROOT, Wortel( A² - B²), 6
+	SET_SIN, A x Sin( B), 7
+	SET_COS, A x Cos( B), 8
+	SET_TAN, A x Tan( B), 9
+	SET_RSIN, A : Sin( B), 10
+	SET_RCOS, A : Cos( B), 11
+	SET_RTAN, A : Tan( B), 12
+	SET_ASIN, Asin( A : B), 13
+	SET_ACOS, Acos( A : B), 14
+	SET_ATAN, Atan( A : B), 15
+<PRIVATE>
+	TA, Tempory A
+	TB, Tempory B
+<GLOBAL>
+	long tmp;
+	long deg;
+<ROUTINE>
+#ifdef ENHANCED
+float raise( float a, int b)
+{
+	b -= 1;
+	while ( b > 0 ) a *= a;
+	return a;
+}
+#endif
+<SENSORUPDATE>
+	if ( SIGNALA.str == "" ) SetInteger( SIGNALA, 1);
+	if ( SIGNALB.str == "" ) SetInteger( SIGNALB, 1);
+#ifdef ENHANCED
+	switch ( CALC.num ) {
+		case 0 :	SetFloat( ANSWER, SIGNALA.flt + SIGNALB.flt); break;
+		case 1 :	SetFloat( ANSWER, SIGNALA.flt - SIGNALB.flt); break;
+		case 2 :	SetFloat( ANSWER, SIGNALA.flt * SIGNALB.flt); break;
+		case 3 :	if ( SIGNALB.flt != 0 ) SetFloat( ANSWER, SIGNALA.flt / SIGNALB.flt);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+		case 4 :	SetFloat( ANSWER, raise( SIGNALA.flt, SIGNALB.num)); break;
+		case 5 :	SetFloat( ANSWER, sqrt( SIGNALA.flt * SIGNALA.flt + SIGNALB.flt * SIGNALB.flt)); break;
+		case 6 :	SetFloat( ANSWER, sqrt( SIGNALA.flt * SIGNALA.flt - SIGNALB.flt * SIGNALB.flt)); break;
+		case 7 : 	SetFloat( ANSWER, SIGNALA.flt * sin( SIGNALB.flt * PI / 180)); break;
+		case 8 : 	SetFloat( ANSWER, SIGNALA.flt * cos( SIGNALB.flt * PI / 180)); break;
+		case 9 : 	SetFloat( ANSWER, SIGNALA.flt * tan( SIGNALB.flt * PI / 180)); break;
+		case 10 : 	{
+					float f = sin( SIGNALB.flt * PI / 180);
+					if ( f != 0 ) SetFloat( ANSWER, SIGNALA.flt / f);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+					}
+		case 11 : 	{
+					float f = cos( SIGNALB.flt * PI / 180);
+					if ( f != 0 ) SetFloat( ANSWER, SIGNALA.flt / f);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+					}
+		case 12 : 	{
+					float f = tan( SIGNALB.flt * PI / 180);
+					if ( f != 0 ) SetFloat( ANSWER, SIGNALA.flt / f);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+					}
+		case 13 : 	if ( SIGNALB.flt != 0 ) SetFloat( ANSWER, asin( SIGNALA.flt / SIGNALB.flt) * 180 / PI);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+		case 14 : 	if ( SIGNALB.flt != 0 ) SetFloat( ANSWER, acos( SIGNALA.flt / SIGNALB.flt) * 180 / PI);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+		case 15 : 	if ( SIGNALB.flt != 0 ) SetFloat( ANSWER, atan( SIGNALA.flt / SIGNALB.flt) * 180 / PI);
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+	}
+#else
+	switch ( CALC.num ) {
+		case 0 :	SetInteger( ANSWER, SIGNALA.num + SIGNALB.num); break;
+		case 1 :	SetInteger( ANSWER, SIGNALA.num - SIGNALB.num); break;
+		case 2 :	SetInteger( ANSWER, SIGNALA.num * SIGNALB.num); break;
+		case 3 :	if ( SIGNALB.num != 0 ) { SetInteger( ANSWER, SIGNALA.num / SIGNALB.num); }
+					else { SetInteger( ANSWER, 0); ANSWER.str = "#P#P#"; }
+					break;
+		default:	SetInteger( ANSWER, 0);
+	}
+#endif
+<END>

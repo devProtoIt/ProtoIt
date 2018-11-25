@@ -1,0 +1,147 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Buggy</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   INFENTO</b></td><td><img src="Buggy.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+De buggy kan worden gebouwd met de materialen van het Infento-model &quot;Swift&quot;. Zorg dat de lijnsensor vlak boven de grond naar de beneden is gericht. De afstandsensor en de bewegingsensor worden naar voren gericht. De stootband komt achter om botsingen bij achteruit rijden waar te nemen.
+<br/><br/>
+Aansluitingen:<br/>
+<li>Edrive (aandrijving): eigen aansluiting.
+<li>Lineaire actuator (stuur): motor 1.
+<li>Stootband: knop 7 van het switchpack.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Buggy, Lijn, Afstand, Beweging, Stootband
+</p>
+<hr/>
+
+<h4><img src="buggy.png" width=50> Buggy</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Flauwe bocht (%)</b></td><td>Het signaal <i>Flauwe bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 30% ingesteld.</td></tr>
+<tr><td class="left"><b>Normale bocht (%)</b></td><td>Het signaal <i>Normale bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 70% ingesteld.</td></tr>
+<tr><td class="left"><b>Scherpe bocht (%)</b></td><td>Het signaal <i>Scherpe bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 100% ingesteld.</td></tr>
+</table><br/>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Richting</b></td><td>Gebruik één van de <i>Constante signalen</i> onder het kopje <i>RICHTING</i>.</td></tr>
+<tr><td class="left"><b>Stuur</b></td><td>Gebruik één van de <i>Constante signalen</i> onder het kopje <i>STUUR</i>.</td></tr>
+<tr><td class="left"><b>Bocht (%)</b></td><td>Gebruik één van de <i>Constante signalen</i> onder het kopje <i>BOCHT</i> of vul een percentage in. Een bocht van 100% is een scherpe bocht en bij 0% gaat de buggy rechtdoor.</td></tr>
+<tr><td class="left"><b>Snelheid (%)</b></td><td>Vul een percentage in of sleep een uitgezonden signaal hiernaar toe. Bij 100% rijdt de buggy op zijn snelst en bij 0% staat de buggy stil.</td></tr>
+<tr><td class="left"><b>Afstand (cm)</b></td><td>De afstand die de buggy moet afleggen.</td></tr>
+<tr><td class="left"><b>Tijd (sec)</b></td><td>De tijd die de buggy moet rijden.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Sleep een constant of uitgezonden signaal hiernaar toe.</br>Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Stop wanneer?</b></td><td>Sleep een constant of uitgezonden signaal hiernaar toe.</br>Standaard op het signaal <i>Nooit</i> ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Klaar</b></td><td>Dit signaal wordt uitgezonden als de buggy is gestopt bij de ingestelde afstand of tijd.</td></tr>
+</table><br/>
+
+<h4><img src="lijnvolger.png" width=50> Lijn</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Helderheid lijn (%)</b></td><td>Relatieve helderheid van de lijn, waarbij 0% volledig donker en 100% volledig licht betekent.
+</br>Standaard op 10% ingesteld.</td></tr>
+<tr><td class="left"><b>Helderheid grond (%)</b></td><td>Relatieve helderheid van de grond, waarbij 0% volledig donker en 100% volledig licht betekent.
+</br>Standaard op 50% ingesteld.</td></tr>
+<tr><td class="left"><b>Interval (msec)</b></td><td>De tijd tussen twee metingen in milliseconden.</br>Standaard op 100 milliseconden ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Positie</b></td><td>De bit-gewijze optelling van de sensoren die de lijn waarnemen. Van links naar rechts hebben de sensoren een bit-waarde van 1, 2, 4, 8 en 16.</td></tr>
+<tr><td class="left"><b>Uiterst links</b></td><td>Alleen de uiterst linker sensor neemt de lijn waar.</td></tr>
+<tr><td class="left"><b>Ver links</b></td><td>Beide linker sensoren nemen de lijn waar</td></tr>
+<tr><td class="left"><b>Links</b></td><td>De linker en middelste sensor nemen de lijn waar.</td></tr>
+<tr><td class="left"><b>Midden</b></td><td>Alleen de middelste sensor neemt de lijn waar.</td></tr>
+<tr><td class="left"><b>Rechts</b></td><td>De rechter en middelste sensor nemen de lijn waar.</td></tr>
+<tr><td class="left"><b>Ver rechts</b></td><td>Beide rechter sensoren nemen de lijn waar.</td></tr>
+<tr><td class="left"><b>Uiterst rechts</b></td><td>Alleen de uiterst rechter sensor neemt de lijn waar.</td></tr>
+<tr><td class="left"><b>Op de lijn</b></td><td>Dit signaal wordt uitgezonden als één van de sensoren de lijn waarneemt.</td></tr>
+<tr><td class="left"><b>Naast de lijn</b></td><td>Dit signaal wordt uitgezonden als geen van de sensoren de lijn waarneemt.</td></tr>
+</table><br/>
+
+<h4><img src="afstandsensor.png" width=50> Afstand</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Dichtbij (cm)</b></td><td>De afstand tot waar het signaal <i>Dichtbij</i> wordt uitgezonden.</br>Standaard op 50 cm ingesteld.</td></tr>
+<tr><td class="left"><b>Veraf (cm)</b></td><td>De afstand waarvanaf het signaal <i>Veraf</i> wordt uitgezonden.</br>Standaard op 100 cm ingesteld.</td></tr>
+<tr><td class="left"><b>Grensbreedte (mm)</b></td><td>Afhankelijk van de snelheid zal de afstand tot een voorwerp meer of minder nauwkeurig worden gemeten.
+Dit zou ertoe kunnen leiden dat een signaal achterwege blijft, omdat niet de exact opgegeven waarde maar een iets grotere of kleinere waarde wordt gemeten.
+Vandaar dat er steeds met een grensbreedte wordt gemeten. Als er een signaal bij 70 cm wordt verlangd en de grensbreedte is ingesteld op 10 mm, dan wordt
+het signaal uitgezonden bij een afstand tussen 69 en 71 cm.</br>Standaard op 10 mm ingesteld.</td></tr>
+<tr><td class="left"><b>Interval (msec)</b></td><td>De tijd tussen twee metingen in milliseconden.</br>Standaard op 100 milliseconde ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Afstand (cm)</b></td><td>De afstand waarop het dichtsbijzijnde voorwerp zich bevindt.</td></tr>
+<tr><td class="left"><b>Dichtbij</b></td><td>Het voorwerp bevindt zich dichtbij (zie de Instellingen).</td></tr>
+<tr><td class="left"><b>Normaal</b></td><td>Het voorwerp bevindt zich tussen dichtbij en veraf.</td></tr>
+<tr><td class="left"><b>Veraf</b></td><td>Het voorwerp bevindt zich veraf (zie de Instellingen).</td></tr>
+</table><br/>
+
+<h4><img src="bewegingsensor.png" width=50> Beweging</h4>
+<p>
+
+</p>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Ziet obstakel</b></td><td>Dit signaal wordt uitgezonden als de sensor beweging constateert.</td></tr>
+<tr><td class="left"><b>Geen obstakel</b></td><td>Dit signaal wordt uitgezonden als de sensor geen beweging constateert. Na een beweging duurt het ongeveer 8 seconden voordat dit signaal wordt uitgezonden.</td></tr>
+</table><br/>
+
+<h4><img src="knoppen.png" width=50> Stootband</h4>
+<p>
+
+</p>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Wel ingedrukt</b></td><td>Dit signaal wordt uitgezonden als de stootband is ingedrukt.</td></tr>
+<tr><td class="left"><b>Niet ingedrukt</b></td><td>Dit signaal wordt uitgezonden als de stootband niet is ingedrukt.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

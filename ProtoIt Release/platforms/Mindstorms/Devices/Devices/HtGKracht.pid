@@ -1,0 +1,96 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, GKracht
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	htgkracht.png
+<PORT>
+	PORT, Poort
+<SIGNALOUT>
+	INCLINATION, Klim (°), #P (STILSTAND)
+	ROTATION, Rol (°)
+	IS_HORZ, Horizontaal
+	PITCH, Pitch (0.001 g), #P (BEWEGING)
+	ROLL, Roll (0.001 g)
+	YAW, Yaw (0.001 g)
+<ROUTINE>
+bool Acceleration( const byte port, int &pitch, int &roll, int &yaw, int& inclination, int& rotation)
+{
+	byte cmdBuf[] = {0x02, 0x42};
+	byte respBuf[];
+	int	 cResp = 6;
+	int  x, y, z;
+	LowspeedWrite( port, cResp, cmdBuf);
+	cResp = LowspeedBytesReady( port);
+	if ( cResp > 0 ) {
+		cResp = LowspeedRead( port, cResp, respBuf);
+		x = 256*respBuf[0] + respBuf[3];
+		y = 256*respBuf[1] + respBuf[4];
+		z = 256*respBuf[2] + respBuf[5];
+		inclination = x / 145;
+		if ( inclination > 180 ) inclination = inclination - 360;
+		rotation = y / 147;
+		if ( rotation > 180 ) rotation = rotation - 360;
+#ifdef ENHANCED
+		pitch = x / 13.0;
+		roll = y / 13.2;
+		yaw = z / 13.2;
+#else
+		pitch = x / 13;
+		roll = y / 13;
+		yaw = z / 13;
+#endif
+	}
+	else {
+		pitch = 0;
+		roll = 0;
+		yaw = 0;
+		inclination = 0;
+		rotation = 0;
+		return false;
+	}
+	return true;
+}
+<SETUP>
+	SetInteger( PORT, PORT.num - 1);
+	if ( PORT.num < 0 || PORT.num > 3 ) {
+	  ClearScreen();
+	  TextOut( 0, LCD_LINE1, "Fout: geen poort");
+	  TextOut( 0, LCD_LINE2, "(G-Krachtsensor)");
+	  while( true);
+	}
+	SetSensorLowspeed( PORT.num);
+<SENSORUPDATE>
+	if ( Acceleration( PORT.num, PITCH.num, ROLL.num, YAW.num, INCLINATION.num, ROTATION.num) ) {
+		SetInteger( PITCH, PITCH.num);
+		SetInteger( ROLL, ROLL.num);
+		SetInteger( YAW, YAW.num);
+		SetInteger( INCLINATION, INCLINATION.num);
+		SetInteger( ROTATION, ROTATION.num);
+		if ( PITCH.num > -10 && PITCH.num < 10 &&
+			 ROLL.num > -10 && ROLL.num < 10 ) {
+			SetInteger( IS_HORZ, 1);
+		}
+		else {
+			SetInteger( IS_HORZ, 0);
+		}
+	}
+<END>

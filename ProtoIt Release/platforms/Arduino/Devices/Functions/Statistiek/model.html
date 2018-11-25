@@ -1,0 +1,55 @@
+<html>
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Statistiek</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   ARDUINO</b></td><td><img src="calculator.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Met deze functie kun je het maximum, minimum en de gemiddelde waarde van een signaal vinden gedurende de actieve periode.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Statistiek
+</p>
+<hr/>
+
+<h4><img src="calculator.png" width=50> Statistiek</h4>
+<p>
+
+</p>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Signaal</b></td><td>Sleep hier het signaal naar toe, waarvan het maximum, minimum en de gemiddelde waarde wordt berekend.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Sleep hier een signaal van een sensor naar toe of het constante signaal <i>Direct</i>.</td></tr>
+<tr><td class="left"><b>Stop wanneer?</b></td><td>Sleep hier een signaal van een sensor naar toe of het constante signaal <i>Nooit</i>.</td></tr>
+<tr><td class="left"><b>Bewaar</b></td><td>Sleep hier het constante signaal <i>Ja</i> of <i>Nee</i> naar toe. Bij <i>Ja</i> blijft het maximum, minimum en gemiddelde bewaard voor de volgende stap. Bij <i>Nee</i> worden ze aan het begin van de volgende stap weer op nul gezet.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Maximum</b></td><td>Geeft gedurende de actieve periode (tussen start en stop) de hoogste waarde. Na de actieve periode wordt de laatste waarde vastgehouden.</td></tr>
+<tr><td class="left"><b>Minimum</b></td><td>Geeft gedurende de actieve periode (tussen start en stop) de laagste waarde. Na de actieve periode wordt de laatste waarde vastgehouden.</td></tr>
+<tr><td class="left"><b>Gemiddelde</b></td><td>Geeft de gemiddelde waarde over de hele actieve periode tussen start en stop.<br/><b>Let op:</b> Het gemiddelde wordt pas uitgezonden n&aacute; de actieve periode.</td></tr>
+</table><br/>
+</table><br/>
+
+<br/>
+</body>
+</html>

@@ -1,0 +1,112 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MINDSTORMS
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	ACTUATOR, Buggy
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Buggy
+<ICON>
+	buggy.png
+<CALIBRATE>
+	WAITRIGHT, Naar rechts (msec), 1500
+	WAITLEFT, Naar links (msec), 1500
+<SIGNALIN>
+	CHECKCOLOR, Rijd tot kleur
+	TURN, Draai dan naar
+<CONSTANT>
+	RIGHT, Rechts, 0
+	LEFT, Links, 1
+<PRIVATE>
+	COLOR, Kleur, 0
+	DISTANCE, Afstand, 255
+<ROUTINE>
+int makecolor( int color)
+{
+	int mc;
+	switch ( color ) {
+		case 0 :	mc = 1; break;
+		case 1 :	mc = 0; break;
+		case 2 :
+		case 3 :	mc = 6; break;
+		case 4 :
+		case 5 :	mc = 5; break;
+		case 6 :
+		case 7 :	mc = 7; break;
+		case 8 :
+		case 9 :
+		case 10 :	mc = 4; break;
+		case 11 :
+		case 12 :
+		case 13 :	mc = 2; break;
+		case 14 :
+		case 15 :
+		case 16 :	mc = 3; break;
+		case 17 :	mc = 1; break;
+		default :	mc = 0;
+	}
+	return mc;
+}
+<SETUP>
+	SetSensorLowspeed( S3);
+	SetSensorLowspeed( S4);
+	Off( OUT_BC);
+<STEPINIT>
+	SetInteger( CHECKCOLOR, 0);
+	SetInteger( COLOR, 0);
+	OnFwd( OUT_BC, 75);
+<SENSORUPDATE>
+	SetInteger( COLOR, SensorHTColorNum( S3));
+	SetInteger( DISTANCE, SensorUS( S4));
+<ACTUATORUPDATE>
+	if ( DISTANCE.num < 20 )
+		Off( OUT_BC);
+	else
+		if ( CHECKCOLOR.num == makecolor( COLOR.num) ) {
+			switch ( TURN.num ) {
+				case 0 : OnFwd( OUT_B, 75);
+						 Off( OUT_C);
+						 Wait( WAITLEFT.num);
+						 break;
+				case 1 : Off( OUT_B);
+						 OnFwd( OUT_C, 75);
+						 Wait( WAITRIGHT.num);
+						 break;
+			}
+			OnFwd( OUT_BC, 75);
+		}
+<END>
+
+<DEVICE>
+	SENSOR, Kleursensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ALIAS>
+	Kleurensensor
+<ICON>
+	htkleur.png
+<CONSTANT>
+	COLOR_WHITE, Wit, 1
+	COLOR_GREY, Grijs, 2
+	COLOR_BLACK, Zwart, 3
+	COLOR_RED, Rood, 4
+	COLOR_GREEN, Groen, 5
+	COLOR_BLUE, Blauw, 6
+	COLOR_YELLOW, Geel, 7
+<END>

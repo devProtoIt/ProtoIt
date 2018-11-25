@@ -1,0 +1,1 @@
+lupdate ProtoIt.pro

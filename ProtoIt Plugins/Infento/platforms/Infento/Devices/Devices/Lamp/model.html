@@ -1,0 +1,76 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Lamp</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform: INFENTO</b></td><td><img src="lamp.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Alle type lampen kunnen op de driver worden aangeloten,
+mits ze geschikt zijn voor 24 volt en niet meer dan 0,5 am&egrave;re nemen.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Lamp
+</p>
+<hr/>
+
+<h4><img src="lamp.png" width=50> Lamp</h4>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Adres</b></td><td>I2C-adres van de driver.</br>Standaard op adres 21 ingesteld.</td></tr>
+<tr><td class="left"><b>Lamppoort</b></td><td>Afhankelijk van de driver, kunnen er &eacute;&eacute;n dan wel twee lampen worden aangesloten.
+De betreffende poorten zijn 1 en 2 genummerd.</br>Standaard op poort 1 ingesteld.</td></tr>
+<tr><td class="left"><b>Sterkte (lumen)</b></td><td>De uitgezonden lichtsterkte zoals die op de verpakking van de lamp is vermeld.</br>
+Standaard op 600 lumen ingesteld.</td></tr>
+</table><br/>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Aan (%)</b></td><td>Helderheid voor als de lamp wordt <i>aan</i>gezet.
+Helderheid in procenten van de ingestelde lumen (zie <i>Instellingen</i>).</td></tr>
+<tr><td class="left"><b>Uit (%)</b></td><td>Helderheid voor als de lamp wordt <i>uit</i>gezet.
+Helderheid in procenten van de ingestelde lumen (zie <i>Instellingen</i>).</td></tr>
+<tr><td class="left"><b>Aan (1/10 sec)</b></td><td>Tijd dat de lamp <i>aan</i> gaat of blijft (zie <i>Manier</i>).<br/>
+Standaard op het maximum ingesteld.</td></tr>
+<tr><td class="left"><b>Aan (1/10 sec)</b></td><td>Tijd de lamp <i>uit</i> gaat of blijft (zie <i>Manier</i>).<br/>
+Standaard op volledig uit ingesteld.</td></tr>
+<tr><td class="left"><b>Manier</b></td><td>De lamp kan met de <i>Constante signalen</i> op drie manieren worden geschakeld:</br>
+- <u>Aan/Uit</u>: De lamp krijgt met het signaal <i>Start wanneer?</i> de voor <i>aan</i> ingestelde helderheid
+en met <i>Stop wanneer?</i> de voor <i>uit</i> ingestelde helderheid.
+De eventueel ingestelde tijden worden genegeerd.</br>
+- <u>Knipperen</u>: De lamp knippert met de ingestelde helderheden voor <i>aan</i> en <i>uit</i> en voor de duur
+van de bijbehorende ingestelde tijden. Het knipperen begint met het signaal <i>Start wanneer?</i> en eindigt
+met <i>Stop wanneer?</i>.</br>
+- <u>Vervagen</u>: De lamp licht langzaam op en vervaagt weer met de ingestelde helderheden voor <i>aan</i> en
+<i>uit</i> en voor de duur van de bijbehorende ingestelde tijden. Dit begint met het signaal <i>Start wanneer?</i> en eindigt
+met <i>Stop wanneer?</i>.</br>
+Standaard op <i>Aan/Uit</i> ingesteld.
+</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>De bij <i>Manier</i> ingestelde functie van de lamp wordt gestart.
+Standaard op <i>Direct</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Stop wanneer?</b></td><td>De bij <i>Manier</i> ingestelde functie van de lamp wordt gestopt.
+Standaard op <i>Nooit</i> ingesteld.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

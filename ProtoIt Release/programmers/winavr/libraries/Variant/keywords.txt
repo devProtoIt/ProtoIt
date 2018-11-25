@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map Variant
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Variant	KEYWORD1
+VariantList	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+toString	KEYWORD2
+length	KEYWORD2
+replace	KEYWORD2
+append	KEYWORD2
+insert	KEYWORD2
+remove	KEYWORD2
+at	KEYWORD2
+size	KEYWORD2
+count	KEYWORD2
+calculate	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################

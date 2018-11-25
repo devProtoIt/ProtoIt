@@ -1,0 +1,139 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Buggy</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   MINDSTORMS</b></td><td><img src="Buggy.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+De buggy kan worden gebouwd met de educatieve basisset 9797 van Lego Minstorms. Zorg dat de lichtsensor vlak boven de grond naar de beneden gericht staat.
+<br/><br/>
+Aansluitingen:
+<li>Motor links: poort B.
+<li>Motor rechts: poort C.
+<li>Ultrasone sensor: poort 4.
+<li>Lichtsensor: poort 3.
+<li>Geluidsensor: poort 2.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Buggy, Geluid, Licht, Afstand
+</p>
+<hr/>
+
+<h4><img src="buggy.png" width=50> Buggy</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Flauwe bocht (%)</b></td><td>Het signaal <i>Flauwe bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 10% ingesteld.</td></tr>
+<tr><td class="left"><b>Normale bocht (%)</b></td><td>Het signaal <i>Normale bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 40% ingesteld.</td></tr>
+<tr><td class="left"><b>Scherpe bocht (%)</b></td><td>Het signaal <i>Scherpe bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 70% ingesteld.</td></tr>
+<tr><td class="left"><b>Haakse bocht (%)</b></td><td>Het signaal <i>Haakse bocht</i> zendt de hier ingestelde bocht uit. 0% is rechtdoor en 100% is het scherpst.
+</br>Standaard op 100% ingesteld.</td></tr>
+</table><br/>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Richting</b></td><td>Gebruik één van de Constante signalen onder het kopje <i>RICHTING</i>.</td></tr>
+<tr><td class="left"><b>Stuur</b></td><td>Gebruik één van de Constante signalen onder het kopje <i>STUUR</i>.</td></tr>
+<tr><td class="left"><b>Bocht (%)</b></td><td>Gebruik één van de Constante signalen onder het kopje <i>BOCHT  of vul een percentage in. Een bocht van 100% is een scherpe bocht en bij 0% gaat de buggy rechtdoor.</td></tr>
+<tr><td class="left"><b>Snelheid (%)</b></td><td>Vul een percentage in of sleep een uitgezonden signaal hiernaar toe. Bij 100% rijdt de buggy op zijn snelst en bij 0% staat de buggy stil.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Sleep een constant of uitgezonden signaal hiernaar toe.</br>Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Stop wanneer?</b></td><td>Sleep een constant of uitgezonden signaal hiernaar toe.</br>Standaard op <i>Nooit</i> ingesteld.</td></tr>
+</table><br/>
+
+<h4><img src="geluidsensor.png" width=50> ProtoIt</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Stilte (%)</b></td><td>Het signaal <i>Stilte</i> wordt uitgezonden bij een geluidsniveau lager dan hier ingesteld.
+</br>Standaard op 33% ingesteld.</td></tr>
+<tr><td class="left"><b>Lawaai (%)</b></td><td>Het signaal <i>Lawaai</i> wordt uitgezonden bij een geluidsniveau hoger dan hier ingesteld.
+</br>Standaard op 67% ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Geluidsterkte (%)</b></td><td>De waarde loopt van 0 (geen geluid) tot 100 (hard geluid).</td></tr>
+<tr><td class="left"><b>Stilte</b></td><td>Dit signaal wordt uitgezonden als het geluidsniveau minder is dan het niveau van de <i>Instellingen</i>.</td></tr>
+<tr><td class="left"><b>Rumoer</b></td><td>Dit signaal wordt uitgezonden als het geluidsniveau zich tussen <i>Stilte</i> en <i>Lawaai</i> bevindt.</td></tr>
+<tr><td class="left"><b>Lawaai</b></td><td>Dit signaal wordt uitgezonden als het geluidsniveau meer is dan het niveau van de <i>Instellingen</i>.</td></tr>
+</table><br/>
+
+<h4><img src="lichtsensor.png" width=50> ProtoIt</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Wit(%)</b></td><td>Het signaal <i>Wit</i> wordt uitgezonden bij een lichtsterkte hoger dan hier ingesteld.
+</br>Standaard op 67% ingesteld.</td></tr>
+<tr><td class="left"><b>Zwart (%)</b></td><td>Het signaal <i>Zwart</i> wordt uitgezonden bij een lichtsterkte lager dan hier ingesteld.
+</br>Standaard op 33% ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Lichtsterkte (%)</b></td><td>De waarde loopt van 0 (donker) tot 100 (lamp van dichtbij).</td></tr>
+<tr><td class="left"><b>Op zwart</b></td><td>Dit signaal wordt uitgezonden als de lichtsterkte minder is dan de sterkte van de <i>Instellingen</i>.</td></tr>
+<tr><td class="left"><b>Op grijs</b></td><td>Dit signaal wordt uitgezonden als de lichtsterkte zich tussen <i>Zwart</i> en <i>Wit</i> bevindt.</td></tr>
+<tr><td class="left"><b>Op wit</b></td><td>Dit signaal wordt uitgezonden als de lichtsterkte meer is dan de sterkte van de <i>Instellingen</i>.</td></tr>
+<tr><td class="left"><b>Zwart naar wit</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst zwart en nu wit waarneemt.</td></tr>
+<tr><td class="left"><b>Grijs naar wit</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst grijs en nu wit waarneemt.</td></tr>
+<tr><td class="left"><b>Zwart naar grijs</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst zwart en nu grijs waarneemt.</td></tr>
+<tr><td class="left"><b>Wit naar grijs</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst wit en nu grijs waarneemt.</td></tr>
+<tr><td class="left"><b>Grijs naar zwart</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst grijs en nu zwart waarneemt.</td></tr>
+<tr><td class="left"><b>Wit naar zwart</b></td><td>Dit signaal wordt uitgezonden als de sensor eerst wit en nu zwart waarneemt.</td></tr>
+</table><br/>
+
+<h4><img src="ultrasonesensor.png" width=50> ProtoIt</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Dichtbij (cm)</b></td><td>Het signaal <i>Dichtbij</i> wordt uitgezonden bij een afstand minder dan hier ingesteld.
+</br>Standaard op 25 cm ingesteld.</td></tr>
+<tr><td class="left"><b>Veraf (cm)</b></td><td>Het signaal <i>Veraf</i> wordt uitgezonden bij een afstand groter dan hier ingesteld.
+</br>Standaard op 75 cm ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Afstand (cm)</b></td><td>De afstand tot een voorwerp.</td></tr>
+<tr><td class="left"><b>Dichtbij</b></td><td>Dit signaal wordt uitgezonden als de afstand minder is dan de afstand van de <i>Instellingen</i>.</td></tr>
+<tr><td class="left"><b>Normaal</b></td><td>Dit signaal wordt uitgezonden als de afstand zich tussen <i>Dichtbij</i> en <i>Veraf</i> bevindt.</td></tr>
+<tr><td class="left"><b>Veraf</b></td><td>Dit signaal wordt uitgezonden als de afstand groter is dan de afstand van de <i>Instellingen</i>.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

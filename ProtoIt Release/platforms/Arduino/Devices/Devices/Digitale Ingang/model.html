@@ -1,0 +1,55 @@
+<html>
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Digitale Ingang</h1><br/><br/>&copy;   2018,   ProtoIt<br/><br/>
+<b>Platform:   ARDUINO</b></td><td><img src="pinin.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+<i>Digitale Ingang</i> gebruik je voor een sensor die een digitaal spannings- niveau afgeeft. Digitaal betekent dat er twee waardes zijn: laag (= uit) of hoog (= aan).
+&acute;<i>Laag</i>&acute; heeft een waarde gelijk aan 0 en &acute;<i>hoog</i>&acute; een waarde ongelijk aan 0 (meestal 1).</br>
+Op de Arduino zijn spanningen van 0 tot 1,5 volt gegarandeerd</br> &acute;<i>laag</i>&acute; en van 3 tot 5 volt gegarandeerd &acute;<i>hoog</i>&acute;.
+Spanningen tussen 1,5 en 3 volt moet je vermijden, want daarvan weet je niet of ze door de Arduino als &acute;<i>laag</i>&acute; of &acute;<i>hoog</i>&acute; worden gemeten.</br></br>
+<i>LET OP! Een ingang kan niet meer dan 20mA verdragen. Bij een grotere stroom kan het Arduino-board beschadigen.
+Ook een spanningsniveau hoger dan 5 volt beschadigt het Arduino-board.</i>
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Digitale Ingang
+</p>
+<hr/>
+
+<h4><img src="pinin.png" width=50> Digitale Ingang</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Pin</b></td><td>Het pin-nummer van de Arduino waarop je de sensor aansluit. Dit moet een digitale pin zijn.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Signaal</b></td><td>Zendt 0 uit als de pin &acute;<i>laag</i>&acute; is en 1 als de pin &acute;<i>hoog</i>&acute; is. Je kunt dit signaal testen met één van de <i>Constante signalen</i>.</td></tr>
+</table><br/>
+</table><br/>
+
+<br/>
+</body>
+</html>

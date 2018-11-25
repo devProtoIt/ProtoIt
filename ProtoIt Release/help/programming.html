@@ -1,0 +1,136 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> Robotiles </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+
+</head>
+
+<body>
+<h1>Programmeren met C / C++</h1>
+
+<p>
+<h4>De resultaatcode van RoboTiles</h4>
+Hoewel onzichtbaar voor de gebruiker, werkt RoboTiles met C++-code (<i>ArduinoC</i>) voor Infento en Arduino en met C-code (<i>NBC</i>) voor Mindstorms.
+Een upload van een robot-programma vindt plaats in de volgende twee stappen:<br/>
+(1) RoboTiles stelt een volledig C++ of C-programma samen: <i>RoboTiles.ino </i> dan wel <i>RoboTiles.nxc</i>.<br/>
+(2) RoboTiles roept de <i>AVR-chain</i> dan wel <i>NBC.exe</i> aan om het programma te compileren, te linken en te uploaden.<br/>
+</p>
+
+<p>
+Door de genoemde compiler/uploaders te gebruiken, moet de code van RoboTiles voldoen aan de regels van <i>Arduino C</i> dan wel <i>NBC</i>.
+Beide talen moeten worden gezien als een beknopte versie C/C++ uitgebreid met robotspecifieke routines en constanten.
+Verder maakt RoboTiles gebruik van een eigen aanvulling: de Variant. Voor NBC is deze als structure met enkele routines
+ge&iuml;mplementeerd, voor Arduino C als een object. Hierover straks meer.
+</p>
+
+<p>
+<h4>De programmacode van RoboTiles</h4>
+De hoofdstructuur van een RoboTiles programma ziet er als volgt uit:<br/><br/>
+<table>
+<tr><td style="width:20"></td><td style="width:230"><u>RoboTiles.ino</u></td><td><u>RoboTiles.nxc</u></td></tr>
+<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+<tr><td></td><td><code><br/>
+
+#include &quot;Variant.h&quot;<br/><br/>
+int LASTSTEP = ...;<br/>
+int STEP = 1;<br/><br/>
+void stepInit()<br/>{<br/>&nbsp;// STEPINIT<br/>}<br/><br/>
+void setup()<br/>{<br/>&nbsp;// SETUP<br/>&nbsp;stepInit();<br/>}<br/><br/>
+void dataFeedThrough()<br/>{<br/>&nbsp;switch ( STEP ) {
+<br/>&nbsp;&nbsp;case 1 :<br/>&nbsp;&nbsp;...<br/>&nbsp;}<br/>}}<br/><br/>
+void loop()<br/>{<br/>&nbsp;// SENSOR UPDATE<br/><br/>&nbsp;switch ( STEP ) {
+<br/>&nbsp;&nbsp;case 1 :<br/>&nbsp;&nbsp;&nbsp;&nbsp;dataFeedThrough();<br/>&nbsp;&nbsp;&nbsp;&nbsp;// FUNCTION UPDATE<br/>&nbsp;&nbsp;&nbsp;&nbsp;// ACTUATOR UPDATE<br/>&nbsp;&nbsp;&nbsp;&nbsp;// STEP TO<br/>
+&nbsp;&nbsp;...<br/>&nbsp;}<br/>}<br/><br/><br/>
+
+</code></td><td><code><br/>
+
+#include &quot;Variant.nxc&quot;<br/><br/>
+int LASTSTEP = ...;<br/>
+int STEP = 1;<br/><br/>
+void StepInit()<br/>{<br/>&nbsp;// STEPINIT<br/>}<br/><br/>
+void Setup()<br/>{<br/>&nbsp;// SETUP<br/>&nbsp;StepInit();<br/>}<br/><br/>
+void DataFeedThrough()<br/>{<br/>&nbsp;switch ( STEP ) {
+<br/>&nbsp;&nbsp;case 1 :<br/>&nbsp;&nbsp;...<br/>&nbsp;}<br/>}}<br/><br/>
+task main() {<br/>&nbsp;Setup()<br/>&nbsp;while ( true ) {<br/><br/>&nbsp;//SENSOR UPDATE<br/>&nbsp;
+<br/>&nbsp;switch ( STEP ) {
+<br/>&nbsp;&nbsp;case 1 :<br/>&nbsp;&nbsp;&nbsp;&nbsp;DataFeedThrough();<br/>&nbsp;&nbsp;&nbsp;&nbsp;// FUNCTION UPDATE<br/>&nbsp;&nbsp;&nbsp;&nbsp;// ACTUATOR UPDATE<br/>&nbsp;&nbsp;&nbsp;&nbsp;// STEP TO<br/>
+&nbsp;&nbsp;...<br/>&nbsp;}<br/>}}
+
+</code></td></tr>
+</table></p>
+
+<p>
+Op de plaatsen met commentaar (&acute;//&acute;) wordt de code bij de betreffende tag uit het rtd-bestand gehaald.
+In het geval van <i>STEP TO</i> komt de code niet uit het rtd-bestand, maar wordt door RoboTiles gegenereerd op basis van
+de invulvakken van de gebruikte <i>Stap naar</i> programmategels.
+Apparaat-code die zelf de waarde van <i>STEP</i> verandert, moet direct daarop volgend de subroutine <i>stepInit()</i> / <i>StepInit()</i> aanroepen.
+<b>De waarde van <i>LASTSTEP</i> mag nooit worden gewijzigd.</b> Deze geeft de hoogste waarde van de cases onder <i>switch ( STEP )</i> weer.
+Behalve de <i>STEP TO</i> verzorgt RoboTiles verder nog de routine <i>DataFeedThrough</i> geheel automatisch.
+Afhankelijk van de invulvakken op de programmategels geeft RoboTiles hier de sensorsignalen (<i>SIGNALIN</i>) door aan de actuatorsignalen (<i>SIGNALOUT</i>)
+</p>
+
+<p>
+<h4>Signalen in de programmacode</h4>
+In een rtd-bestand worden apparaten en signalen gedefini&euml;erd met een <i>ID</i> en een <i>ALIAS</i>.
+Om onderscheid te maken tussen dezelfde signalen van verschillende apparaten krijgt ieder signaal-id&rsquo;s de alias van het apparaat als prefix.
+Bijvoorbeeld krijgt het signaal <i>SPEED</i> van een apparaat met alias <i>Motor A</i> de identifier <i>Motor_A_SPEED</i> in de programmacode.
+Het signaal wordt dan als &quot;Variant Motor_A_SPEED;&quot; gedeclareerd. (Alle signalen worden als <i>Variant</i> gedeclareerd.)
+</p>
+
+<p>
+<h4>Het type Variant</h4>
+Om te weten hoe je de Variant gebruikt, is het het simpelst om  bestaande rtd-bestanden te onderzoeken.
+Deze zijn te vinden in de submappen van <i>{installatiemap}/Devices</i>.
+Wie de implementatie zelf wil bestuderen vindt de bestanden in <i>{installatiemap}/Mindstorms/Variant.nxc</i> en in
+<i>{installatiemap}/Arduino/libraries/Variant</i>.
+</p>
+
+<p>
+In de Infento/Arduino-versie is het type <i>Variant</i> als object gedefini&euml;erd.
+Waarden kunnen als <i>int</i>, <i>long</i>, <i>uint8_t</i>, <i>double</i> en als <i>char*</i> worden gecast.
+Het type <i>String</i> kan niet worden gecast, wordt via de functie <i>toString()</i> verkregen.
+Met het type <i>Variant</i> kunnen de vier basisberekeningen optellen, aftrekken, vermenigvuldigen en delen worden uitgevoerd.
+</p>
+
+<p>
+In de Mindstorms-versie is het type <i>Variant</i> als struct gedefini&euml;erd met als datamembers <i>num</i>, <i>flt</i> en <i>str</i>.
+Datamember <i>flt</i> is alleen beschikbaar wanneer <i>Mindstorms (uitgebreid)</i> als platform wordt gekozen.
+Dit vereist dat de NXT-brick van de bijbehorende firmware (versie 1.32) is voorzien.
+Door de globale routines <i>SetInteger</i>, <i>SetFloat</i> en <i>SetString</i> te gebruiken, worden de drie datamembers van overeenkomende waardes voorzien.<br/>
+Bijvoorbeeld stelt de aanroep <i>SetInteger( 5)</i> niet alleen de <i>num</i>-member op 5 in, maar ook de <i>flt</i>- en <i>str</i>-member.
+&nbsp - void SetInteger( Variant& var, long val);<br/>
+&nbsp - void SetFloat( Variant& var, float val);<br/>
+&nbsp - void SetString( Variant& var, string str);<br/>
+</p>
+
+<p>
+<h4>Exporteren van de RoboTiles code</h4>
+Bij het uploaden van een programma maakt RoboTiles een volledig programma aan.
+De programmacode staat in het bestand <i>{operating system temp}/RoboTilesBuild/RoboTiles.ino</i> dan wel in het bestand <i>{operating system temp}/RoboTilesBuild/RoboTiles.nxc</i>.
+Dit bestand wordt echter iedere keer bij het uploaden overschreven.
+Om het bestand te behouden, kan de code worden ge&euml;xporteerd naar een bestand met een zelfgekozen naam en in een map naar keuze.
+Het include-bestand <i>Variant.h</i> dan wel <i>Variant.nxc</i> wordt meegekopieerd.
+</p>
+
+<p>
+<h4>Include bestanden voor apparaten</h4>
+Sommige apparaten worden geleverd met speciale include-bestanden als aanvulling op de programmeeromgeving.
+RoboTiles kan samenwerken met include-bestanden die zijn gemaakt voor <i>Arduino C</i> dan wel voor <i>NBC</i>.
+Include-bestanden voor <i>Arduino C</i> horen in een submap met enkele andere bestanden te worden aangeleverd.
+Plaats deze map met de bestanden in <i>{installatiemap}/Arduino/libraries/</i>.<br/>
+Voor <i>Mindstorms</i> heeft een include-bestand vaak de extensie <i>nxc</i>. Plaats dit bestand in de map <i>{installatiemap}/Mindstorms/</i>.
+</p>
+
+<br/>
+</body>
+
+</html>

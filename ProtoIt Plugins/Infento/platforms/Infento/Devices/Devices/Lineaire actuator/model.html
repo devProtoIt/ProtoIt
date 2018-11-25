@@ -1,0 +1,68 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Lineaire actuator</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform: INFENTO</b></td><td><img src="lineaire actuator.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Een lineaire actuator wordt ook wel elektrische cilinder genoemd.
+Als de motor draait schuift er een cilinder langzaam in of uit.
+Daarbij is hij in staat om een grote kracht uit te oefenen.
+Door gebruik te maken van een lineaire actuator met potmeter
+kan de positie van de cilinder worden uitgelezen.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Lineaire actuator
+</p>
+<hr/>
+
+<h4><img src="lineaire actuator.png" width=50> Lineaire actuator</h4>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>Adres</b></td><td>I2C-adres van de driver.</br>Standaard op adres 21 ingesteld.</td></tr>
+<tr><td class="left"><b>Motorpoort</b></td><td>Er zijn twee motorpoorten aanwezig, die 1 en 2 zijn genummerd.</br>Standaard op poort 1 ingesteld.</td></tr>
+<tr><td class="left"><b>Lengte (mm)</b></td><td>Het verschil in lengte tussen een volledig in- en uitgeschoven cilinder.</br>Standaard op 150 mm ingesteld.</td></tr>
+<tr><td class="left"><b>Opstartkracht (%)</b></td><td>Bij 0% vernelt de cilinder vanuit stilstand en anders vanuit het opgegeven percentage van volle kracht.
+Bij 100% beweegt de cilinder meteen op volle kracht en kost het opstarten geen tijd.</br>Standaard op 0% ingesteld.</td></tr>
+</table><br/>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Naar positie (mm)</b></td><td>Beweegt de cilinderkop naar de opgegeven positie.</td></tr>
+<tr><td class="left"><b>Snelheid (%)</b></td><td>Beweegt de cilinderkop met een snelheidspercentage van de maximum snelheid.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Bepaalt het moment waarop de cilinderkop gaat bewegen.
+Standaard op <i>Direct</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Stop wanneer?</b></td><td>Bepaalt het moment waarop de beweging van de cilinderkop wordt afgebroken.
+Standaard op <i>Nooit</i> ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Positie (mm)</b></td><td>Geeft de huidige positie van de cilinderkop weer.</td></tr>
+<tr><td class="left"><b>Klaar</b></td><td>Dit signaal wordt uitgezonden als de cilinderkop de bij <i>Naar positie (mm)</i>
+opgegeven positie heeft bereikt.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

@@ -1,0 +1,57 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	MBOT
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Lijnsensor
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	lijnsensor.png
+<PORT>
+	PORT, Poort, 2
+<SIGNALOUT>
+	ISLEFT, Links, 0
+	ISRIGHT, Rechts, 0
+	ISMID, Op lijn, 0
+<PRIVATE>
+	LEFT, Linker sensor, 10
+	RIGHT, Rechter sensor, 9
+<SETUP>
+	switch ( (int) PORT ) {
+		case 1 : RIGHT = 11; LEFT = 12; break;
+		case 2 : RIGHT = 9; LEFT = 10; break;
+		case 3 : RIGHT = A2; LEFT = A3; break;
+		case 4 : RIGHT = A0; LEFT = A1; break;
+		default : RIGHT = 9; LEFT = 10;
+	}
+	pinMode( (int) LEFT, INPUT);
+	pinMode( (int) RIGHT, INPUT);
+<SENSORUPDATE>
+	bool left = digitalRead( (int) LEFT);
+	bool right = digitalRead( (int) RIGHT);
+	ISLEFT = ISRIGHT = ISMID = 0;
+	if ( left ) {
+		if ( right )
+			ISMID = 1;
+		else
+			ISRIGHT = 1;
+	}
+	else
+	if ( right )
+		ISLEFT = 1;
+<END>

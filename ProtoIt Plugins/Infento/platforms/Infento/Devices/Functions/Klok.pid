@@ -1,0 +1,67 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	INFENTO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Klok
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/clock
+<PRIVATE>
+	REFT, Referentie
+	CURT, Huidig
+	HOUR, Uren, 0
+	MIN, Minuten, 0
+	SEC, Seconden, 0
+<SIGNALOUT>
+	TIME, Tijd, "000:00:00"
+<SETUP>
+	REFT = (long) millis() / 1000;
+<SENSORUPDATE>
+	if ( RTCMD == "RTCMDTIME" ) {
+		String stm = "0";
+		char ctm[4];
+		stm.concat( readSerial());
+		TIME = stm;
+		stm.substring( 0, 3).toCharArray( ctm, 4);
+		HOUR = atoi( ctm);
+		stm.substring( 4, 6).toCharArray( ctm, 3);
+		MIN = atoi( ctm);
+		stm.substring( 7, 9).toCharArray( ctm, 3);
+		SEC = atoi( ctm);
+		CURT = REFT = (long) millis() / 1000;
+		RTCMD = "";
+	}
+	if ( millis() / 1000 - (long) CURT )
+	{
+		CURT = (long) millis() / 1000;
+		char ctm[10];
+		int hr, mn, sc;
+		long tm = (long) CURT - (long) REFT;
+		hr = tm / 3600; tm = tm - hr * 3600;
+		mn = tm / 60; tm = tm - mn * 60;
+		sc = tm;
+		hr += (int) HOUR;
+		mn += (int) MIN;
+		sc += (int) SEC;
+		if ( sc > 59 ) { mn++; sc -= 60; }
+		if ( mn > 59 ) { hr++; mn -= 60; }
+		sprintf( ctm, "%03d:%02d:%02d", hr, mn, sc);
+		TIME = ctm;
+	}
+<END>
