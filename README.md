@@ -1,6 +1,8 @@
 # ProtoIt
 Educational software to get on with robotics via prototyping without the need of coding (Dutch language)
 
+![Alt text](/devprotoit/ProtoIt/Screenshots/Program_step.png?raw=true "The programming page of ProtoIt")
+
 Windows: Download the setup file from: 'ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe'.
 Raspbian: Unpack the 'protoit.tar' in a convenient directory and 'qtlibs.tar' to '/usr/lib/arm-linux-gnueabihf'.
 
