@@ -3,7 +3,7 @@
 Educational software to get on with robotics via prototyping without the need of coding (Dutch language)
 
 ### Download ###
-* Windows: Download the setup file from ![ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe] (https://github.com/devprotoit/ProtoIt/ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe)
+* Windows: Download the setup file from ![ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe] ('https://github.com/devprotoit/ProtoIt/ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe')
 * Raspbian: Coming soon ...
 
 ### General description ###
