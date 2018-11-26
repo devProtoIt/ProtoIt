@@ -3,7 +3,7 @@
 Educational software to get on with robotics via prototyping without the need of coding (Dutch language)
 
 ### Download ###
-* Windows: Download the setup file from ![ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe] ('https://github.com/devprotoit/ProtoIt/ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe')
+* Windows: download 'ProtoIt Setup/ProtoIt_1.0_win32_nl_setup.exe' from this git
 * Raspbian: Coming soon ...
 
 ### General description ###
@@ -13,8 +13,6 @@ A robot program evolves step by step literally when the user adds steps with suc
 When finished, ProtoIt will create code, compile it and upload it to the robot.
 
 **ProtoIt supports** *Lego Mindstorms*, *MBot*, *Arduino (uno/mega)* and *Raspberry (rasbian)*.
-
-![ProtoIt screenshot] (https://github.com/devprotoit/ProtoIt/Screenshots/Program_step.png)
 
 ### Program info ###
 
