@@ -1,0 +1,84 @@
+<html>
+<meta name="copyright" content="(C) 2018 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Nextion Scherm</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   RASPBERRY</b></td><td><img src="nextion.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+<i>Nextion enhanced</i> schermen hebben acht pio-pinnen die je kunt programmeren.
+Deze kunnen <i>aan</i> en <i>uit</i> worden gezet. In <i>ProtoIt</i> vind je ze terug
+als zes datapinnen en twee pinnen voor de data-uitwisseling (pio-6 en pio-7).
+</p>
+<p>
+Pio-pinnen 6 en 7 begeleiden de data-uitwisseling tussen  <i>ProtoIt</i> en het <i>Nextion</i>-scherm.
+Pio-6 geeft aan wanneer er data van het <i>Nextion</i>-scherm klaar staat en omgekeerd geeft <i>ProtoIt</i>
+dat via pio-7 aan. Pin pio-6 of 7 gaat hoog en na 10 milliseconden weer laag. Bij het laag gaan
+(&acute;falling edge&acute;) wordt een event (<i>Nextion</i>) of interrupt (<i>ProtoIt</i>) opgeroepen,
+waarin de data wordt uitgelezen. In <i>ProtoIt</i> gaat dit automatisch, maar in de <i>Nextion</i>-editor
+moet je dit zelf programmeren. Om data te ontvangen maak je gebruik van de &acute;binding input&acute; modus.
+Bijvoorbeeld bindt de code <code>cfgpio 7,1,b0</code> het laag gaan van pio-7 aan de &acute;button release event&acute;
+van de knop b0. Bij het verzenden van data moet je zelf pio-6 hoog maken en na 10 millisec weer laag maken.
+De code hiervoor is: <code>cfgpio 6,2,0 pio6=1 delay=10 pio6=0</code>. Zie de gebruikershandleiding van de
+<i>Nextion</i>-editor voor uitgebreide informatie over het programmeren van het <i>Nextion</i>-scherm.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Scherm
+</p>
+<hr/>
+
+<h4><img src="nextion.png" width=50> Scherm</h4>
+<p>
+
+</p>
+
+<u>Instellingen:</u>
+<table>
+<tr><td class="left"><b>PIO n (Optie n)</b></td><td>GPIO-pin waar de Nextion PIO-pin op aangesloten is.
+Let op, dat de PIO-nummers &eacute;&eacute;n lager zijn dan de optie-nummers.</td></tr>
+<tr><td class="left"><b>PIO 6 (verzend)</b></td><td>GPIO-pin waar de Nextion PIO6-pin op aangesloten is.
+Deze pin wordt gebruikt als &acute;data-ready&acute; bij het verzenden van data. Dit gebeurt automatisch.</td></tr>
+<tr><td class="left"><b>PIO 7 (ontvang)</b></td><td>GPIO-pin waar de Nextion PIO7-pin op aangesloten is.
+Deze pin wordt gebruikt als &acute;data-ready&acute; bij het ontvangen van data. Dit gebeurt automatisch.</td></tr>
+</table><br/>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Zend waarde</b></td><td>Waarde die naar het <i>Nextion</i>-scherm moet worden verzonden.</td></tr>
+<tr><td class="left"><b>Zend wanneer?</b></td><td>Als het hier ingevulde signaal optreedt, wordt de waarde naar het
+<i>Nextion</i>-scherm verzonden.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Staat klaar</b></td><td>Wordt uitgezonden wanneer het <i>Nextion</i>-scherm data klaar heeft staan.
+De data kan via &eacute;&eacute;n van de onderstaande signalen worden uitgelezen.</td></tr>
+<tr><td class="left"><b>Keuze</b></td><td>Bevat het optie-nummer wanneer &eacute;&eacute;n van de
+onderstaande opties optreedt.</td></tr>
+<tr><td class="left"><b>Optie n</b></td><td>Wordt uitgezonden wanneer de overeenkomstige PIO-pin van het
+<i>Nextion</i>-scherm <i>hoog</i> is.</td></tr>
+<tr><td class="left"><b>Waarde</b></td><td>Bevat de decimale waarde van PIO-pinnen 1 t/m 6, door de pinnen als
+binair getal uit te lezen.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

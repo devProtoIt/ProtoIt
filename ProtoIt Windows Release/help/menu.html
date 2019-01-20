@@ -1,0 +1,129 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+
+</head>
+
+<body>
+<h1>RoboTile menu&acute;s</h1>
+
+<p>
+<h4>Het bestand-menu</h4>
+<img src="media/menufile.png" /></br></br>
+
+<u><b>Nieuwe besturing</b></u><br/>
+Hiermee maak je een nieuw programma voor een robot.
+Wanneer je nog met een ander programma bezig was, wordt je gevraagd of je dat eerst wilt bewaren.<br/><br/>
+
+<u><b>Open bestaande</b></u><br/>
+Hiermee ga je verder met een programma dat bewaard hebt.
+Een opgeslagen programma van ProtoIt herken je aan de bestandextentie &rsquo;<i>rtp</i>&rsquo;.
+Behalve het rtp-bestand vind je een submap met dezelfde naam als het rtp-bestand.
+Het rtp-bestand heeft de bestanden in de submap nodig.<br/><br/>
+
+<u><b>Bewaar huidige</b></u><br/>
+Een programma van ProtoIt wordt in twee delen opgeslagen. Het hoofdbestand heeft als extentie &rsquo;<i>rtp</i>&rsquo;.
+Je wordt gevraagd om de naam voor dit bestand op te geven. Behalve het rtp-bestand maakt ProtoIt nog een submap aan met dezelfde naam.
+In de submap komen de <i>ProtoIt Device</i>-bestanden (rtd-bestanden) te staan, die door het programma in gebruik zijn.
+Gevorderde gebruikers kunnen daar de rtd-bestanden aanpassen, terwijl de originele bestanden van ProtoIt ongewijzigd blijven.<br/><br/>
+
+<u><b>Bewaar als ...</b></u><br/>
+Hiermee kun je een kopie van je programma opslaan onder een andere naam.
+Ook nu weer bewaart ProtoIt een rtp-bestand en een submap met dezelfde naam, waar zich de rtd-bestanden in bevinden.<br/><br/>
+
+<u><b>Upload naar robot</b></u><br/>
+<img src="media/upload.png" align="right" />Hoewel hiervoor een menu-optie aanwezig is, vind je ook in het snelmenu een knop voor het uploaden:<br/>
+Beide mogelijkheden werken hetzelfde. Zorg ervoor dat de robot aan staat voordat je begint met uploaden.
+Op sommige platforms (Arduino, Raspberry) start een programma na het uploaden automatisch. Op andere platforms (Lego Mindstorms) moet je zelf het programma starten.<br/><br/>
+
+<u><b>Exporteer code</b></u><br/>
+Voordat ProtoIt een programma naar een robot upload, maakt het eerst een code-bestand in C/C++ aan. De gehanteerde code is afhankelijk van het platform.
+Wie deze code wil inspecteren of er in een IDE-omgeving verder aan wil werken, kan de code exporteren onder een zelfgekozen naam.<br/><br/>
+
+<u><b>Platform</b></u><br/>
+Wanneer ProtoIt start, wordt je gevraagd om een platform te kiezen.
+Zolang je niet aan een programma bent begonnen, kun je het platform later nog wijzigen.
+Ook direct na de menu-optie <i>Nieuwe besturing</i> kun je weer een ander platform kiezen.
+<br/><br/>
+
+<u><b>Platform beheer</b></u><br/>
+Hier vind je een overzicht van alle platforms, modellen, apparaten en functies, die tot je beschikking staan.
+Je kunt items <i>importeren</i> en <i>verwijderen</i>. Dit wordt uitgebreid behandeld bij het onderwerp <i>Platforms beheren</i>.
+<br/><br/>
+
+<u><b>Einde</b></u><br/>
+Hiermee wordt ProtoIt be&euml;indigd. Je wordt gevraagd om het programma waar je mee bezig was op te slaan.
+</p>
+
+<p>
+<h4>Het bewerk-menu</h4>
+<img src="media/menuedit.png" /></br></br>
+
+<u><b>Ongedaan maken</b></u><br/>
+Alle wijzigingen, vanaf het moment dat je aan een nieuw programma begint of een bestaand programma hebt geopend, kun je ongedaan maken.
+Het ongedaan maken gebeurt in de omgekeerde volgorde waarin de handelingen hebben plaatsgevonden. De sneltoets <i>Ctrl-Z</i> werkt op dezelfde manier.</br>
+<u>Let op</u>: Wanneer het ongedaan maken van een handeling niet in de huidige programmastap plaats vindt, zal ProtoIt naar de betreffende programmastap omschakelen.<br/><br/>
+
+<u><b>Weer herstellen</b></u><br/>
+Als je een wijziging per ongeluk ongedaan hebt gemaakt, kun je deze weer herstellen.
+Het herstellen gebeurt in de volgorde waarin de handelingen oorspronkelijk plaatsvonden. De sneltoets <i>Ctrl-Y</i> werkt op dezelfde manier.</br>
+<u>Let op</u>: Wanneer het herstellen van een handeling niet op de huidige programmastap plaats vindt, zal ProtoIt naar de betreffende programmastap omschakelen.<br/><br/>
+
+<u><b>Toon bewerkingen</b></u><br/>
+Nadat je aan een nieuw programma bent begonnen of een bestaand programma hebt geopend, houdt ProtoIt alle wijzigingen aan het programma bij.
+Daarvan roep je een rapport op met de optie <i>Toon bewerkingen</i>.
+Dat is handig als je terug wilt vinden wat je precies veranderd hebt tijdens het programmeren.
+<br/><br/>
+
+</p>
+
+<p>
+<h4>Het robot-menu</h4>
+<img src="media/menurobot.png" /></br></br>
+<i> LET OP! Het robot-menu of sommige opties ervan zijn niet voor ieder platform beschikbaar.</i>
+</br></br>
+
+<u><b>Stop robot</b></u><br/>
+Stopt het programma in de robot. De robot moet worden gereset om het programma weer te starten.<br/><br/>
+
+<u><b>Tijd instellen</b></u><br/>
+Stelt de <i>Klok</i>-functie in op de huidige tijd.
+De <i>Klok</i>-functie moet dan wel in het programma van de robot zijn opgenomen.<br/><br/>
+
+<u><b>Datalog uitlezen</b></u><br/>
+Vraagt de gegevens van de het <i>Datalogger</i>-apparaat op.
+Het <i>Datalogger</i>-apparaat moet dan wel in het programma van de robot zijn opgenomen.<br/><br/>
+
+<u><b>USB monitor</b></u><br/>
+Maakt vanuit ProtoIt een &acute;live&acute;-verbinding met je programma.
+Zo kun je in ProtoIt maximaal vier signaal-waardes uit je programma volgen.
+Het <i>Usb Monitor</i>-apparaat moet dan wel in het programma van de robot zijn opgenomen.<br/><br/>
+<br/><br/>
+
+</p>
+
+<p>
+<h4>Het informatie-menu</h4>
+<img src="media/menuhelp.png" /></br></br>
+
+<u><b>Handleiding</b></u><br/>
+Hiermee wordt deze handleiding opgeroepen.<br/><br/>
+
+<u><b>Over ProtoIt</b></u><br/>
+Hier vind je informatie over jouw versie van ProtoIt en waarom ProtoIt is gemaakt.
+</p>
+
+<br/>
+</body>
+
+</html>

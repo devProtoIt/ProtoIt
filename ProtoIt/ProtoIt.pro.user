@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.2.1, 2018-11-25T14:55:36. -->
+<!-- Written by QtCreator 3.2.1, 2019-01-13T14:14:37. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -223,10 +223,10 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments"></value>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">C:/Users/Gebruiker/Documents/Programma's/ProtoIt Git/ProtoIt Release/ProtoIt.exe</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">C:/Users/Gebruiker/Documents/Programma's/ProtoIt_Git/ProtoIt Windows Release/ProtoIt.exe</value>
     <value type="bool" key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal">false</value>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">C:/Users/Gebruiker/Documents/Programma's/ProtoIt Git/ProtoIt Release</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run C:\Users\Gebruiker\Documents\Programma's\ProtoIt Git\ProtoIt Release\ProtoIt.exe</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">C:/Users/Gebruiker/Documents/Programma's/ProtoIt_Git/ProtoIt Windows Release</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run C:\Users\Gebruiker\Documents\Programma's\ProtoIt_Git\ProtoIt Windows Release\ProtoIt.exe</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
@@ -274,8 +274,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ProtoIt</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ProtoIt2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Gebruiker/Documents/Programma's/ProtoIt Git/ProtoIt/ProtoIt.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Gebruiker/Documents/Programma's/ProtoIt_Git/ProtoIt/ProtoIt.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ProtoIt.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

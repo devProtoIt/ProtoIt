@@ -1,0 +1,86 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	RASPBERRY
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, RFID-sensor
+<ALIAS>
+	RfID
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	rfid.png
+<CALIBRATE>
+	CALID1, Eerste ID, XX XX XX XX
+	CALID2, Tweede ID, XX XX XX XX
+	CALID3, Derde ID, XX XX XX XX
+	CALID4, Vierde ID, XX XX XX XX
+<SIGNALOUT>
+	HASID, ID Gelezen
+	ISNEW, ID Gewijzigd
+	ISCAL1, Is eerste ID
+	ISCAL2, Is tweede ID
+	ISCAL3, Is derde ID
+	ISCAL4, Is vierde ID
+	CURID, Kaart-ID
+<INCLUDE>
+#include "MFRC522.h"
+<LIBRARY>
+MFRC522
+<GLOBAL>
+MFRC522 mfrc;
+<PRIVATE>
+	PRVID, Vorig ID
+<SETUP>
+	mfrc.PCD_Init();
+	CALID1 = CALID1.toString() + " ";
+	CALID2 = CALID2.toString() + " ";
+	CALID3 = CALID3.toString() + " ";
+	CALID4 = CALID4.toString() + " ";
+<STEPINIT>
+	ISNEW = 0;
+	ISCAL1 = 0;
+	ISCAL2 = 0;
+	ISCAL3 = 0;
+	ISCAL4 = 0;
+	HASID = 0;
+	CURID = "";
+<SENSORUPDATE>
+    if( mfrc.PICC_IsNewCardPresent() && mfrc.PICC_ReadCardSerial() ) {
+	String tag;
+	char hex[17] = "0123456789ABCDEF";
+        for( int i = 0; i < mfrc.uid.size; ++i) {
+	    byte bt = (mfrc.uid.uidByte[i] >> 4);
+            if ( !bt ) tag += '0';
+            else tag += hex[bt];
+	    bt = (mfrc.uid.uidByte[i] & 0x0F);
+	    tag += hex[bt];
+	    tag += " ";
+	}
+	if ( tag != PRVID.toString() ) {
+	    PRVID = tag;
+	    ISNEW = 1;
+	}
+	HASID = 1;
+	CURID = tag;
+	ISCAL1 = (CURID == CALID1);
+	ISCAL2 = (CURID == CALID2);
+	ISCAL3 = (CURID == CALID3);
+	ISCAL4 = (CURID == CALID4);
+    }
+
+<END>

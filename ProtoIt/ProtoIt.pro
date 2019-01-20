@@ -14,7 +14,7 @@ QT += bluetooth
 
 TARGET = ProtoIt
 TEMPLATE = app
-DESTDIR = ../ProtoIt Git/ProtoIt Release/
+DESTDIR = "../ProtoIt_Git/ProtoIt Windows Release/"
 
 SOURCES += main.cpp\
     mainwindow.cpp \

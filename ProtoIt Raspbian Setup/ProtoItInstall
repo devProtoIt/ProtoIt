@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install libqt5serialport5-dev
+sudo apt-get install libqt5webkit5
+sudo apt-get install qtmultimedia5-dev
+sudo tar -zxvf ProtoIt.tar.gz -C /
+sudo cp /opt/ProtoIt/protoit.desktop /usr/share/applications
+sudo cp /opt/ProtoIt/protoitsudo.desktop /usr/share/applications
+echo "Start ProtoIt vanuit het menu 'Programmeren'"

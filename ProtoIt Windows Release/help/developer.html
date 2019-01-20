@@ -1,0 +1,156 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+
+</head>
+
+<body>
+<h1>ProtoIt inside</h1>
+
+<p>
+<h4>Rule based</h4>
+ProtoIt is een zogenaamde <i>rule based</i> programmeeromgeving. Dit is vergelijkbaar met het programmeren van plc&acute;s
+in de megatronica aan de hand van ladderdiagrammen. (Robotica is een onderdeel van de megatronica.)
+Er worden meerdere regels opgesteld die simultaan afspelen. Simultaan zal over het algemeen niet volledig gelijktijdig betekenen,
+omdat de meeste kleine processoren single core zijn en de instructies sequentieel afhandelen. ProtoIt simuleert de gelijktijdigheid
+door een aantal fasen in hoog tempo te herhalen, zodat het niet uitmaakt van welke programmategel de regels het eerst worden uitgevoerd.
+</p>
+
+<p>
+<h4>Vier programmafasen</h4>
+<div style="position:absolute; left:290; width:200; height:180; font-size:12">
+<img src="media/psd.png" width="200" /><br/>
+PSD van de programmafasen.
+</div>
+<div style="width:270">
+<u>Fase 1: Sensor-update</u></br>
+Van alle aan het programma toegevoegde sensoren worden de signalen uitgelezen.</br></br>
+<u>Fase 2: Data-uitwisseling</u></br>
+Volgense de regels van de programmategels worden de waardes van de signalen uitgewisseld.</br></br>
+<u>Fase 3: Functie-update</u></br>
+De programmategels verwerken de informatie van de signalen die zij hebben ontvangen.</br></br>
+<u>Fase 4: Actuator-update</u></br>
+De programmategels sturen de actuatoren aan op basis van de verwerkte informatie.
+</div>
+</p>
+
+<p>
+In principe zou er nog een extra fase kunnen worden ingevoegd tussen de functie-update en de actuator-update.
+Nadat de data is verwerkt zou deze eigenlijk weer moeten worden uitgewisseld ten behoeve van de actuator-update.
+Met vier fasen loopt de actuator-update steeds &eacute;&eacute;n cyclus achter ten opzichte van de sensor-update
+in het geval dat niet de ruwe data maar de verwerkte data wordt gebruikt. Dit scheelt echter maar een enkele
+milliseconde, wat in de robotica verwaarloosbaar is. In de opzet van ProtoIt is hier gekozen voor de eenvoud van het programma.
+</p>
+
+<p>
+<h4>In stappen</h4>
+Hoewel de sensor-update voor alle programmastappen op dezelfde wijze wordt uitgevoerd, verschillen de daaropvolgende
+fasen per stap. Codetechnisch lost ProtoIt dit op door de data-uitwisseling, functie-update en actuator-update
+in een switch-statement onder te brengen die op stapnummer selecteert (zie het <i>PSD van de programmafasen</i>).
+ProtoIt declareert hiervoor een globale variabele <code>STEP</code> van het type integer.
+</p>
+
+<p>
+Het springen naar een andere stap is een kritisch moment in de afhandeling van de fasen.
+Er is een speciale programmategel <i>Stap naar</i>, dat een nieuwe stap initieert.
+ProtoIt herkent deze tegel en zorgt ervoor dat de afhandeling ervan als laatste plaatsvindt,
+na de actuator-update. De actuators hebben dan nog de mogelijkheid om op het signaal te reageren,
+voordat <i>Stap naar</i> naar een andere stap laat springen.
+</p>
+
+<p>
+Nadat de huidige stap is verlaten, wordt meteen de initialisatie van de volgende stap uitgevoerd.
+Welke signalen worden teruggezet naar een beginwaarde is afhankelijk van het modelbestand (*.rtd).
+Meestal zullen alle in de volgende stap te gebruiken signalen worden ge&iuml;nitialiseerd, maar
+soms kan het nodig zijn de waarde van een signaal mee te nemen naar de volgende stap.
+</p>
+
+<p>
+<h4>Script-gestuurd</h4>
+De werking van apparaten - welke signalen ze uitzenden en hoe hun programmategels eruit zien - wordt geregeld vanuit een script-bestand.
+Dit bestand heeft als extentie <i>rtd</i> (ProtoIt Device). Een apparaat kan een eigen bestand hebben, maar er kunnen
+ook meerdere apparaten in &eacute;&eacute;n bestand worden samengevoegd. Een script-bestand begint met enkele algemene definities,
+zoals voor welk platform het bestemd is. Daarna worden &eacute;&eacute;n of meerdere apparaten gedefini&euml;erd.
+Een apparaatdefinitie begint met de tag <code>&lt;DEVICE&gt;</code> en eindigt met de tag <code>&lt;END&gt;</code>.
+</p>
+
+<p>
+Per apparaat worden drie programmafasen onder een eigen tag geprogrammeerd: <code>&lt;SENSORUPDATE&gt;</code>,
+<code>&lt;FUNCTIONUPDATE&gt;</code> en <code>&lt;ACTUATORUPDATE&gt;</code>. De fase van de data-uitwisseling wordt automatisch door
+ProtoIt gegenereerd. De eigenschappen van de gebruikte programmeertaal en de tools om de code te bouwen worden vastgelegd in een versie-bestand.
+Daarover meer bij het onderwerp <i>Het versiebestand</i>. De kern van de data-uitwisseling bestaat daarin, dat de verschillende datatypes
+vrij naar elkaar getypecast moeten kunnen worden. Voor de programmeertalen C/C++/NXC komt ProtoIt daarom met het voorgedefini&euml;erde
+datatype <code>Variant</code>. Alle variabelen gedeclareerd met de tags <code>&lt;PORT&gt;</code>, <code>&lt;ADDRESS&gt;</code>, <code>&lt;CALIBRATE&gt;</code>,
+<code>&lt;SIGNALIN&gt;</code>, <code>&lt;SIGNALOUT&gt;</code>, <code>&lt;CONSTANT&gt;</code> en <code>&lt;PRIVATE&gt;</code>
+zijn van het type <code>Variant</code>.
+</p>
+
+<p>
+<h4>Afwikkeling in een programmastap</h4>
+De tag <code>&lt;SIGNALIN&gt;</code> declareert signalen die op een programmategel terugkomen. Voor een motor kan dat het signaal
+&acute;snelheid&acute; zijn. Det tag <code>&lt;SIGNALOUT&gt;</code> declareert signalen die door sensoren worden uitgezonden.
+Dat kan bijvoorbeeld het signaal &acute;afstand&acute; zijn van een ultrasone sensor. Wanneer de afstand via de programmategel van
+
+<div style="position:absolute; left:390; width:100; height:180; font-size:12">
+</br><img src="media/run1_2.png" width="100" /><br/><br/>
+Programmaverloop in twee runs
+</div>
+<div style="width:370">
+de motor wordt doorgegeven aan de snelheid, gebeurt het volgende in de vier fasen: De afstand wordt tijdens de sensor-update
+ingelezen en daarna via data-uitwisseling aan de snelheid overgedragen. Tijdens de fase van de actuator-update wordt de snelheid van de motor
+daadwerkelijk ingesteld. De fase van de function-update blijft hierbij onbenut.</br></br>
+
+Door de afstand eerst met &eacute;&eacute;n van de ProtoIt-functies (bijv. <i>Test</i> of <i>Verwissel</i>) te bewerken verloopt het
+instellen van de snelheid in twee runs. In de eerste run wordt de afstand ingelezen en tijdens de data-uitwisseling doorgegeven aan
+de functie. Afhankelijk van de gebruikte functie wordt de afstand in de fase van de function-update verder verwerkt.
+Dit verwerkte signaal komt in deze run niet bij de actuator aan, omdat hiervoor een volgende data-uitwisseling nodig is.
+Pas in de tweede run wordt de verwerkte afstand van de functie doorgegeven aan de actuator. Bij de actuator-update van deze run
+wordt de nieuwe snelheid ingesteld.
+</div>
+</p>
+
+<h4>Vaste programma-onderdelen</h4>
+<p>
+<b>main</b></br>
+ProtoIt schrijft een zeer eenvoudige &acute;main&acute;-routine voor een programma. Eerst wordt een &acute;setup&acute;-routine aangeroepen en vervolgens
+een &acute;loop&acute;-routine. De &acute;loop&acute;-routine wordt eindeloos herhaald. Hiermee volgt ProtoIt de programmastructuur
+van de Arduino. In de Arduino-code ontbreekt dan ook de &acute;main&acute;-routine, omdat de firmware automatisch op deze wijze de &acute;setup&acute;- en
+&acute;loop&acute;-routines aanroept.
+</p>
+<p>
+<b>setup</b></br>
+Hierin vindt de algemene initialisatie van de apparaten plaats.
+Per apparaat wordt de code geschreven onder de tag <code>&lt;SETUP&gt;</code>.
+</p>
+<p>
+<b>loop</b></br>
+In de &acute;loop&acute;-routine vindt de afwikkeling van de programmastappen plaats.
+ProtoIt schrijft deze code naar aanleiding van hoe de stappen zijn geprogrammeerd.
+De vier eerder genoemde fasen vinden hier plaats.
+</p>
+<p>
+<b>stepinit</b></br>
+Deze routine wordt voor het eerst tijdens de setup aangeroepen. Daarna wordt ze alleen nog door de functie <i>Stap naar</i> aangeroepen.
+Voordat een stap begint vindt dus steeds een initialisatie van de apparaten plaats.
+Hiervoor wordt per apparaat de code geschreven onder de tag <code>&lt;STEPINIT&gt;</code>.
+</p>
+<p>
+<b>datafeedthrough</b></br>
+In deze routine vindt de data-uitwisseling plaats. Dit is de tweede fase die direct op de sensor-update volgt.
+ProtoIt schrijft de code naar aanleiding van hoe de stappen zijn geprogrammeerd.
+</p>
+
+<br/>
+</body>
+
+</html>

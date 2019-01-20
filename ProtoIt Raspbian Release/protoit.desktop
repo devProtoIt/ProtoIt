@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=Robot programming software (prototyping)
+Terminal=false
+Name=ProtoIt
+Exec=/opt/ProtoIt/ProtoIt
+Icon=/opt/ProtoIt/ProtoIt.ico
+Type=Application
+Categories=Development;

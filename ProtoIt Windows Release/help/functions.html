@@ -1,0 +1,159 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+td { font-family:Century Gothic; font-size:14px; font-weight:400; }
+</style>
+
+</head>
+
+<body>
+<h1>Functiekaart</h1>
+
+<h4>Lijst van beschikbare functies:</h4>
+<img src="media/functions/toevoegen.png" width="200" /><br/>
+
+<p>
+Hieronder vind je de beschrijving van iedere functie.
+Onder de naam van de functie vind je achtereenvolgens de tegel op het blad instellingen, de programmategel,
+de signalen die de functie uitzendt en welke constante signalen kunnen worden gebruikt.
+Bij sommige programmategels staat blauwe tekst in een vakje ingevuld.
+Dit zijn standaardwaardes. Wanneer niets is ingevuld betekent dit <i>geen tekst</i> of het getal <i>0</i>.
+</p>
+
+<h4>Berekenen</h4>
+<table><tr valign=top>
+<td><img src="media/functions/berekenen_i.png" width="120" /></td><td><img src="media/functions/berekenen_t.png" width="120" /></td>
+<td><img src="media/functions/berekenen_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Deze functie voert een berekening uit met de signalen of waarden die achter <i>Waarde A</i> en <i>Waarde B</i> zijn ingevuld.
+In de lijst van constante signalen vind je de mogelijke berekeningen. Sleep één ervan naar het invulvakje achter <i>Functie</i>.
+
+<h4>Klok</h4>
+<table><tr valign=top>
+<td><img src="media/functions/klok_i.png" width="120" /></td><td><img src="media/functions/geen_t.png" width="120" /></td>
+<td><img src="media/functions/klok_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+De functie klok zend alleen signalen uit met de tijd.
+
+<h4>Lijst</h4>
+<table><tr valign=top>
+<td><img src="media/functions/lijst_i.png" width="120" /></td><td><img src="media/functions/lijst_t.png" width="120" /></td>
+<td><img src="media/functions/lijst_u.png" width="120" /></td><td><img src="media/functions/lijst_c.png" width="120" /></td>
+</tr></table>
+Je kunt met deze functie een lijst van waardes bijhouden. De lijst blijft gedurende het hele programma actief.
+Het is mogelijk om waardes aan de lijst toe te voegen en er weer vanaf te halen.
+Iedere waarde krijgt automatisch een index-nummer, dat de positie in de lijst weergeeft. 
+De waardes in de lijst kun je gebruiken met het signaal <i>Waarde</i>.
+Zorg ervoor dat op de programmategel achter het vakje <i>Signaal index</i> het gewenste index-nummer is ingevuld.
+Het signaal <i>Waarde</i> zendt steeds de waarde bij deze index uit.<br/><br/>
+De functie <i>Lijst</i> houdt het gemiddelde, het maximum en het minimum van de waardes in de lijst bij.
+Dit is een verschil met de functie <i>Statistiek</i>.
+Die doet dit ook, maar dan voor &eacute;&eacute;n bepaald signaal.<br/><br/>
+Let op! Omdat een lijst veel geheugenruimte inneemt, kan het programma vastlopen bij teveel waardes in de lijst.
+Daarom is het niet mogelijk om meer dan &eacute;&eacute;n waarde per stap toe te voegen of te schrappen.
+Ook dit is een verschil met de functie <i>Statistiek</i>.
+<i>Statistiek</i> houdt geen lijst bij en je loopt daar ook niet het risico dat het geheugen van de computer vol loopt.
+
+<h4>Onthouden</h4>
+<table><tr valign=top>
+<td><img src="media/functions/onthouden_i.png" width="120" /></td><td><img src="media/functions/onthouden_t.png" width="120" /></td>
+<td><img src="media/functions/onthouden_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Vergeleken bij de functie <i>Lijst</i> is deze functie erg beperkt. Het enige wat hij doet, is maximaal zes waardes
+onthouden. Dat kan bijvoorbeeld handig zijn om een bepaalde waarde van een sensor vast te houden. Deze waardes veranderen
+namelijk voortdurend. De functie <i>Onthouden</i> kan bovendien een waarde meenemen naar een volgende stap.
+Over het algemeen worden signaalwaardes bij de overgang van de ene naar de andere stap op een nul-stand gezet en
+ben je de eerdere waarde kwijt.
+
+<h4>Stap naar</h4>
+<table><tr valign=top>
+<td><img src="media/functions/stapnaar_i.png" width="120" /></td><td><img src="media/functions/stapnaar_t.png" width="120" /></td>
+<td><img src="media/functions/geen_u.png" width="120" /></td><td><img src="media/functions/stapnaar_c.png" width="120" /></td>
+</tr></table>
+Programmastappen worden niet automatisch na elkaar uitgevoerd. Om met een andere stap verder te gaan, moet je de functie <i>Stap naar</i> gebruiken.
+Zodra het signaal achter <i>Wanneer?</i> actief wordt, gaat het programma verder met de stap, die is ingevuld achter <i>Ga naar stap</i>.
+Met de functie <i>Stap naar</i> kun je naar iedere willekeurige stap springen - zowel vooruit als achteruit in het progamma.
+
+<h4>Statistiek</h4>
+<table><tr valign=top>
+<td><img src="media/functions/statistiek_i.png" width="120" /></td><td><img src="media/functions/statistiek_t.png" width="120" /></td>
+<td><img src="media/functions/statistiek_u.png" width="120" /></td><td><img src="media/functions/statistiek_c.png" width="120" /></td>
+</tr></table>
+De functie Statistiek houdt de gemiddelde waarde, het maximum en het minimum van een signaal bij.
+De waardes beslaan de periode tussen <i>Start wanneer?</i> en <i>Stop wanneer?</i>.
+Wanneer achter <i>Bewaar</i> het constante signaal <i>Ja</i> is ingevuld, blijven de waardes na de meetperiode beschikbaar.
+Bij <i>Nee</i> worden de waardes na afloop op nul gezet.
+Als de waardes zijn bewaard, kunnen ze in een volgende stap worden aangevuld met nieuwe waardes.
+
+<h4>Stopwatch</h4>
+<table><tr valign=top>
+<td><img src="media/functions/stopwatch_i.png" width="120" /></td><td><img src="media/functions/stopwatch_t.png" width="120" /></td>
+<td><img src="media/functions/stopwatch_u.png" width="120" /></td><td><img src="media/functions/stopwatch_c.png" width="120" /></td>
+</tr></table>
+Deze functie wacht een aantal milliseconden vanaf het moment dat het signaal achter <i>Start wanneer?</i> actief is.
+Als de tijd verstreken is wordt het signaal <i>Klaar</i> uitgezonden. De wachttijd vul je in achter <i>Duur</i>.
+In één seconde zitten 1000 milliseconden.
+
+<h4>Tellen</h4>
+<table><tr valign=top>
+<td><img src="media/functions/tellen_i.png" width="120" /></td><td><img src="media/functions/tellen_u.png" width="120" /></td>
+<td><img src="media/functions/tellen_u.png" width="120" /></td><td><img src="media/functions/tellen_c.png" width="120" /></td>
+</tr></table>
+Deze functie maakt het mogelijk om bij te houden hoe vaak een signaal optreedt (vul 1 in achter <i>Verhoog hoeveel</i>) of
+om de som van een signaal te nemen (sleep het signaal achter <i>Verhoog hoeveel</i>).
+Het totaal wordt in <i>Tellerstand</i> bijgehouden. Vooraf wordt de teller op de <i>Beginstand</i> gezet.
+Het tellen start met het signaal achter <i>Start wanneer?</i> en stopt met het signaal <i>Stop wanneer?</i> of
+als de stand achter <i>Stop bij stand</i> is bereikt.
+Deze stand kan op twee manieren worden bereikt:
+1) als de teller wordt verhoogd en de waarde erbovenuit komt of 2) als de teller wordt verlaagd en de waarde komt eronder te liggen.
+Wanneer het tellen stopt wordt het signaal <i>Klaar</i> uitgezonden.
+
+<h4>Testen</h4>
+<table><tr valign=top>
+<td><img src="media/functions/testen_i.png" width="120" /></td><td><img src="media/functions/testen_t.png" width="120" /></td>
+<td><img src="media/functions/testen_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Deze functie zul je voornamelijk gebruiken als je programma moet reageren op zowel het optreden als het uitblijven van een signaal.
+Afhankelijk van een testsignaal worden twee andere signalen afgeven.
+Als het testsignaal actief is, wordt het signaal achter <i>Test gelukt</i> uitgezonden.
+Anders wordt het signaal achter <i>Test mislukt</i> uitgezonden.
+
+<h4>Vergelijken</h4>
+<table><tr valign=top>
+<td><img src="media/functions/vergelijken_i.png" width="120" /></td><td><img src="media/functions/vergelijken_t.png" width="120" /></td>
+<td><img src="media/functions/vergelijken_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Je kunt twee signalen met elkaar vergelijken maar ook een signaal en een ingevulde waarde.
+De functie zendt uit of de signalen groter, kleiner, gelijk of ongelijk zijn aan elkaar.
+
+<h4>Verspreiden</h4>
+<table><tr valign=top>
+<td><img src="media/functions/verspreiden_i.png" width="120" /></td><td><img src="media/functions/verspreiden_t.png" width="120" /></td>
+<td><img src="media/functions/verspreiden_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Het signaal achter <i>Wanneer?</i> geeft het startschot om <i>Signaal A</i>, <i>Signaal B</i> en <i>Signaal C</i> uit te zenden. 
+De inhoud van deze drie signalen wordt bepaald op de programmategel achter <i>Zend signaal A</i>, enz.
+
+<h4>Verwisselen</h4>
+<table><tr valign=top>
+<td><img src="media/functions/verwisselen_i.png" width="120" /></td><td><img src="media/functions/verwisselen_t.png" width="120" /></td>
+<td><img src="media/functions/verwisselen_u.png" width="120" /></td><td><img src="media/functions/geen_c.png" width="120" /></td>
+</tr></table>
+Terwijl je bij de functie Testen één signaal test, kun je hier meer signalen gebruiken.
+Het signaal achter <i>Zend signaal</i> wordt doorgegeven wanneer het signaal achter <i>Als signaal</i> actief is. 
+Als geen van de signalen achter <i>Als signaal</i> actief is, wordt het signaal achter <i>Anders zend</i> doorgegeven.
+Het doorgegeven signaal vind je in de lijst met uitgezonden signalen als het signaal <i>Actie</i>. 
+
+<br/>
+</body>
+
+</html>

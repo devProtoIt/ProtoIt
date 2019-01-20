@@ -1,0 +1,212 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+table { table-layout:fixed; }
+td { vertical-align:top; font-family:Century Gothic; font-size:14px; font-weight:400; }
+</style>
+
+</head>
+
+<body>
+<h1>Het programmeerscherm</h1>
+
+<h4>Indeling van het scherm</h4>
+<p>
+<img src="media/basicscreen.png" width=500/>
+</p>
+
+<p><ol><small>
+<li>Menu</li>
+<li>Upload het programma naar de robot</li>
+<li>Voeg een apparaat aan het programma toe</li>
+<li>Snelmenu <i>Actuatoren</i> (programmeerbare apparaten)</li>
+<li>Snelmenu <i>Sensoren</i> (apparaten die signalen uitzenden)</li>
+<li>Lijst met de door een apparaat uitgezonden signalen</li>
+<li>Lijst met vooringestelde signalen van een apparaat</li>
+<li>Tabblad met daarop de instellingen van de apparaten</li>
+<li>Tabbladen met de programmastappen</li>
+<li>Knop om een programmastap toe te voegen</li>
+<li>Verwijder de actieve programmastap.</li>
+<li>Geef de actieve programmastap een begrijpelijke naam</li>
+<li>Verschuif de actieve programmastap &eacute;&eacute;n plaats naar voren.</li>
+<li>Verschuif de actieve programmastap &eacute;&eacute;n plaats naar achteren.</li>
+</small></ol></p>
+
+<p>
+<h4>(1) Het menu</h4>
+ProtoIt heeft vier menu&rsquo;s:<br/><br/>
+<img src="media/menu.png" /><br/><br/>
+Deze menu&rsquo;s worden verder besproken bij het onderwerp <i>RoboTile menu&acute;s</i>.
+Welke menu-opties beschikbaar zijn kan per platform verschillen.
+</p>
+
+<p>
+<h4>(2) Upload een programma</h4>
+<div style="position:absolute; left:360; width:120; height:130; font-size:12">
+<img src="media/upload.png" width="120" /><br/>
+De upload-knop van ProtoIt.
+</div>
+<div style="width:340">
+Hoe een programma naar de robot wordt ge&uuml;pload verschilt per platform.
+Wordt er ge&uuml;pload vanaf een pc, dan is er een usb-kabel of bluetooth-verbinding nodig (bijv. Minstorms en Arduino).
+Soms start het programma vanzelf (Arduino) of je moet moet het programma handmatig starten (Mindstorms).
+Draait ProtoIt op de robot zelf (bijv. Raspberry), dan start ProtoIt het programma als zelfstandige app.
+</div>
+</p>
+
+<p>
+<h4>(3) Een model, apparaat of functie toevoegen</h4>
+<div style="position:absolute; left:360; width:120; height:130; font-size:12">
+<img src="media/addtile.png" width="120" /><br/>
+Met deze knop voeg je in ProtoIt apparaten toe.
+Verwar de knop niet met die om een stap toe te voegen:
+<img src="media/newstep.png" height="12"/>
+</div>
+<div style="width:340">
+Door op de knop &rsquo;toevoegen&rsquo; te klikken, krijg je een scherm met drie lijsten te zien: modellen, apparaten en functies.
+Standaardmodellen en ge&iuml;mporteerde modellen vind je terug in de lijst met modellen.
+Een model bestaat uit meerdere apparaten en functies die aan je programma worden toegevoegd.
+Losse apparaten en functies vind je in de lijsten van apparaten en functies.
+Als je een item uit een lijst aanklikt, verschijnt er een beschrijving van hoe dat item werkt.
+Je kunt meerdere items tegelijk selecteren en toevoegen.
+De toegevoegde apparaten verschijnen in de snelmenu&rsquo;s <i>Sensoren</i> en <i>Actuatoren</i>.
+</div>
+</br>
+Functies (zoals berekeningen of vergelijkingen) worden op dezelfde manier gebruikt als apparaten (zoals knoppen en motoren).
+In deze handleiding wordt er daarom geen onderscheid tussen gemaakt.
+Overal waar &rsquo;apparaten&rsquo; staat, moet je bedenken dat dit ook voor de functies geldt.
+</p>
+
+<p>
+<h4>(4) Het snelmenu <i>Actuatoren</i></h4>
+In het snelmenu <i>Actuatoren</i> staan de apparaten die signalen ontvangen en erop reageren.
+Door op een actuator te klikken plaats je zijn programmategel in de programmastap waar je op dat moment mee bezig bent.
+Op de programmategel vind je invulvakjes voor de signalen die het apparaat nodig heeft om te functioneren.
+Sleep signalen uit de lijst <i>Uitgezonden signalen</i> of <i>Constante signalen</i> naar de invulvakjes van de programmategels.
+Zo bepaal je hoe de apparaten op de signalen reageren en zorg je ervoor dat een programmastap iets doet.
+In dezelfde programmastap kan per apparaat maar &eacute;&eacute;n programmategel worden geplaatst.
+Deze tegel mag al wel in andere programmastappen voorkomen.
+</p>
+
+<p>
+<h4>(5) Het snelmenu <i>Sensoren</i></h4>
+Het snelmenu <i>Sensoren</i> staan de apparaten die signalen uitzenden.
+Door op een sensor te klikken, komen zijn signalen beschikbaar voor je programma.
+De signalen verschijnen rechts van het snelmenu in twee lijsten:
+in de lijst met <i>Uitgezonden signalen</i> (6) en de lijst met <i>Constante signalen</i> (7).
+</p>
+
+<p>
+<h4>(6) Uitgezonden signalen</h4>
+Onder het kopje <i>Het snelmenu Sensoren</i> (5) is beschreven hoe je signalen tot je beschikking krijgt in de lijst <i>Uitgezonden signalen</i>.
+In deze lijst vind je de signalen die voortdurend van waarde veranderen. Dat kan bijvoorbeeld de afstand tot een voorwerp zijn.
+Wanneer de buggy ernaar toe rijdt, wordt de afstand steeds kleiner. In dat geval zal het betreffende signaal ook een steeds kleinere waarde krijgen.
+Wat de waarde van een signaal voorstelt, lees je aan de naam van het signaal af, bijvoorbeeld <i>Afstand (cm)</i>.
+Uitgebreide informatie krijg je bij het toevoegen van het apparaat. Zie het kopje <i>Een model, apparaat of functie toevoegen</i> (3).
+Versleep de signalen uit de lijst met <i>Uitgezonden signalen</i> naar de invulvakjes van de programmategels in een programmastap.
+</p>
+
+<p>
+<h4>(7) Constante signalen</h4>
+Onder het kopje <i>Het snelmenu Sensoren</i> (5) is beschreven hoe je signalen tot je beschikking krijgt in de lijst <i>Constante signalen</i>.
+<i>Constante signalen</i> veranderen nooit van waarde. Bijvoorbeeld blijft het signaal <i>Stop</i> altijd hetzelfde.
+Je kunt de <i>Constante signalen</i> op twee manieren gebruiken:
+<li>om de invulvakjes van de programmategels foutloos in te vullen.</li>
+<li>om te vergelijken met &eacute;&eacute;n van de uitgezonden signalen.</li>
+(ProtoIt bevat meerdere functies waarmee je signalen kunt vergelijken om te beslissen wat er moet gebeuren.)
+Versleep de signalen uit de lijst met <i>Constante signalen</i> naar de invulvakjes van de programmategels in een programmastap.
+</p>
+
+<p>
+<h4>(8) Het tabblad <i>Instellingen</i></h4>
+Alle toegevoegde apparaten verschijnen op het tabblad <i>Instellingen</i>. Ook als er niets aan een apparaat in te stellen valt.
+Het verschilt per apparaat wat er moet worden ingesteld. Bij losse apparaten van Mindstorms moet bijvoorbeeld de poort worden
+opgegeven waarop het apparaat is aangesloten. Bij Arduino en Raspberry zul je vaak een pinnummer op moeten geven.
+</p>
+
+<p>
+<h4>(9) De tabbladen met de programmastappen</h4>
+Alle programmastappen hebben een eigen tabblad. Dat maakt het gemakkelijk om door de stappen te bladeren.
+Maar let op: Vanwege de tabbladen lijkt het alsof de programmastappen achter elkaar worden uitgevoerd. Dit is niet het geval.</br></br>
+<b>Nadat de activiteit van een programmastap is afgerond, zal de volgende stap <u>niet</u> automatisch starten.</b></br></br>
+<div style="position:absolute; left:420; width:80; height:90; font-size:12">
+<img src="media/stepper.png" width="80" /><br/>
+De functie <i>Stap naar</i>.
+</div>
+<div style="width:400">
+Gebruik de programmategel van de speciale <i>Stap naar</i>-functie om naar een andere stap te springen.
+Dat kan de volgende stap zijn, maar ook een willekeurige.
+Zorg ervoor dat de programmastappen in een logische volgorde staan, anders krijg je een rommelig programma.
+</div>
+</p>
+
+<p>
+<h4>(10) Een programmastap toevoegen</h4>
+Met deze knop voeg je een programmastap toe achter de stap waar je mee bezig bent.
+Dit zal over het algemeen de laatste stap zijn.
+Door eerst een andere stap aan te klikken, komt de nieuwe stap daarachter te staan en niet aan het eind.
+Wanneer je een stap v&oacute;&oacute;r de eerste stap wilt invoegen,
+moet je eerst het tabblad <i>Instellingen</i> aanklikken.</br></br>
+ProtoIt start een programma altijd met de programmastap direct na het tabblad <i>Instellingen</i>.
+Dit is de enige stap die automatisch wordt uitgevoerd.
+Alle andere programmastappen worden <u>niet</u> automatisch in je programma opgenomen.
+Een stap wordt pas uitgevoerd als je in een bestaande stap de speciale functie <i>Stap naar</i> gebruikt en
+deze naar de nieuwe stap laat verwijzen.</br></br>
+<b>Na het tussenvoegen van een programmastap zal ProtoIt alle stappen opnieuw nummeren.
+Ook alle verwijzingen naar stapnummers in de functie <i>Stap naar</i> worden automatisch aangepast.
+Verwijzingen naar stapnamen of met de constante signalen <i>Volgende</i> en <i>Vorige</i> blijven echter onveranderd.
+</b>
+</p>
+
+<p>
+<h4>(11) Een programmastap verwijderen</h4>
+Het is alleen mogelijk om een lege programmastap te verwijderen.
+Verwijder eerst alle programmategels en daarna de stap zelf.</br></br>
+<b>ProtoIt zal de programmastappen opnieuw nummeren.
+Ook alle verwijzingen naar stapnummers in de functie <i>Stap naar</i> worden automatisch aangepast.
+Verwijzingen naar stapnamen of met de constante signalen <i>Volgende</i> en <i>Vorige</i> blijven echter onveranderd.
+</b>
+</p>
+
+<p>
+<h4>(12) De naam van een programmastap</h4>
+Bij het toevoegen van een programmastap krijgt deze automatisch een volgnummer.
+Met veel programmastappen wordt het lastig om te onthouden wat in welke stap gebeurt.
+Het is een goede gewoonte om de programmastappen van een zinvolle naam te voorzien.
+In de speciale <i>Stap naar</i>-functie verwijs je dan naar de namen in plaats van de nummers.
+Let op dat je de naam van een stap precies schrijft zoals deze op het tabblad staat.
+Houd daarbij rekening met hoofdletters en kleine letters.
+</p>
+
+<p>
+<h4>(13) Schuif een programmastap naar voren</h4>
+Het kan zijn dat je na verloop van tijd een andere volgorde van de programmastappen beter vindt.
+Met deze knop verschuift een programmastap &eacute;&eacute;n positie naar voren.</br></br>
+<b>ProtoIt zal de programmastappen opnieuw nummeren.
+Ook alle verwijzingen naar stapnummers in de functie <i>Stap naar</i> worden automatisch aangepast.
+Verwijzingen naar stapnamen of met de constante signalen <i>Volgende</i> en <i>Vorige</i> blijven echter onveranderd.
+</b>
+
+<p>
+<h4>(14) Schuif een programmastap naar achteren</h4>
+Het kan zijn dat je na verloop van tijd een andere volgorde van de programmastappen beter vindt.
+Met deze knop verschuift een programmastap &eacute;&eacute;n positie naar achteren.</br></br>
+<b>ProtoIt zal de programmastappen opnieuw nummeren.
+Ook alle verwijzingen naar stapnummers in de functie <i>Stap naar</i> worden automatisch aangepast.
+Verwijzingen naar stapnamen of met de constante signalen <i>Volgende</i> en <i>Vorige</i> blijven echter onveranderd.
+</b>
+</p>
+
+<br/>
+</body>
+
+</html>

@@ -9,6 +9,7 @@
 // the GNU General Public License version 3.0 requirements will be
 // met: http://www.gnu.org/copyleft/gpl.html.
 
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMenuBar>
@@ -33,6 +34,35 @@
 #include "serialmonitor.h"
 #include "serialselect.h"
 #include "platformmanager.h"
+
+QString tabstyle =
+        "QTabWidget::pane { "
+        "border-top: 2px solid #D8D8D8; "
+        "} "
+        "QTabBar::tab { "
+        "background: qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1, "
+        "stop: 0 #E1E1E1, stop: 0.4 #DDDDDD, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3); "
+        "border: 2px solid #C4C4C3; "
+        "border-bottom-color: #C2C7CB; "
+        "border-top-left-radius: 4px; "
+        "border-top-right-radius: 8px; "
+        "min-width: 8px; "
+        "padding: 2px; "
+        "} "
+        "QTabWidget::tab-bar { "
+        "left: 5px; "
+        "} "
+        "QTabBar::tab:selected, QTabBar::tab:hover { "
+        "background: qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1,"
+        "stop: 0 #FAFAFA, stop: 0.4 #F4F4F4, stop: 0.5 #E7E7E7, stop: 1.0 #FAFAFA)"
+        "} "
+        "QTabBar::tab:selected { "
+        "border-color: #9B9B9B; "
+        "border-bottom-color: #C2C7C8; "
+        "} "
+        "QTabBar::tab:!selected { "
+        "margin-top: 2px;"
+        "} ";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -61,14 +91,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_cmodel.setStringList( m_constants);
     ui->listConstants->setModel( &m_cmodel);
 
+    setStyleSheet( tabstyle);
     m_addstep = new Step( this);
     ui->stepTab->addTab( m_addstep, ""); // tab 'new step'
     // adding this tab triggers an event to add a new tab "Instellingen" too
     // so the tab index becomes 1 instead of 0
     ui->stepTab->setTabIcon( 1, QIcon( ":/addtab.png"));
-    ui->stepTab->setStyleSheet( "background-image:url(:/background.png); color:blue");
     ui->stepTab->setCurrentIndex( 0);
-
     ((Step*)ui->stepTab->widget( 0))->setIndex( 0);
 
     QDir::setCurrent( homePath()); // only needed for testing
@@ -1550,12 +1579,21 @@ QString MainWindow::replaceParam( QString cmd, QString param, QString item)
     return cmd;
 }
 
+void MainWindow::killProtoItRun()
+{
+    QProcess proc;
+    proc.start( "pidof ProtoItRun");
+    proc.waitForFinished();
+    QString pid = proc.readAllStandardOutput();
+    if ( !pid.isEmpty() )
+        QProcess::execute( "kill " + pid);
+}
+
 void MainWindow::uploadCode()
 {
     int i, j;
     QString line, subm;
     QString buildpath = buildPath();
-    QProcess proc;
     QStringList cmmds;
     QString curdir = QDir::currentPath();
     QDir::setCurrent( programmerPath());
@@ -1564,6 +1602,8 @@ void MainWindow::uploadCode()
     if ( !m_version ) return;
     if ( m_version->programmer.toUpper() == "WINAVR" )
         m_serialport = findSerialPort();
+    if ( m_version->programmer.toUpper() == "NIXG")
+        killProtoItRun();
 
     // amass all libraries needed for linking
     for ( i = 0; i < m_templates.count(); i++ ) {
@@ -1619,6 +1659,12 @@ void MainWindow::uploadCode()
         cmmds.append( line);
     }
 
+    // PREPARE MESSAGE
+
+    QString msg;
+    if ( m_version->message.count() )
+        msg = m_version->message.at( 0);
+
     // UPLOAD
     if ( m_version->upload.count() ) {
         line = m_version->upload.at( 0);
@@ -1630,13 +1676,6 @@ void MainWindow::uploadCode()
         cmmds.append( line);
     }
 
-    // MESSAGE
-    QString msg;
-    if ( m_version->message.count() )
-        msg = m_version->message.at( 0);
-
-    int ret;
-
     for ( int i = 0; i < cmmds.count(); i++ ) {
         line = cmmds.at( i);
         if ( (j = line.indexOf( ' ')) >= 0 ) {
@@ -1646,29 +1685,44 @@ void MainWindow::uploadCode()
         else
             subm = "EXEC";
 
+        int ret;
+        QProcess proc;
+
+        if ( subm == "SUBMIT" ) {
+            proc.start( line);
+            proc.waitForFinished();
+            ret = (proc.exitStatus() == QProcess::NormalExit ? proc.exitCode() : -1);
+        }
+        else
         if ( subm == "EXEC" ) {
             proc.start( line);
             proc.waitForFinished();
-            ret = proc.exitCode();
+            ret = (proc.exitStatus() == QProcess::NormalExit ? proc.exitCode() : -1);
         }
         else
-        if ( subm == "START" )
-            ret = proc.startDetached( line);
+        if ( subm == "START" ) {
+            ret = !proc.startDetached( line);
+        }
+
+        // MESSAGE
 
         if ( ret ) {
-            QString fail = tr( "Upload mislukte door de volgende fout:\n\n");
+            QString fail = tr( "Upload mislukte door de volgende fout in:\n\n") + line + "\n\n";
             QString err = proc.readAllStandardError();
             if ( i < cmmds.count() - 1 )
                 message( QMessageBox::Critical, fail + err + tr( "\n\n") + msg);
             else {
-                if ( (m_version->programmer.toUpper() != "NBC") || err.isEmpty() )
+                if ( (m_version->programmer.toUpper() != "NBC") || err.isEmpty() ) {
+                    msg += line + "\n\n";
                     message( QMessageBox::Critical, tr( "Upload is mislukt\n\nIs de robot aangesloten?\n\n") + msg);
+                }
                 else
                     message( QMessageBox::Critical, fail + err + tr( "\n\n") + msg);
             }
             goto restorepath;
         }
     }
+
     message( QMessageBox::Information, tr( "Upload is gelukt\n\n") + msg);
 
 restorepath:
@@ -1984,7 +2038,7 @@ void MainWindow::on_actionReport_triggered()
 void MainWindow::on_actionHelp_triggered()
 {
     HelpViewer hv( this);
-    hv.setHelp( homePath() + "help/ProtoIt.rth");
+    hv.setHelp( homePath() + "help/ProtoIt.pih");
 
     QString tmpl;
     QStringList tmplist;
@@ -2069,11 +2123,8 @@ void MainWindow::on_actionStop_triggered()
         serialWrite( cmd);
     }
     else
-    if ( cmd.left( ix).toUpper() == "EXEC" ) {
-        cmd = cmd.right( cmd.length() - ix - 1).trimmed();
-        QProcess proc;
-        proc.execute( cmd);
-        proc.waitForFinished();
+    if ( cmd.left( ix).toUpper() == "KILL" ) {
+        killProtoItRun();
     }
 }
 

@@ -1,0 +1,57 @@
+<html>
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Tellen</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   ARDUINO</b></td><td><img src="counter.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Deze functie telt het aantal keer dat een signaal wordt uitgezonden. Verder kan worden ingesteld hoevaak dit signaal op mag treden, voordat de tile <i>Tellen</i> het signaal <i>Klaar</i> uitzendt.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Tellen
+</p>
+<hr/>
+
+<h4><img src="counter.png" width=50> Tellen</h4>
+<p>
+
+</p>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Begin bij</b></td><td>De stand waarmee de teller begint.</br>Standaard op 0 ingesteld.</td></tr>
+<tr><td class="left"><b>Stop bij</b></td><td>De stand waarbij de teller stopt. Na een verhoging van de stand stopt de teller ook bij een hogere waarde en na een verlaging van de stand ook bij een lagere waarde. Als de teller is gestopt zendt hij het signaal <i>Klaar</i> uit.</td></tr>
+<tr><td class="left"><b>Tel opnieuw?</b></td><td>Dit kan eenmalig aan het begin van het programma of iedere keer als de stap begint. Sleep &eacute;&eacute;n van de constante signalen <i>Nog niet</i> of <i>Nu wel</i> hier naar toe.<br/>Standaard op <i>Nog niet</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Verhoog met</b></td><td>De waarde waarmee de tellerstand moet worden verhoogd.</br>Standaard op 1 ingesteld.</td></tr>
+<tr><td class="left"><b>Verhoog wanneer?</b></td><td>Het signaal dat ervoor zorgt dat de tellerstand wordt verhoogd.</td></tr>
+<tr><td class="left"><b>Verminder met</b></td><td>De waarde waarmee de tellerstand moet worden verlaagd.</br>Standaard op 1 ingesteld.</td></tr>
+<tr><td class="left"><b>Verminder wanneer?</b></td><td>Het signaal dat ervoor zorgt dat de tellerstand wordt verlaagd.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Als het ingevulde signaal optreedt, zal de teller starten.</br>Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Tellerstand</b></td><td>Geeft de huidige tellerstand weer.</td></tr>
+<tr><td class="left"><b>Klaar</b></td><td>Dit signaal wordt uitgezonden als de tellerstand gelijk wordt aan de waarde achter <i>Stop bij stand</i>. Het signaal wordt ook uitgezonden wanneer de tellerstand hoger (bij verhogen) of lager (bij verlagen) wordt dan deze waarde.</td></tr>
+</table><br/>
+
+<br/>
+</body>
+</html>

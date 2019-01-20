@@ -192,6 +192,7 @@ private:
     void resizeWnd();
     void writeCode();
     void uploadCode();
+    void killProtoItRun();
     QString replaceParam( QString cmd, QString param, QStringList& items);
     QString replaceParam( QString cmd, QString param, QString item);
     void renumberSteps();

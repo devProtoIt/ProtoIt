@@ -1,0 +1,256 @@
+<html>
+<meta name="copyright" content="(C) 2014 D.Kruithof">
+<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
+
+<head>
+
+<title> ProtoIt </title>
+
+<style type="text/css">
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+table { table-layout:fixed; width:500px; }
+td.tag { vertical-align:top; width:75px; font-family:Century Gothic; font-size:11px; font-weight:400; }
+td.descr { vertical-align:top; width:300px;  font-family:Century Gothic; font-size:12px; font-weight:400; }
+td.sample{ vertical-align:top; width:125px; font-family:Century Gothic; font-size:10px; font-weight:400; }
+</style>
+
+</head>
+
+<body>
+<h1>Tag referentiegids</h1>
+
+<p>
+<h4>Beschrijving van de tabellen</h4>
+<u>Eerste kolom:</u> Hier staan de tags die het onderdeel defini&euml;ren.</br>
+<u>Tweede kolom:</u> De eerste regel is vetgedrukt en bevat het format, waarin een onderdeel moet worden beschreven.
+Een verticale streep &quot;|&quot; duidt aan dat het om opties gaat.
+Wat tussen blokhaken &quot;[...]&quot; staat mag worden weggelaten en betreft meestal een vooringevulde waarde.
+Achter de eerste regel wordt het format toelicht. Ieder woord uit het format wordt hier herhaald (onderstreept)
+met een uitleg erachter.</br>
+<u>Derde kolom:</u> Deze kolom bevat voorbeelden.
+</p>
+
+<p>
+<h4>Algemene tags</h4>
+De algemene tags beschrijven het platform waarvoor het rtd-bestand is bestemd
+en het copyright (jaar en auteur) van de initi&euml;le inhoud. In de resultaatcode van een
+programma wordt dit als algemeen copyright geclaimd.
+</p>
+<table>
+<tr><td class="tag">&lt;PLATFORM&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>platform</b></code><br/>
+<i><u>Platform:</u></i> Een identifier voor het platform waar het model bij hoort.
+Dit kan zijn <i>INFENTO</i>, <i>MINDSTORMS</i> en <i>ARDUINO</i>.
+Afgeleide platforms, zoals <i>ARDUINO Mega</i> worden door ProtoIt intern verwerkt.
+</td><td class="sample">&lt;PLATFORM&gt;<br/>INFENTO</td></tr>
+
+<tr><td class="tag">&lt;AUTHOR&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>auteur</b></code><br/>
+<i><u>Auteur:</u></i> Naam van de instelling of persoon die het initi&euml;le auteurschap claimt.</td><td class="sample">&lt;AUTHOR&gt;<br/>ProtoIt</td></tr>
+
+<tr><td class="tag">&lt;YEAR&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>jaar</b></code><br/>
+<i><u>Jaar:</u></i> Jaar waarin het rtd-bestand beschikbaar kwam.</td><td class="sample">&lt;YEAR&gt;<br/>2014</td></tr>
+</table>
+
+<p>
+<h4>Apparaat declaratie tags</h4>
+Na de algemene tags kunnen er apparaten worden gedeclareerd.
+Iedere declaratie begint met de tag &lt;DEVICE&gt; en eindigt met &lt;END&gt;.
+</p>
+<table>
+<tr><td class="tag">&lt;DEVICE&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>soort, apparaatnaam</b></code><br/>
+<i><u>Soort:</u></i> Het soort apparaat kan zijn: <i>ACTUATOR</i>, <i>SENSOR</i> of <i>FUNCTION</>.
+Dit heeft geen invloed op het programma, maar bepaalt alleen de kleur van de instellingen-tegel en programmategel.<br/>
+<i><u>Apparaatnaam:</u></i>Een naam die duidelijk maakt wat het apparaat technisch voorstelt.
+Dit heeft geen invloed op het programma, maar wordt ten behoeve van de gebruiker op de instellingen-tegel en de
+programmategels afgedrukt.
+</td><td class="sample">&lt;DEVICE&gt;<br/>ACTUATOR, Motor</td></tr>
+
+<tr><td class="tag">&lt;END&gt;</td></tr>
+<tr><td></td><td class="descr">Met deze tag wordt de tag <i>&lt;DEVICE&gt;</i> afgesloten.
+Daartussen komen de andere tags die de eigenschappen van het apparaat beschrijven.</td><td class="sample">&lt;DEVICE&gt;<br/>...<br/>&lt;END&gt;</td></tr>
+</table>
+
+<p>
+<h4>Apparaat eigenschappen tags</h4>
+Nadat een device met de tag &lt;DEVICE&gt; is gedeclareerd volgen andere tags, die de eigenschappen van het apparaat beschrijven.
+De beschrijving van een apparaat eindigt met de tag &lt;END&gt;. De volgende tags zijn mogelijk:<br/><br/>
+<table>
+<tr><td>&lt;ALIAS&gt;</td><td>&lt;SIGNALIN&gt;</td><td>&lt;ROUTINE&gt;</td></tr>
+<tr><td>&lt;COPYRIGHT&gt;</td><td>&lt;SIGNALOUT&gt;</td><td>&lt;SETUP&gt;</td></tr>
+<tr><td>&lt;ICON&gt;</td><td>&lt;CONSTANT&gt;</td><td>&lt;STEPINIT&gt;</td></tr>
+<tr><td>&lt;PORT&gt;</td><td>&lt;INCLUDE&gt;</td><td>&lt;SENSORUPDATE&gt;</td></tr>
+<tr><td>&lt;ADDRESS&gt;</td><td>&lt;GLOBAL&gt;</td><td>&lt;FUNCTIONUPDATE&gt;</td></tr>
+<tr><td>&lt;CALIBRATE&gt;</td><td>&lt;PRIVATE&gt;</td><td>&lt;ACTUATORUPDATE&gt;</td></tr>
+</table><br/>
+Beschrijving van de tags:
+</p>
+
+<table>
+<tr><td class="tag">&lt;ALIAS&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>alias</b></code><br/>
+<i><u>Alias:</u></i> De unieke naam waaraan een apparaat wordt herkend. Wanneer de alias wordt weggelaten,
+zal ProtoIt de gebruiker om een alias vragen.</td><td class="sample">&lt;ALIAS&gt;<br/>Buggy</td></tr>
+
+<tr><td class="tag">&lt;COPYRIGHT&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>jaar, auteur</b></code><br/>
+<i><u>Jaar, auteur:</u></i> Wanneer ProtoIt de resultaatcode voor een programma aanmaakt, zal daarin een
+copyright-claim voor het betreffende apparaat worden opgenomen.</td><td class="sample">&lt;COPYRIGHT&gt;<br/>2014, ProtoIt</td></tr>
+
+<tr><td class="tag">&lt;ICON&gt;</td></tr>
+<tr><td></td><td class="descr"><code><b>bestandsnaam | interne naam</b></code><br/>
+<i><u>Bestandsnaam:</u></i> Een bestandsnaam met de afbeelding van het apparaat, zoals &quot;apparaat.png&quot;.
+Zorg ervoor dat het bestand aanwezig is in de submap van het apparaat.<br/>
+<i><u>Interne naam:</u></i> Er zijn enkele voorgedefini&euml;erde afbeeldingen in ProtoIt aanwezig. Dit zijn
+<i>:/stepper</i>, <i>:/timer</i>, <i>:/calculator</i> en <i>:/comparator</i>. ProtoIt herkent ze als eigen afbeeldingen
+en deze hebben geen bestand in de submap nodig.</td><td class="sample">&lt;ICON&gt;<br/>apparaat.png<br/><br/>of<br/><br/>&lt;ICON&gt;<br/>:/timer</td></tr>
+
+<tr><td class="tag">&lt;PORT&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias [, poort | pinnummer]</b></code><br/>
+<i><u>Id:</u></i> De id van de poort wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias wordt op het tabblad <i>Instellingen</i> van ProtoIt getoond.<br/>
+<i><u>Poort:</u></i> De waarde die door de C-code wordt gebruikt om met de poort te communiceren.<br/>
+<i><u>Pinnummer:</u></i> De waarde die door de C-code wordt gebruikt om met de juiste ingangs- dan wel uitgangslijn te communiceren.<br/>
+De poort of het pinnummer wordt door ProtoIt op het tabblad <i>Instellingen</i> getoond.
+De gebruiker kan het nummer zelf aanpassen of instellen.
+</td><td  class="sample">&lt;PORT&gt;<br/>PORT_IN, SensorPoort, 0<br/>PORT_OUT, ActuatorPoort, 1</td></tr>
+
+<tr><td class="tag">&lt;ADDRESS&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias [, adres]</b></code><br/>
+Soms wordt er een interface naar meerdere apparaten op een poort aangesloten.
+In dat geval hanteert de interface een eigen adressering om het gewenste apparaat te bedienen. Dit adres wordt hier opgegeven.<br/>
+<i><u>Id:</u></i> De id van het adres wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias wordt op het tabblad <i>Instellingen</i> van ProtoIt getoond.<br/>
+<i><u>Adres:</u></i> De waarde die door de C-code wordt gebruikt om het interface-adres aan te duiden.<br/>
+Het adres wordt door ProtoIt op het tabblad <i>Instellingen</i> getoond.
+De gebruiker kan het adres zelf aanpassen of instellen.
+<br/></td><td  class="sample">&lt;ADDRESS&gt;<br/>ADR_MA, Motor A, #1<br/>ADR_MB, Motor B, #2</td></tr>
+
+<tr><td class="tag">&lt;CALIBRATE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias [, waarde]</b></code><br/>
+Het gaat hier om waarden die voor de kalibratie van sensoren dienen.
+De gekalibreerde waarden kunnen in het programma worden gebruikt om de robot onder verschillende omstandigheden te laten functioneren.
+Op het tabblad <i>Instellingen</i> van ProtoIt zijn de kalibratiewaarden opgenomen en kunnen door de gebruiker worden aangepast.<br/>
+<i><u>Id:</u></i> De id van de kalibratiewaarde wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias wordt op het tabblad <i>Instellingen</i> getoond. <br/>
+<i><u>Waarde:</u></i> De waarde voor de kalibratie onder normale omstandigheden.
+</td><td  class="sample">&lt;CALIBRATE&gt;<br/>BRIGHT, Zonlicht, 85<br/>DIM, Donker, 15</td></tr>
+
+<tr><td class="tag">&lt;SIGNALIN&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias [, [beginwaarde]</b></code><br/>
+Dit zijn de signalen die een apparaat nodig heeft om te functioneren.
+Door signalen onder <i><code>&lt;SIGNALIN&gt;</code></i> te defini&euml;ren, krijgt het apparaat een knop op de toolbar voor de actuatoren.<br/>
+<i><u>Id:</u></i> De id van het signaal wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias wordt op de tabbladen van de stappen getoond. Daar geeft de gebruiker aan welke waarde het signaal krijgt.
+(Meestal een <i><code>SIGNALOUT</code></i>-waarde van een ander apparaat.)<br/>
+<i><u>Beginwaarde:</u></i> Soms heeft de C-code een beginwaarde nodig om er zeker van te zijn dat een signaal met een bepaalde waarde begint.
+</td><td  class="sample">&lt;SIGNALIN&gt;<br/>ROT_V, Draaisnelheid, 0<br/>ROT_D, Draairichting, 0</td></tr>
+
+<tr><td class="tag">&lt;SIGNALOUT&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias [, beginwaarde]</b></code><br/>
+Dit zijn de signalen die een apparaat uitzendt.
+Door signalen onder <i><code>&lt;SIGNALOUT&gt;</code></i> te defini&euml;ren, krijgt het apparaat een knop op de toolbar voor de signalen.<br/>
+<i><u>Id:</u></i> De id van het signaal wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias wordt op het tabblad <i>Instellingen</i> getoond. <br/>
+<i><u>Beginwaarde:</u></i> Soms heeft de C-code een beginwaarde nodig om er zeker van te zijn dat een signaal met een bepaalde waarde begint.
+</td><td  class="sample">&lt;SIGNALOUT&gt;<br/>ANGLE, Draaihoek, 0</td></tr>
+
+<tr><td class="tag">&lt;CONSTANT&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>id, alias, waarde</b></code><br/>
+Het gaat hier om constante waarden die voor het gemak van de gebruiker worden gedecla- reerd.
+Wanneer een lamp met signaalwaarde &rsquo;1&rsquo; wordt aangezet, dan is het voor de gebruiker duidelijker
+om hier een constante met de herkenbare naam &rsquo;<i>Aan</i>&rsquo; voor te defini&euml;ren.<br/>
+Door een constante waarde te defini&euml;ren, krijgt het apparaat een knop op de toolbar voor de signalen.<br/>
+<i><u>Id:</u></i> De id van de constante wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Alias:</u></i> De alias komt in de lijst met <i>Constante signalen</i> te staan. <br/>
+<i><u>Waarde:</u></i> De waarde die de constante afgeeft.
+</td><td  class="sample">&lt;CONSTANT&gt;<br/>LIGHTON, Aan, 1<br/>LIGHTOFF, Uit, 0</td></tr>
+
+<tr><td class="tag">&lt;INCLUDE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>bestandsnaam</b></code><br/>
+Bij het coderen in C zijn soms speciale <i>include</i>-bestanden nodig.
+Deze bestanden kunnen met een apparaat meegeleverd zijn om het programmeren van het apparaat te vereenvoudigen.
+Dit wordt verder behandeld bij <i>Programmeren met C/C++</i>.<br/>
+<i><u>Bestandsnaam:</u></i> De naam van het include-bestand. Het voorbeeld levert de volgende code op:<br/>
+<i>#include &quot;rtrobot.h&quot;;</i>
+</td><td  class="sample">&lt;INCLUDE&gt;<br/>rtrobot</td></tr>
+
+<tr><td class="tag">&lt;GLOBAL&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+Declareer hier globale variabelen die in de C-code nodig zijn. Deze variabelen blijven onzichtbaar voor de gebruiker.
+(Globale variabelen van het type <i>Variant</i> kunnen ook met de tag <i>&lt;PRIVATE&gt;</i> worden gedeclareerd.)
+De globale variabelen worden als eerste in de programma-code geplaatst en zijn daardoor verderop in het programma beschikbaar.<br/>
+<i><u>Code:</u></i> De complete declaratie van de variabele, inclusief puntcomma.<br/>
+</td><td  class="sample">&lt;GLOBAL&gt;<br/>int count;</td></tr>
+
+<tr><td class="tag">&lt;PRIVATE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>variabele, waarde</b></code><br/>
+Declareer hier eventuele extra variabelen die in de C-code nodig zijn. Deze variabelen blijven onzichtbaar voor de gebruiker.
+Ze worden als het type <i>Variant </i>gedeclareerd.<br/>
+<i><u>Variabele:</u></i> De variabele wordt gebruikt als identifier in de C-code van de apparaten.<br/>
+<i><u>Waarde:</u></i> Beginwaarde voor de variabele.<br/>
+</td><td  class="sample">&lt;PRIVATE&gt;<br/>TEST, 50</td></tr>
+
+<tr><td class="tag">&lt;ROUTINE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+Eventuele subroutines worden onder deze tag geprogrammeerd.
+In de programma-code volgen de subroutines direct op de globale variabelen en zijn daardoor verderop in het programma beschikbaar.<br/>
+<i><u>Code:</u></i> Zie <i>Programmeren met C/C++</i>.
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;ROUTINE&gt;<br/>void Reset()<br/>{<br/>TEST = 0;<br/>}<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;ROUTINE&gt;<br/>void Reset()<br/>{<br/>TEST.num = 0;<br/>}</td></tr>
+
+<tr><td class="tag">&lt;SETUP&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+Bij <i>Infento</i> en <i>Arduino</i> wordt de code geplaatst in de voorgedefini&euml;erde subroutine &rsquo;<b>setup()</b>&rsquo;.
+Bij <i>Lego Nxt</i> wordt de code geplaatst in de subroutine &rsquo;<b>Setup()</b>&rsquo;.
+Voordat het hoofdprogramma start wordt eerst deze subroutine aangeroepen.<br/>
+<i><u>Code:</u></i> Code die de initialisatie van het apparaat verzorgt aan het begin van het programma.
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;SETUP&gt;<br/>pinMode( PORT_IN, INPUT);<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;SETUP&gt;<br/>SetSensorLowspeed( PORT_IN.num);</td></tr>
+
+<tr><td class="tag">&lt;STEPINIT&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+De code wordt geplaatst in de subroutine &rsquo;<b>StepInit()</b>&rsquo;.<br/>
+Alle apparaatcode moet deze subroutine aanroepen op het moment dat ze er voor zorgt dat er naar een andere stap wordt gesprongen.
+Dit vindt plaats na een instructie als <code>STEP++;</code>.<br/>
+<i><u>Code:</u></i> Code die de initialisatie van het apparaat verzorgt aan het begin van iedere stap.
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;STEPINIT&gt;<br/>if ( (long) TEST ) Reset();<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;STEPINIT&gt;<br/>if ( TEST.num ) Reset();</td></tr>
+
+<tr><td class="tag">&lt;SENSORUPDATE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+De code wordt geplaatst in de fase van de sensorupdate (zie <i>ProtoIt inside</i>).</br>
+<i><u>Code:</u></i> Code die ervoor zorgt dat de signalen van <i><code>&lt;SIGNALOUT&gt;</code></i> hun waarde krijgen door de sensor uit te lezen.<br/>
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;SENSORUPDATE&gt;<br/>ANGLE = analogRead( PORT);<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;SENSORUPDATE&gt;<br/>ANGLE.num = Sensor( PORT.num);</td></tr>
+
+<tr><td class="tag">&lt;FUNCTIONUPDATE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+De code wordt geplaatst in de fase van de sensorupdate (zie <i>ProtoIt inside</i>).<br/>
+<i><u>Code:</u></i> Code die voor de verwerking van de signalen zorgt.
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;FUNCTIONUPDATE&gt;<br/>if ( (long) TEST > 50 ) TEST = 0;<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;FUNCTIONUPDATE&gt;<br/>if ( TEST.num > 50 ) TEST.num = 0;</td></tr>
+
+<tr><td class="tag">&lt;ACTUATORUPDATE&gt;</td></tr>
+<tr><td></td><td  class="descr"><code><b>code</b></code><br/>
+De code wordt geplaatst in de fase van de sensorupdate (zie <i>ProtoIt inside</i>).<br/>
+<i><u>Code:</u></i> Code die ervoor zorgt dat de signalen van <i><code>&lt;SIGNALIN&gt;</code></i> naar de actuatoren wordt gestuurd.<br/>
+</td><td  class="sample">
+<i><u>Infento/Arduino:</u></i><br/>&lt;ACTUATORUPDATE&gt;<br/>digitalWrite( PORT, ROT_V);<br/><br/>
+<i><u>Lego Nxt:</u></i><br/>&lt;ACTUATORUPDATE&gt;<br/>OnFwd( PORT.num, ROT_V.num);</td></tr>
+</table>
+
+<br/>
+</body>
+
+</html>
