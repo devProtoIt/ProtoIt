@@ -25,54 +25,100 @@
 <PORT>
   PIN, Pin
 <SIGNALIN>
-  VALHI, Helderheid (%), 100, #P Effecten
-  VALLO, Helderheid uit (%), 0, #E
-  TIMEHI, Tijd aan (msec), 0, #E
-  TIMELO, Tijd uit (msec), 0, #E
+  VALHI, Helderheid (%), > Maximum, #P Helderheid
+  VALLO, Helderheid uit (%), > Uit, #E
+  EFFECT, Effect, > Geen, #P Effect, #E
+  TIMEHI, Tijd aan (msec), #E
+  TIMELO, Tijd uit (msec), #E
   START, Wanneer aan?, > Direct, #P Aan en uit, #E
   STOP, Wanneer uit?, > Nooit, #E
 <CONSTANT>
-  SETOFF, Uit, 0, #P EFFECTEN
-  SETON, Aan, 1
+  SETOFF, Uit, 0, #P HELDERHEID
+  SETON, Maximum, 100
+  SETNONE, Geen, 0, #P EFFECTEN
+  SETBLINK, Knipperen, 1
+  SETFADE, Vervagen, 2
   SET_NOW, Direct, 1, #P AAN EN UIT
   SET_NEVER, Nooit, 0
 <PRIVATE>
   ACTIVE, Active
   ISON, Toggle, 0
   TIMER, Timer, 0
+  INTERVAL, Interval
+  VALCUR, Huidige helderheid
 <SETUP>
   pinMode( PIN, OUTPUT);
+  TIMELO = TIMEHI = 500;
 <STEPINIT>
   START = 0;
   STOP = 0;
   ACTIVE = 0;
+  if ( VALLO > VALHI ) {
+    Variant  VAR;
+    VAR = VALLO;
+    VALLO = VALHI;
+    VALHI = VAR;
+  }
+  INTERVAL = TIMEHI / (VALHI - VALLO);
+  VALCUR = (EFFECT == SETFADE ? VALLO : VALHI);
+  ISON = 1;
   TIMER = (long) millis();
 <FUNCTIONUPDATE>
   if ( (int) START )
     ACTIVE = 1;
   if ( (int) STOP && (int) ACTIVE ) {
     ACTIVE = 0;
-    digitalWrite( PIN, 0);
+    analogWrite( PIN, 0);
   }
 <ACTUATORUPDATE>
   if ( (int) ACTIVE ) {
-    if ( (int) ISON && (int) TIMELO ) {
-      if ( millis() - (long) TIMER > (long) TIMEHI ) {
-        if ( (int) VALLO < 0 ) VALLO = 0;
-        if ( (int) VALLO > 100 ) VALLO = 100;
-	    analogWrite( PIN, (int) VALLO * 255 / 100);
-		ISON = 0;
-		TIMER = (long) millis();
-	  }
-	}
-	else {
-	  if ( millis() - (long) TIMER > (long) TIMELO ) {
-      if ( (int) VALHI < 0 ) VALHI = 0;
-      if ( (int) VALHI > 100 ) VALHI = 100;
-	    analogWrite( PIN, (int) VALHI * 255 / 100);
-		ISON = 1;
-		TIMER = (long) millis();
-	  }
-	}
+    if ( VALLO > VALHI ) {
+      Variant  VAR;
+      VAR = VALLO;
+      VALLO = VALHI;
+      VALHI = VAR;
+    }
+    if ( (int) VALHI < 0 ) VALHI = 0;
+    if ( (int) VALHI > 100 ) VALHI = 100;
+    if ( (int) VALLO < 0 ) VALLO = 0;
+    if ( (int) VALLO > 100 ) VALLO = 100;
+
+    if ( EFFECT == SETFADE ) {
+      if ( millis() - (long) TIMER > (long) INTERVAL ) {
+        VALCUR += ((int) ISON ? 1 : -1);
+        if ( VALCUR < VALLO ) {
+          VALCUR = VALLO;
+          ISON = 1;
+          INTERVAL = TIMEHI / (VALHI - VALLO);
+        }
+        if ( VALCUR > VALHI ) {
+          VALCUR = VALHI;
+          ISON = 0;
+          INTERVAL = TIMELO / (VALHI - VALLO);
+        }
+        analogWrite( PIN, (((long) VALCUR) * 255) / 100);
+        TIMER = (long) millis();
+      }
+    }
+    else
+    if ( EFFECT == SETBLINK ) {
+      if ( (int) ISON ) {
+        if ( millis() - (long) TIMER > (long) TIMEHI ) {
+          analogWrite( PIN, (((long) VALLO) * 255) / 100);
+          ISON = 0;
+          TIMER = (long) millis();
+        }
+      }
+      else {
+        if ( millis() - (long) TIMER > (long) TIMELO ) {
+          analogWrite( PIN, (((long) VALHI) * 255) / 100);
+          ISON = 1;
+          TIMER = (long) millis();
+        }
+      }
+    }
+    else { // no effect
+      analogWrite( PIN, (((long) VALHI) * 255) / 100);
+    }
   }
 <END>

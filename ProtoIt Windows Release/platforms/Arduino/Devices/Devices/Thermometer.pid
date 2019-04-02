@@ -57,7 +57,7 @@ DeviceAddress deviceAddress;
 <SENSORUPDATE>
 	sensors.requestTemperaturesByIndex( (int) INDEX);
 	CELCIUS = sensors.getTempCByIndex( (int) INDEX);
-	KELVIN = (double) CELCIUS + 273;
+	KELVIN = ((double) CELCIUS) - 273;
 	FAHRENH = DallasTemperature::toFahrenheit( (int) CELCIUS);
 	ISCOLD = ISNORMAL = ISWARM = 0;
 	ISFREEZING = 0;

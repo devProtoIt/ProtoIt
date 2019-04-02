@@ -21,9 +21,8 @@ h4 { color:#FF7F2F; }
 <hr/>
 
 <p><u>Beschrijving:</u><br/>
-Een kleurenled wordt met drie kleuren aangestuurd: rood, groen en blauw. Vandaar dat deze led&acute;s ook wel RGB-led&acute;s worden genoemd.<br/>
-De kleurenled wordt op drie pwm-pinnen van de Arduino aangsloten. &acute;<i>Pwm</i>&acute; staat voor pulse-wide-modulation.
-Dit is een speciale techniek waarmee een kleur harder of zachter kan worden gezet.<br/><br/>
+Een kleurenled wordt met drie kleuren aangestuurd: rood, groen en blauw. Vandaar dat deze led&acute;s ook wel RGB-led&acute;s worden genoemd.
+De kleurenled wordt via <i>pulse-wide-modulation</i> aangestuurd en moet daarom op pwm-pinnen worden aangesloten.<br/>
 <i>LET OP! Je mag een led niet rechtstreeks op de Arduino-pinnen aansluiten. Dan gaat de Arduino stuk.</i>
 </p>
 
@@ -39,19 +38,34 @@ Kleurenled
 
 <u>Instellingen:</u>
 <table>
-<tr><td class="left"><b>Pin rood</b></td><td>Het pin-nummer van de Arduino waarop je de rode ingang van de led aansluit.</td></tr>
-<tr><td class="left"><b>Pin groen</b></td><td>Het pin-nummer van de Arduino waarop je de groene ingang van de led aansluit.</td></tr>
-<tr><td class="left"><b>Pin blauw</b></td><td>Het pin-nummer van de Arduino waarop je de blauwe ingang van de led aansluit.</td></tr>
+<tr><td class="left"><b>Pin rood</b></td><td>Pwm-pin waarop je de rode ingang van de led aansluit.</td></tr>
+<tr><td class="left"><b>Pin groen</b></td><td>Pwm-pin waarop je de groene ingang van de led aansluit.</td></tr>
+<tr><td class="left"><b>Pin blauw</b></td><td>Pwm-pin waarop je de blauwe ingang van de led aansluit.</td></tr>
 </table><br/>
 
 <u>Op de programmategel:</u>
 <table>
-<tr><td class="left"><b>Rood (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de rode kleur bepaalt.</td></tr>
-<tr><td class="left"><b>Groen (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de groene kleur bepaalt.</td></tr>
-<tr><td class="left"><b>Blauw (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de blauwe kleur bepaalt.</td></tr>
+<tr><td class="left"><b>Rood (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de rode kleur bepaalt als de led aan is.<br/>
+Standaard op het signaal <i>Maximum</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Rood uit (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de rode kleur bepaalt als de led bij een effect uit is.<br/>
+Standaard op het signaal <i>Uit</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Groen (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de groene kleur bepaalt als de led aan is.<br/>
+Standaard op het signaal <i>Maximum</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Groen uit (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de groene kleur bepaalt als de led bij een effect uit is.<br/>
+Standaard op het signaal <i>Uit</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Blauw (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de blauwe kleur bepaalt als de led aan is.<br/>
+Standaard op het signaal <i>Maximum</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Blauw uit (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de blauwe kleur bepaalt als de led bij een effect uit is.<br/>
+Standaard op het signaal <i>Uit</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Effect</b></td><td>Sleep hier &eacute;&eacute;n van de constante signalen <i>Geen</i>, <i>Knipperen</i> of <i>Vervagen</i> naar toe.
+De gewone <i>(%)</i>-waardes en de <i>uit (%)</i>-waardes bepalen de helderheid tijdens een effect.<br/>
+Standaard op het signaal <i>Geen</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Tijd aan (msec)</b></td><td>Bij het effect <i>Knipperen</i> is dit de tijd in millisec. dat de kleurenled aan <u>blijft</u> en
+bij het effect <i>Vervagen</i> is het de tijd dat de led aan <u>gaat</u>.</td></tr>
+<tr><td class="left"><b>Tijd uit (msec)</b></td><td>Bij het effect <i>Knipperen</i> is dit de tijd in millisec. dat de kleurenled uit <u>blijft</u> en
+bij het effect <i>Vervagen</i> is het de tijd dat de led uit <u>gaat</u>.</td></tr>
 <tr><td class="left"><b>Start wanneer?</b></td><td>Als het ingevulde signaal optreedt, zal de led reageren.<br/> Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
 <tr><td class="left"><b>Start wanneer?</b></td><td>Als het ingevulde signaal optreedt, zal de led niet meer reageren.<br/> Standaard op het signaal <i>Nooit</i> ingesteld.</td></tr>
-</table><br/>
 </table><br/>
 
 <br/>

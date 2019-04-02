@@ -1,0 +1,81 @@
+<html>
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Net Server</h1><br/><br/>&copy;   2018,   ProtoIt<br/><br/>
+<b>Platform:   ARDUINO</b></td><td><img src="netserver.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+Met de net-server kun je de waarde de vier signalen over een netwerk versturen.
+ProtoIt maakt daarbij gebruik van de <i>EtherCard</i> software en ondersteunt dezelfde netwerk-modules.
+(Een veel gebruikte module is de <i>ENC28J60</i>.) Door de omvang van de EtherCard software kan je
+programma onstabiel worden met een <i>Arduino Uno</i>.
+</p>
+<p>
+De net-server kan de informatie als mini <i>html-pagina</i> verzenden of als <i>xml-tekst</i>.
+Op de html-pagina worden de signaalwaardes naast de bijbehorende kopjes in een tabel getoond.
+Boven de tabel staat de titel. In de xml-tekst verschijnt de titel als hoofd-tag en de kopjes
+met bijbehorende waarde in de sub-tags &lt;name&gt; en &lt;value&gt;.
+</p>
+<p>
+<b>Let op</b> dat je bij de instellingen van de net-server de juiste <i>CS-pin</i> (= chip select) pin invult.
+Standaard staat deze op pin 53 voor de <i>Arduino Mega</i> ingesteld. Onderaan deze pagina vind je
+de correcte aansluiting van de pinnen.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Net Server
+</p>
+<hr/>
+
+<h4><img src="netserver.png" width=50> Net Server</h4>
+<p>
+
+</p>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Titel</b></td><td>De titel die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Kopje A</b></td><td>Kopje bij de eerste waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Signaal A</b></td><td>Eerste waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Kopje B</b></td><td>Kopje bij de tweede waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Signaal B</b></td><td>Tweede waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Kopje C</b></td><td>Kopje bij de derde waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Signaal C</b></td><td>Derde waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Kopje D</b></td><td>Kopje bij de vierde waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Signaal D</b></td><td>Vierde waarde die de net-server verstuurt.</td></tr>
+<tr><td class="left"><b>Manier</b></td><td>De manier van verzenden. Dit kan zijn als html-pagina of als xml-tekst.<br/>
+Sleep hier het constante signaal <i>Als html</i> of <i>Als xml</i> naar toe.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>IP-adres</b></td><td>Dit signaal bevat het ip-adres van de net-server.</td></tr>
+</table><br/>
+
+<u>Aansluiting ethernet-module (spi):</u>
+<p>
+Arduino Mega:<br/><br/>
+<img src="arduino_mega_spi_pins.png" width=500 /><br/><br/>
+Arduino Uno:<br/><br/>
+<img src="arduino_uno_spi_pins.png" width=250 />
+</p>
+
+<br/>
+</body>
+</html>

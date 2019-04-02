@@ -1,0 +1,71 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	ARDUINO
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	SENSOR, Trigger
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/timer
+<PORT>
+	PIN, Pin
+<SIGNALIN>
+	TRIGIN, Trigger wanneer?, #P Verloop
+	START, Start wanneer?, > Direct, #P Start en reset, #E
+	RESET, Reset wanneer?, > Geen reset, #E
+<SIGNALOUT>
+	TRIGOUT, Getriggerd
+	VALSEC, Tijd (sec)
+	VALMSEC, Tijd (msec)
+	VALUSEC, Tijd (usec)
+<CONSTANT>
+	SET_DOWN, Hoog naar laag, 0, #P VERLOOP
+	SET_UP, Laag naar hoog, 1
+	SET_DIRECT, Direct, 1, #P START EN RESET
+	SET_NEVER, Geen reset, 0
+<PRIVATE>
+	DTIME, Tijdverloop
+<STEPINIT>
+	VALUSEC = 0;
+	VALMSEC = 0;
+	VALSEC = 0;
+	TRIGOUT = 0;
+	DTIME = 0;
+<SETUP>
+	pinMode( PIN, INPUT);
+<SENSORUPDATE>
+	if ( (int) RESET ) {
+		VALUSEC = 0;
+		VALMSEC = 0;
+		VALSEC = 0;
+		TRIGOUT = 0;
+		DTIME = 0;
+	}
+	if ( (int) START )
+		DTIME = (long) micros();
+	if ( (int) DTIME ) {
+		int level = digitalRead( PIN);
+		if ( (TRIGIN == SET_DOWN && level == LOW) ||
+			 (TRIGIN == SET_UP && level == HIGH) ) {
+			VALUSEC = (long) micros() - (long) DTIME;
+			VALMSEC = (long) VALUSEC / 1000;
+			VALSEC = (long) VALUSEC / 1000000
+			TRIGOUT = 1;
+		}
+	}
+<END>

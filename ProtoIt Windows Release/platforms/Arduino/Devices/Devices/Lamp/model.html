@@ -21,10 +21,10 @@ h4 { color:#FF7F2F; }
 <hr/>
 
 <p><u>Beschrijving:</u><br/>
-Een lamp (of led) wordt aan of uit geschakeld. Ook kun je hem laten knipperen. Stel de tijd in dat hij aan en uit blijft.<br/>
-Eventueel kun je de lamp via &acute;<i>Pwm</i>&acute; harder of zachter laten branden. &acute;<i>Pwm</i>&acute; staat voor pulse-wide-modulation.
-Je moet hem dan wel op een speciale &acute;<i>Pwm</i>&acute;-pin aansluiten.<br/><br/>
-<i>LET OP! Je mag een lamp niet rechtstreeks op de Arduino-pinnen aansluiten. Dan gaat de Arduino stuk.</i>
+Een lamp (of led) wordt aan of uit geschakeld. Je stelt in hoe hard of zacht de lamp brandt.
+Ook kun je hem laten knipperen. Stel de tijd in dat hij aan en uit blijft.
+De lamp wordt via <i>pulse-wide-modulation</i> aangestuurd en moet daarom op pwm-pinnen worden aangesloten.<br/><br/>
+<i>LET OP! Je mag een lamp niet rechtstreeks op de Raspberry-pinnen aansluiten. Dan gaat de Raspberry stuk.</i>
 </p>
 
 <p><u>Onderdelen:</u><br/>
@@ -32,24 +32,31 @@ Lamp
 </p>
 <hr/>
 
-<h4><img src="lamp.png" width=50> Kleurenled</h4>
+<h4><img src="lamp.png" width=50> Lamp</h4>
 <p>
-
 </p>
+<h3>Voor dit apparaat heb je ProtoIt met 'sudo' nodig.</h3>
 
 <u>Instellingen:</u>
 <table>
-<tr><td class="left"><b>Pin</b></td><td>Het pin-nummer van de Arduino waarop je de lamp aansluit.</td></tr>
+<tr><td class="left"><b>Pin</b></td><td>Pwm-pin waarop je de lamp aansluit.</td></tr>
 </table><br/>
 
 <u>Op de programmategel:</u>
 <table>
-<tr><td class="left"><b>Helderheid (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke van de lamp bepaalt.<br/>Standaard ingesteld op 100%.</td></tr>
-<tr><td class="left"><b>Tijd aan (msec)</b></td><td>De tijd in milliseconden dat de lamp aan blijft.<br/>Standaard op 0 ingesteld (= altijd aan).</td></tr>
-<tr><td class="left"><b>Tijd uit (msec)</b></td><td>De tijd in milliseconden dat de lamp uit blijft.<br/>Standaard op 0 ingestald (= altijd aan).</td></tr>
-<tr><td class="left"><b>Wanneer aan?</b></td><td>Als het ingevulde signaal optreedt, zal de lamp aan gaan.<br/> Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
-<tr><td class="left"><b>Wanneer uit?</b></td><td>Als het ingevulde signaal optreedt, zal de lamp uit gaan.<br/> Standaard op het signaal <i>Nooit</i> ingesteld.</td></tr>
-</table><br/>
+<tr><td class="left"><b>Helderheid (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke bepaalt als de lamp aan is.<br/>
+Standaard op het signaal <i>Maximum</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Helderheid uit (%)</b></td><td>Een waarde van 0 tot 100, die de lichtsterke bepaalt als de lamp bij een effect uit is.<br/>
+Standaard op het signaal <i>Uit</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Effect</b></td><td>Sleep hier &eacute;&eacute;n van de constante signalen <i>Geen</i>, <i>Knipperen</i> of <i>Vervagen</i> naar toe.
+De gewone <i>(%)</i>-waarde en de <i>uit (%)</i>-waarde bepalen de helderheid tijdens een effect.<br/>
+Standaard op het signaal <i>Geen</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Tijd aan (msec)</b></td><td>Bij het effect <i>Knipperen</i> is dit de tijd in millisec. dat de lamp aan <u>blijft</u> en
+bij het effect <i>Vervagen</i> is het de tijd dat de lamp aan <u>gaat</u>.</td></tr>
+<tr><td class="left"><b>Tijd uit (msec)</b></td><td>Bij het effect <i>Knipperen</i> is dit de tijd in millisec. dat de lamp uit <u>blijft</u> en
+bij het effect <i>Vervagen</i> is het de tijd dat de lamp uit <u>gaat</u>.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Als het ingevulde signaal optreedt, zal de lamp reageren.<br/> Standaard op het signaal <i>Direct</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Start wanneer?</b></td><td>Als het ingevulde signaal optreedt, zal de lamp niet meer reageren.<br/> Standaard op het signaal <i>Nooit</i> ingesteld.</td></tr>
 </table><br/>
 
 <br/>

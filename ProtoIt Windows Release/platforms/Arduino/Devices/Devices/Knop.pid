@@ -17,22 +17,24 @@
 	2018
 
 <DEVICE>
-	SENSOR, Digitale Ingang
+	SENSOR, Knop
 <COPYRIGHT>
 	2018, ProtoIt
 <ICON>
-	pinin.png
+	knop.png
 <PORT>
 	PIN, Pin
+
 <SIGNALOUT>
-	VALUE, Signaal
-<CONSTANT>
-	SETOFF, Uit, 0
-	SETON, Aan, 1
-	SETLO, Laag, 0
-	SETHI, Hoog, 1
+	PRESSED, Ingedrukt
 <SETUP>
 	pinMode( PIN, INPUT);
+
+<STEPINIT>
+	PRESSED = 0;
 <SENSORUPDATE>
-	VALUE = digitalRead( PIN);
+	if ( digitalRead( PIN) ) {
+		PRESSED = 1;
+		while ( digitalRead( PIN) );
+	}
 <END>

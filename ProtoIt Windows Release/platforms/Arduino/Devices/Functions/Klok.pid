@@ -82,10 +82,10 @@
 		if ( !sc ) {
 			ALM1MIN = 1;
 			if ( !(mn - (mn / 5)) ) ALM5MIN = 1;
-			if ( !(mn - (mn / 10)) ) ALM5MIN = 1;
-			if ( !(mn - (mn / 15)) ) ALM5MIN = 1;
-			if ( !(mn - (mn / 20)) ) ALM5MIN = 1;
-			if ( !(mn - (mn / 30)) ) ALM5MIN = 1;
+			if ( !(mn - (mn / 10)) ) ALM10MIN = 1;
+			if ( !(mn - (mn / 15)) ) ALM15MIN = 1;
+			if ( !(mn - (mn / 20)) ) ALM20MIN = 1;
+			if ( !(mn - (mn / 30)) ) ALM30MIN = 1;
 			if ( !mn ) {
 				ALM1HOUR = 1;
 				if ( !(hr - (hr / 2)) ) ALM2HOUR = 1;

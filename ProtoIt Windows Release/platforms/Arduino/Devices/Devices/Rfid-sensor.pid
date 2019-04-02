@@ -27,8 +27,18 @@
 	MISO, Miso-pin
 	CS, CS-pin
 	SCK, SCK-pin
+<CALIBRATE>
+	CALID1, Eerste ID, XX XX XX XX
+	CALID2, Tweede ID, XX XX XX XX
+	CALID3, Derde ID, XX XX XX XX
+	CALID4, Vierde ID, XX XX XX XX
 <SIGNALOUT>
 	HASID, ID Gelezen
+	ISNEW, ID Gewijzigd
+	ISCAL1, Is eerste ID
+	ISCAL2, Is tweede ID
+	ISCAL3, Is derde ID
+	ISCAL4, Is vierde ID
 	CURID, Kaart-ID
 <INCLUDE>
 #include "RFID.h"
@@ -36,14 +46,34 @@
 RFID
 <GLOBAL>
 RFID* rfid;
+<PRIVATE>
+	PRVID, Vorig ID
 <SETUP>
 	rfid = new RFID( (int) MOSI, (int) MISO, (int) CS, (int) SCK);
+	CALID1 = CALID1.toString();
+	CALID2 = CALID2.toString();
+	CALID3 = CALID3.toString();
+	CALID4 = CALID4.toString();
 <STEPINIT>
+	ISNEW = 0;
+	ISCAL1 = 0;
+	ISCAL2 = 0;
+	ISCAL3 = 0;
+	ISCAL4 = 0;
 	HASID = 0;
 	CURID = "";
 <SENSORUPDATE>
 	if ( rfid->sensorReady() ) {
+		String tag = rfid->id();
+		if ( tag != PRVID.toString() ) {
+			PRVID = tag;
+			ISNEW = 1;
+		}
 		HASID = 1;
-		CURID = rfid->id();
+		CURID = tag;
+		ISCAL1 = (CURID == CALID1);
+		ISCAL2 = (CURID == CALID2);
+		ISCAL3 = (CURID == CALID3);
+		ISCAL4 = (CURID == CALID4);
 	}
 <END>

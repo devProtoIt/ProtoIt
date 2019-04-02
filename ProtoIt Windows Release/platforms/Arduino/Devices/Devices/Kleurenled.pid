@@ -27,39 +27,124 @@
 	PINGREEN, Pin groen
 	PINBLUE, Pin blauw
 <SIGNALIN>
-	RED, Rood (%), #P Kleurwaarde
-	GREEN, Groen (%)
-	BLUE, Blauw (%)
+	REDHI, Rood (%), > Maximum, #P Helderheid
+	REDLO, Rood uit (%), > Uit, #E
+	GREENHI, Groen (%), > Maximum
+	GREENLO, Groen uit (%), > Uit, #E
+	BLUEHI, Blauw (%), > Maximum
+	BLUELO, Blauw uit (%), > Uit, #E
+	EFFECT, Effect, > Geen, #P Effecten, #E
+	TIMEHI, Tijd aan (msec), #E
+	TIMELO, Tijd uit (msec), #E
 	START, Wanneer aan?, > Direct, #P Aan en uit, #E
 	STOP, Wanneer uit?, > Nooit, #E
 <CONSTANT>
-	SETOFF, Uit, 0, #P KLEURWAARDE
-	SETON, Maximaal, 100
+	SETOFF, Uit, 0, #P HELDERHEID
+	SETON, Maximum, 100
+	SETNONE, Geen, 0, #P EFFECTEN
+	SETBLINK, Knipperen, 1
+	SETFADE, Vervagen, 2
 	SET_NOW, Direct, 1, #P AAN EN UIT
 	SET_NEVER, Nooit, 0
 <PRIVATE>
 	ACTIVE, Active
+	ISON, Toggle, 0
+	TIMER, Timer, 0
+	TIMER10, Timer update, 0
+	REDUPD, Update waarde rood
+	GREENUPD, Update waarde groen
+	BLUEUPD, Update waarde blauw
+	REDCUR, Huidig rood
+	GREENCUR, Huidig groen
+	BLUECUR, Huidig blauw
 <SETUP>
 	pinMode( PINRED, OUTPUT);
 	pinMode( PINBLUE, OUTPUT);
 	pinMode( PINGREEN, OUTPUT);
+	TIMELO = TIMEHI = 500;
 <STEPINIT>
-	START = 0;
-	STOP = 0;
-	ACTIVE = 0;
+  START = 0;
+  STOP = 0;
+  ACTIVE = 0;
+  REDCUR = (EFFECT == SETFADE ? REDLO : REDHI);
+  GREENCUR = (EFFECT == SETFADE ? GREENLO : GREENHI);
+  BLUECUR = (EFFECT == SETFADE ? BLUELO : BLUEHI);
+  ISON = 1;
+  TIMER = TIMER10 = (long) millis();
 <FUNCTIONUPDATE>
-    if ( (int) START )
-        ACTIVE = 1;
-	if ( (int) STOP && (int) ACTIVE ) {
-		ACTIVE = 0;
-		analogWrite( PINRED, 0);
-		analogWrite( PINGREEN, 0);
-		analogWrite( PINBLUE, 0);
-	}
+  if ( (int) START )
+    ACTIVE = 1;  
+  if ( (int) STOP && (int) ACTIVE ) {
+	ACTIVE = 0;
+	analogWrite( PINRED, 0);
+	analogWrite( PINGREEN, 0);
+	analogWrite( PINBLUE, 0);
+  }
 <ACTUATORUPDATE>
-	if ( (int) ACTIVE ) {
-		analogWrite( PINRED, (((long) RED) * 255) / 100);
-		analogWrite( PINGREEN, (((long) GREEN) * 255) / 100);
-		analogWrite( PINBLUE, (((long) BLUE) * 255) / 100);
+  if ( (int) ACTIVE ) {
+	if ( (int) REDHI < 0 ) REDHI = 0;
+	if ( (int) REDHI > 100 ) REDHI = 100;
+	if ( (int) REDLO < 0 ) REDLO = 0;
+	if ( (int) REDLO > 100 ) REDLO = 100;
+    if ( (int) GREENHI < 0 ) GREENHI = 0;
+    if ( (int) GREENHI > 100 ) GREENHI = 100;
+    if ( (int) GREENLO < 0 ) GREENLO = 0;
+    if ( (int) GREENLO > 100 ) GREENLO = 100;
+    if ( (int) BLUEHI < 0 ) BLUEHI = 0;
+    if ( (int) BLUEHI > 100 ) BLUEHI = 100;
+    if ( (int) BLUELO < 0 ) BLUELO = 0;
+    if ( (int) BLUELO > 100 ) BLUELO = 100;
+
+	if ( EFFECT == SETNONE ) {
+		analogWrite( PINRED, (((long) REDHI) * 255) / 100);
+		analogWrite( PINGREEN, (((long) GREENHI) * 255) / 100);
+		analogWrite( PINBLUE, (((long) BLUEHI) * 255) / 100);
 	}
+	else {
+		if ( EFFECT == SETFADE && millis() - (long) TIMER10 > 10 ) {
+			TIMER10 = (long) millis();
+   			if ( (int) ISON ) {	
+				REDCUR += (((double) REDHI - (double) REDLO) * 10) / (double) TIMEHI;
+				GREENCUR += (((double) GREENHI - (double) GREENLO) * 10) / (double) TIMEHI;
+				BLUECUR += (((double) BLUEHI - (double) BLUELO) * 10) / (double) TIMEHI;
+			}
+			else {
+				REDCUR -= (((double) REDHI - (double) REDLO) * 10) / (double) TIMELO;
+				GREENCUR -= (((double) GREENHI - (double) GREENLO) * 10) / (double) TIMELO;
+				BLUECUR -= (((double) BLUEHI - (double) BLUELO) * 10) / (double) TIMELO;
+			}
+			if ( REDCUR < REDLO ) REDCUR = REDLO;
+			if ( REDCUR > REDHI ) REDCUR = REDHI;
+			if ( GREENCUR < GREENLO ) GREENCUR = GREENLO;
+			if ( GREENCUR > GREENHI ) GREENCUR = GREENHI;
+			if ( BLUECUR < BLUELO ) BLUECUR = BLUELO;
+			if ( BLUECUR > BLUEHI ) BLUECUR = BLUEHI;
+			analogWrite( PINRED, (((long) REDCUR) * 255) / 100);
+			analogWrite( PINGREEN, (((long) GREENCUR) * 255) / 100);
+			analogWrite( PINBLUE, (((long) BLUECUR) * 255) / 100);
+		}
+		if ( (int) ISON ) {
+			if ( (millis() - (long) TIMER) > (long) TIMEHI ) {
+				ISON = 0;
+				TIMER = (long) millis();
+				if ( EFFECT == SETBLINK ) {
+					analogWrite( PINRED, (((long) REDLO) * 255) / 100);
+					analogWrite( PINGREEN, (((long) GREENLO) * 255) / 100);
+					analogWrite( PINBLUE, (((long) BLUELO) * 255) / 100);
+				}
+			}
+		}
+		else {    
+			if ( millis() - (long) TIMER  > (long) TIMELO ) {
+				ISON = 1;
+				TIMER = (long) millis();
+				if ( EFFECT == SETBLINK ) {
+					analogWrite( PINRED, (((long) REDHI) * 255) / 100);
+					analogWrite( PINGREEN, (((long) GREENHI) * 255) / 100);
+					analogWrite( PINBLUE, (((long) BLUEHI) * 255) / 100);
+				}
+			}
+		}
+	}
+  }
 <END>

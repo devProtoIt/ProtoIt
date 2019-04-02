@@ -27,7 +27,7 @@
 <SIGNALIN>
 	VALUE, Signaal (%), #P Signaalwaarde
 	START, Start wanneer?, > Direct, #P Start en stop, #E
-	STOP, Start wanneer?, > Nooit, #E
+	STOP, Stop wanneer?, > Nooit, #E
 <CONSTANT>
 	SETOFF, Uit, 0, #P SIGNAALWAARDE
 	SETON, Maximaal, 100
@@ -49,6 +49,9 @@
 		analogWrite( PIN, 0);
 	}
 <ACTUATORUPDATE>
-	if ( (int) ACTIVE )
+	if ( (int) ACTIVE ) {
+		if ( (int) VALUE < 0 ) VALUE = 0;
+		if ( (int) VALUE > 100 ) VALUE = 100;
 		analogWrite( PIN, (((long) VALUE) * 255) / 100);
+	}
 <END>
