@@ -24,136 +24,70 @@
 	2018, ProtoIt
 <ICON>
 	nextion.png
-<PORT>
-	PIN0, PIO 0 (optie 1), #P Pin-aansluiting
-	PIN1, PIO 1 (optie 2)
-	PIN2, PIO 2 (optie 3)
-	PIN3, PIO 3 (optie 4)
-	PIN4, PIO 4 (optie 5)
-	PIN5, PIO 5 (optie 6)
-	PIN6, PIO 6 (verzend)
-	PIN7, PIO 7 (ontvang)
 <SIGNALOUT>
-	VALID, Staat klaar
-	OPTION, Keuze, #P KEUZE
-	OPTION1, Optie 1
-	OPTION2, Optie 2
-	OPTION3, Optie 3
-	OPTION4, Optie 4
-	OPTION5, Optie 5
-	OPTION6, Optie 6
-	VALOUT, Waarde, #P WAARDE
+	VALID, Staat klaar, #P ONTVANGEN
+	VALOUT, Waarde
 <SIGNALIN>
 	VALIN, Zend waarde, #P Verzenden
+	FLDIN, Naar veld
+	TYPIN, Type veld
 	SEND, Zend wanneer?
 <CONSTANT>
 	SET_NOW, Direct, 1, #P ZEND WANNEER
 	SET_NEVER, Nooit, 0
+	SET_TEXT, Tekst, 0, #P TYPE VELD
+	SET_NUM, Getal, 1
+	SET_PAGE, Pagina, 2
 <PRIVATE>
-	OLDIN, Oude waarde
-<ROUTINE>
-void receive(void)
-{
-	VALID = 0;
-	VALOUT = 0;
-	if ( PIN0.toString() != "" ) {
-		pinMode( PIN0,INPUT);
-		if ( digitalRead( PIN0) ) {
-			OPTION1 = 1;
-			OPTION = 1;
-			VALOUT |= 1;
-		}
-	}
-	if ( PIN1.toString() != "" ) {
-		pinMode( PIN1,INPUT);
-		if ( digitalRead( PIN1) ) {
-			OPTION2 = 1;
-			OPTION = 2;
-			VALOUT |= 2;
-		}
-	}
-	if ( PIN2.toString() != "" ) {
-		pinMode( PIN2,INPUT);
-		if ( digitalRead( PIN2) ) {
-			OPTION3 = 1;
-			OPTION = 3;
-			VALOUT |= 4;
-		}
-	}
-	if ( PIN3.toString() != "" ) {
-		pinMode( PIN3,INPUT);
-		if ( digitalRead( PIN3) ) {
-			OPTION4 = 1;
-			OPTION = 4;
-			VALOUT |= 8;
-		}
-	}
-	if ( PIN4.toString() != "" ) {
-		pinMode( PIN4,INPUT);
-		if ( digitalRead( PIN4) ) {
-			OPTION5 = 1;
-			OPTION = 5;
-			VALOUT |= 16;
-		}
-	}
-	if ( PIN5.toString() != "" ) {
-		pinMode( PIN5,INPUT);
-		if ( digitalRead( PIN5) ) {
-			OPTION6 = 1;
-			OPTION = 6;
-			VALOUT |= 32;
-		}
-	}
-	VALID = 1;
-}
+	HAS_SEND, Is verzonden, 0
+<INCLUDE>
+#include "wiringSerial.h"
+<GLOBAL>
+	int fdSerial;
 <SETUP>
-	wiringPiISR( PIN7, INT_EDGE_FALLING, &receive);
-	pinMode( PIN6, OUTPUT);
+	fdSerial = serialOpen( "/dev/ttyS0", 9600);
 <STEPINIT>
 	VALID = 0;
-	OPTION = 0;
-	OPTION1 = 0;
-	OPTION2 = 0;
-	OPTION3 = 0;
-	OPTION4 = 0;
-	OPTION5 = 0;
-	OPTION6 = 0;
-	OLDIN = 0;
-	VALIN = 0;
+	VALOUT = "";
+	HAS_SEND = 0;
+<SENSORUPDATE>
+    if ( serialDataAvail( fdSerial) ) {
+		char c = (char) serialGetchar( fdSerial);
+		if ( c == '#' ) {
+			int val = 0;
+			for ( int i = 0; i < 4; i++ ) {
+				// 4 bytes in little endian order
+				int v = serialGetchar( fdSerial);
+				val += v << (8 * i);
+			}
+			VALOUT = val;
+		}
+		else {
+			String str;
+			while ( c != '~' ) {
+				str += c;
+				c = (char) serialGetchar( fdSerial);
+			}
+			VALOUT = str;
+		}
+		VALID = 1;
+	}
 <ACTUATORUPDATE>
-	if ( (int) SEND && (VALIN != OLDIN) ) {
-		if ( PIN0.toString() != "" ) {
-			pinMode( PIN0, OUTPUT);
-			digitalWrite( PIN0, ((int) VALIN & 1) / 1);
+	if ( (int) SEND && !(int) HAS_SEND ) {
+		String cmd = FLDIN.toString();
+		switch ( (int) TYPIN ) {
+			case 0 : cmd += ".txt=\""; break;
+			case 1 : cmd += ".val="; break;
+			case 2 : cmd = "page "; break;
 		}
-		if ( PIN1.toString() != "" ) {
-			pinMode( PIN1, OUTPUT);
-			digitalWrite( PIN1, ((int) VALIN & 2) / 2);
-		}
-		if ( PIN2.toString() != "" ) {
-			pinMode( PIN2, OUTPUT);
-			digitalWrite( PIN2, ((int) VALIN & 4) / 4);
-		}
-		if ( PIN3.toString() != "" ) {
-			pinMode( PIN3, OUTPUT);
-			digitalWrite( PIN3, ((int) VALIN & 8) / 8);
-		}
-		if ( PIN4.toString() != "" ) {
-			pinMode( PIN4, OUTPUT);
-			digitalWrite( PIN4, ((int) VALIN & 16) / 16);
-		}
-		if ( PIN5.toString() != "" ) {
-			pinMode( PIN5, OUTPUT);
-			digitalWrite( PIN5, ((int) VALIN & 32) / 32);
-		}
-		// Strange behaviour of Nextion requires a falling edge twice for one event
-		digitalWrite( PIN6, HIGH);
-		delay( 10);
-		digitalWrite( PIN6, LOW);
-		delay( 10);
-		digitalWrite( PIN6, HIGH);
-		delay( 10);
-		digitalWrite( PIN6, LOW);
-		OLDIN = VALIN;
+		cmd += VALIN.toString();
+		if ( !(int) TYPIN )
+			cmd += "\"";
+		cmd += char(255);
+		cmd += char(255);
+		cmd += char(255);
+		for ( int i = 0; i < cmd.length(); i++ )
+			serialPutchar( fdSerial, cmd[i]);
+		HAS_SEND = 1;
 	}
 <END>
