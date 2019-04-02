@@ -27,7 +27,7 @@
 <SIGNALIN>
 	VALUE, Signaal (%), #P Signaalwaarde
 	START, Start wanneer?, > Direct, #P Start en stop, #E
-	STOP, Start wanneer?, > Nooit, #E
+	STOP, Stop wanneer?, > Nooit, #E
 <CONSTANT>
 	SETOFF, Uit, 0, #P SIGNAALWAARDE
 	SETON, Maximaal, 100

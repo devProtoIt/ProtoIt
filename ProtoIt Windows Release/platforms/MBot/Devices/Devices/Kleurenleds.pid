@@ -54,8 +54,12 @@
 LedStrip
 <GLOBAL>
 LedStrip leds( 13, 2);
-RGB rgb1, rgb1cur, rgb2, rgb2cur;
-long ledstm, ledsdt;
+RGB rgb1;
+RGB rgb1cur;
+RGB rgb2;
+RGB rgb2cur;
+long ledstm;
+long ledsdt;
 <STEPINIT>
 	ACTIVE = 0;
 	ledstm = millis();
