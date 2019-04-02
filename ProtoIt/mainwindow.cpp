@@ -64,6 +64,67 @@ QString tabstyle =
         "margin-top: 2px;"
         "} ";
 
+QString toMsDosName( const QString path, const QString name)
+{
+    if ( name.indexOf( ' ') < 0 )
+        return name;
+
+    // prepare msdos name
+    int cnt = 0, ix;
+    QString ext, nam;
+    if ( (ix = name.lastIndexOf( '.')) < 0 )
+        nam = name;
+    else {
+        nam = name.left( ix);
+        ext = name.right( name.length() - ix);
+    }
+    for ( ix = 0; ix < nam.length(); ix++ ) {
+        if ( nam.at( ix) == ' ' )
+            cnt++;
+        if ( ix - cnt == 6 )
+            break; // this is the maximum msdos name length when a space is contained
+    }
+
+    // find entry number within all matching msdos names
+    QDir dir( path);
+    QStringList flt;
+    flt.append( nam.left( ix) + "*");
+    QStringList sub = dir.entryList( flt);
+    ix = 0;
+    foreach ( QString s, sub ) {
+        ix++;
+        if ( s == nam + ext )
+            break;
+    }
+
+    // create msdos name
+    nam.remove( ' ');
+    nam = nam.left( 6).toUpper() + "~" + QString::number( ix) + ext;
+    return nam;
+}
+
+QString toMsDos( const QString path)
+{
+    QStringList lst = path.split( '/');
+    QString nam, pth = lst.at( 0);
+    for ( int ix = 1; ix < lst.count(); ix++ ) {
+        nam = lst.at( ix);
+        lst.replace( ix, toMsDosName( pth, nam));
+        pth += "/" + nam;
+    }
+    pth = lst.at( 0);
+    lst.removeFirst();
+    foreach ( nam, lst )
+        pth += "/" + nam;
+    return pth;
+}
+
+
+////////////////////////////////////////
+/// MAINWINDOW
+////////////////////////////////////////
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -1098,7 +1159,7 @@ void MainWindow::on_butRename_clicked()
 
 void MainWindow::on_butDelete_clicked()
 {
-    int i, ix = ui->stepTab->currentIndex();
+    int ix = ui->stepTab->currentIndex();
 
     // don't delete the 'config' or the 'new step' tap
     if ( !ix || (ix == ui->stepTab->count() - 1) ) return;
@@ -1598,6 +1659,10 @@ void MainWindow::uploadCode()
     QString curdir = QDir::currentPath();
     QDir::setCurrent( programmerPath());
     QStringList libs;
+
+#ifdef Q_OS_WIN
+    buildpath = toMsDos( buildpath); // needed for avr-g++ compiler
+#endif
 
     if ( !m_version ) return;
     if ( m_version->programmer.toUpper() == "WINAVR" )
