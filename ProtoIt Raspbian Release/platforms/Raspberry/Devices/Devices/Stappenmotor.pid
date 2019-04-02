@@ -23,13 +23,14 @@
 <ICON>
 	stappenmotor.png
 <PORT>
-	PIN1, In1
-	PIN2, In2
-	PIN3, In3
+	PIN1, In1 of Step
+	PIN2, In2 of Dir
+	PIN3, In3 of Enable
 	PIN4, In4
 <CALIBRATE>
-	STEPS, Stappen / ronde, 512
-	MINDELAY, Min. vertr. (mics), 250
+	TYPE, Type (UNI of A4988), A4988
+	STEPS, Stappen / ronde, 200
+	MINDELAY, Min. vertr. (usec), 300
 <SIGNALIN>
 	ANGLE, Draaihoek (°), #P Aandrijving
 	COUNT, Aantal stappen, #E
@@ -51,32 +52,40 @@
 	DELAY, Vertraging
 	ACTIVE, Active
 <ROUTINE>
-void stepper( int bits, int dly)
+void unistepper( int bits, int dly)
 {
-	digitalWrite( (int) PIN1, bits & 8);
-	delayMicroseconds( dly);
-	digitalWrite( (int) PIN2, bits & 4);
-	delayMicroseconds( dly);
-	digitalWrite( (int) PIN3, bits & 2);
-	delayMicroseconds( dly);
-	digitalWrite( (int) PIN4, bits & 1);
+	digitalWrite( PIN1, bits & 8);
+	digitalWrite( PIN2, bits & 4);
+	digitalWrite( PIN3, bits & 2);
+	digitalWrite( PIN4, bits & 1);
 	delayMicroseconds( dly);
 }
 void fullstep( int dly, bool reverse)
 {
 	int bits[8] = {8, 12, 4, 6, 2, 3, 1, 9};
-	if ( reverse )
-		for ( int i = 7; i >= 0; i-- )
-			stepper( bits[i], dly);
-	else
-		for ( int i = 0; i < 7; i++ )
-			stepper( bits[i], dly);
+	if ( TYPE.toString() == "UNI" ) {
+		if ( reverse )
+			for ( int i = 7; i >= 0; i-- )
+				unistepper( bits[i], dly);
+		else
+			for ( int i = 0; i < 7; i++ )
+				unistepper( bits[i], dly);
+	}
+	else {
+		digitalWrite( PIN2, reverse ? LOW : HIGH);
+		digitalWrite( PIN1, HIGH);
+		delayMicroseconds( dly);
+		digitalWrite( PIN1, LOW);
+		delayMicroseconds( dly);
+	}
 }
 <SETUP>
 	pinMode( PIN1, OUTPUT);
 	pinMode( PIN2, OUTPUT);
 	pinMode( PIN3, OUTPUT);
 	pinMode( PIN4, OUTPUT);
+	if ( TYPE.toString() == "A4988" )
+		digitalWrite( PIN3, LOW);
 <STEPINIT>
 	START = 0;
 	STOP = 0;
@@ -88,7 +97,8 @@ void fullstep( int dly, bool reverse)
         ACTIVE = 1;
     if ( (int) STOP ) {
         ACTIVE = 0;
-		stepper( 0, 0);
+		if ( TYPE.toString() == "UNI" )
+			unistepper( 0, 0);
     }
 	if ( (int) ANGLE )
 		COUNT = (ANGLE * STEPS) / 360;
@@ -96,17 +106,23 @@ void fullstep( int dly, bool reverse)
     if ( (int) SPEED > 0 )
       DELAY = ((long) MINDELAY * 100) / (long) SPEED;
     else
-      DELAY = 0;
+      DELAY = 10;
 <ACTUATORUPDATE>
 	if ( (int) ACTIVE && (PASS < COUNT) ) {
 		switch ( (int) DIRECTION ) {
-			case 1 : fullstep( (int) DELAY, false); PASS++; break;
-			case 2 : fullstep( (int) DELAY, true); PASS++; break;
-			default : stepper( 0, 0);
+			case 1 : fullstep( DELAY, false);
+					 PASS++;
+					 break;
+			case 2 : fullstep( DELAY, true);
+					 PASS++;
+					 break;
+			default : if ( TYPE.toString() == "UNI" )
+						  unistepper( 0, 0);
 		}
 		if ( PASS >= COUNT ) {
 			READY = 1;
-			stepper( 0, 0);
+			if ( TYPE.toString() == "UNI" )
+				unistepper( 0, 0);
 		}
 	}
 <END>

@@ -10,56 +10,56 @@
 // met: http://www.gnu.org/copyleft/gpl.html.
 
 <PLATFORM>
-	RASPBERRY
+  RASPBERRY
 <AUTHOR>
-	ProtoIt
+  ProtoIt
 <YEAR>
-	2018
+  2018
 
 <DEVICE>
-	ACTUATOR, Digitale Uitgang
+  ACTUATOR, Digitale Uitgang
 <COPYRIGHT>
-	2018, ProtoIt
+  2018, ProtoIt
 <ICON>
-	pinout.png
+  pinout.png
 <PORT>
-	PIN, Pin
+  PIN, Pin
 <SIGNALIN>
-	VALUE, Signaal, #P Signaalwaarde
-	MAKEHI, Wanneer hoog?, #P Hoog en laag, #E
-	MAKELO, Wanneer laag?, #E
-	START, Start wanneer?, > Direct, #P Start en stop, #E
-	STOP, Stop wanneer?, > Nooit, #E
+  VALUE, Signaal, #P Signaalwaarde
+  MAKEHI, Wanneer hoog?, #P Hoog en laag, #E
+  MAKELO, Wanneer laag?, #E
+  START, Start wanneer?, > Direct, #P Start en stop, #E
+  STOP, Stop wanneer?, > Nooit, #E
 <CONSTANT>
-	SETOFF, Uit, 0, #P SIGNAALWAARDE
-	SETON, Aan, 1
-	SETLO, Laag, 0
-	SETHI, Hoog, 1
-	SET_NOW, Direct, 1, #P START EN STOP
-	SET_NEVER, Nooit, 0
+  SETOFF, Uit, 0, #P SIGNAALWAARDE
+  SETON, Aan, 1
+  SETLO, Laag, 0
+  SETHI, Hoog, 1
+  SET_NOW, Direct, 1, #P START EN STOP
+  SET_NEVER, Nooit, 0
 <PRIVATE>
-	ACTIVE, Active
+  ACTIVE, Active
 <SETUP>
-	pinMode( PIN, OUTPUT);
+  pinMode( PIN, OUTPUT);
 <STEPINIT>
-	START = 0;
-	STOP = 0;
-	ACTIVE = 0;
+  START = 0;
+  STOP = 0;
+  ACTIVE = 0;
 <FUNCTIONUPDATE>
-    if ( (int) START )
-        ACTIVE = 1;
-    if ( (int) STOP && (int) ACTIVE ) {
-        ACTIVE = 0;
-	digitalWrite( PIN, 0);
-    }
+  if ( (int) START )
+    ACTIVE = 1;
+  if ( (int) STOP && (int) ACTIVE ) {
+    ACTIVE = 0;
+    digitalWrite( PIN, 0);
+  }
 <ACTUATORUPDATE>
-	if ( (int) ACTIVE ) {
-		if ( (int) MAKEHI )
-			digitalWrite( PIN, 1);
-		else
-		if ( (int) MAKELO )
-			digitalWrite( PIN, 0);
-		else
-			digitalWrite( PIN, VALUE);
-	}
+  if ( (int) ACTIVE ) {
+    if ( (int) MAKEHI )
+      digitalWrite( PIN, 1);
+    else
+    if ( (int) MAKELO )
+      digitalWrite( PIN, 0);
+    else
+      digitalWrite( PIN, (int) VALUE);
+  }
 <END>

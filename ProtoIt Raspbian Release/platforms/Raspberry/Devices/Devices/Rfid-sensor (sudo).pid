@@ -61,26 +61,25 @@ MFRC522 mfrc;
 	CURID = "";
 <SENSORUPDATE>
     if( mfrc.PICC_IsNewCardPresent() && mfrc.PICC_ReadCardSerial() ) {
-	String tag;
-	char hex[17] = "0123456789ABCDEF";
-        for( int i = 0; i < mfrc.uid.size; ++i) {
-	    byte bt = (mfrc.uid.uidByte[i] >> 4);
-            if ( !bt ) tag += '0';
-            else tag += hex[bt];
-	    bt = (mfrc.uid.uidByte[i] & 0x0F);
-	    tag += hex[bt];
-	    tag += " ";
-	}
-	if ( tag != PRVID.toString() ) {
-	    PRVID = tag;
-	    ISNEW = 1;
-	}
-	HASID = 1;
-	CURID = tag;
-	ISCAL1 = (CURID == CALID1);
-	ISCAL2 = (CURID == CALID2);
-	ISCAL3 = (CURID == CALID3);
-	ISCAL4 = (CURID == CALID4);
+		String tag;
+		char hex[17] = "0123456789ABCDEF";
+		for( int i = 0; i < mfrc.uid.size; ++i) {
+			byte bt = (mfrc.uid.uidByte[i] >> 4);
+				if ( !bt ) tag += '0';
+				else tag += hex[bt];
+			bt = (mfrc.uid.uidByte[i] & 0x0F);
+			tag += hex[bt];
+			tag += " ";
+		}
+		if ( tag != PRVID.toString() ) {
+			PRVID = tag;
+			ISNEW = 1;
+		}
+		HASID = 1;
+		CURID = tag;
+		ISCAL1 = (CURID == CALID1);
+		ISCAL2 = (CURID == CALID2);
+		ISCAL3 = (CURID == CALID3);
+		ISCAL4 = (CURID == CALID4);
     }
-
 <END>

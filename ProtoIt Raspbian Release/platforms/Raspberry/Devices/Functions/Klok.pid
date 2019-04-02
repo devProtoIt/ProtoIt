@@ -28,7 +28,21 @@
 	MIN, Minuten, 0
 	SEC, Seconden, 0
 <SIGNALOUT>
-	TIME, Tijd, "000:00:00"
+	TIME, Tijd, 000:00:00, #P TIJD
+	ALM1MIN, 1 min. alarm, #P HERHAALDE ALARMEN
+	ALM5MIN, 5 min. alarm
+	ALM10MIN, 10 min. alarm
+	ALM15MIN, 15 min. alarm
+	ALM20MIN, 20 min. alarm
+	ALM30MIN, 30 min. alarm
+	ALM1HOUR, 1 uurs alarm
+	ALM2HOUR, 2 uurs alarm
+	ALM3HOUR, 3 uurs alarm
+	ALM4HOUR, 4 uurs alarm
+	ALM6HOUR, 6 uurs alarm
+	ALM8HOUR, 8 uurs alarm
+	ALM12HOUR, 12 uurs alarm
+	ALM24HOUR, 24 uurs alarm
 <SETUP>
 	REFT = (long) millis() / 1000;
 <SENSORUPDATE>
@@ -46,11 +60,15 @@
 		REFT = (long) millis() / 1000;
 		RTCMD = "";
 	}
-	if ( millis() / 1000 - (long) REFT )
+	if ( (int) ALM1MIN )
+		ALM1MIN = ALM5MIN = ALM10MIN = ALM15MIN = ALM20MIN = ALM30MIN =
+		ALM1HOUR = ALM2HOUR = ALM3HOUR = ALM4HOUR = ALM6HOUR =
+		ALM8HOUR = ALM12HOUR = ALM24HOUR = 0;
+	long tm = millis() / 1000 - (long) REFT;
+	if ( tm )
 	{
 		char ctm[10];
 		int hr, mn, sc;
-		long tm = millis() / 1000 - (long) REFT;
 		hr = tm / 3600; tm = tm - hr * 3600;
 		mn = tm / 60; tm = tm - mn * 60;
 		sc = tm;
@@ -60,7 +78,24 @@
 		if ( sc > 59 ) { mn++; sc -= 60; }
 		if ( mn > 59 ) { hr++; mn -= 60; }
 		sprintf( ctm, "%03d:%02d:%02d", hr, mn, sc);
-Serial.println( ctm);
 		TIME = ctm;
+		if ( !sc ) {
+			ALM1MIN = 1;
+			if ( !(mn - (mn / 5)) ) ALM5MIN = 1;
+			if ( !(mn - (mn / 10)) ) ALM10MIN = 1;
+			if ( !(mn - (mn / 15)) ) ALM15MIN = 1;
+			if ( !(mn - (mn / 20)) ) ALM20MIN = 1;
+			if ( !(mn - (mn / 30)) ) ALM30MIN = 1;
+			if ( !mn ) {
+				ALM1HOUR = 1;
+				if ( !(hr - (hr / 2)) ) ALM2HOUR = 1;
+				if ( !(hr - (hr / 3)) ) ALM3HOUR = 1;
+				if ( !(hr - (hr / 4)) ) ALM4HOUR = 1;
+				if ( !(hr - (hr / 6)) ) ALM6HOUR = 1;
+				if ( !(hr - (hr / 8)) ) ALM8HOUR = 1;
+				if ( !(hr - (hr / 12)) ) ALM12HOUR = 1;
+				if ( !(hr - (hr / 24)) ) ALM24HOUR = 1;
+			}
+		}
 	}
 <END>

@@ -27,8 +27,8 @@
 	CURTIME, CurTime
 	ACTIVE, Active
 <SIGNALIN>
-	START, Start
-	TRIGGER, Duur (ms)
+	TRIGGER, Tijd (ms)
+	START, Start wanneer?
 <SIGNALOUT>
 	READY, Klaar
 	TIMETOGO, Te gaan (ms)

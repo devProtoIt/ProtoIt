@@ -23,18 +23,18 @@
 <ICON>
 	:/switcher
 <SIGNALIN>
-	SWITCHA, Als signaal, #P
-	SIGNALA, Zend signaal
-	SWITCHB, Als signaal, #P
-	SIGNALB, Zend signaal
-	SWITCHC, Als signaal, #P Meer ..., #E
-	SIGNALC, Zend signaal, #E
-	SWITCHD, Als signaal, #P, #E
-	SIGNALD, Zend signaal, #E
-	SWITCHE, Als signaal, #P, #E
-	SIGNALE, Zend signaal, #E
-	SWITCHF, Als signaal, #P, #E
-	SIGNALF, Zend signaal, #E
+	SIGNALA, Zend signaal, #P
+	SWITCHA, Wanneer?
+	SIGNALB, Zend signaal, #P
+	SWITCHB, Wanneer?
+	SIGNALC, Zend signaal, #P Meer ..., #E
+	SWITCHC, Wanneer?, #E
+	SIGNALD, Zend signaal, #P, #E
+	SWITCHD, Wanneer?, #E
+	SIGNALE, Zend signaal, #P, #E
+	SWITCHE, Wanneer?, #E
+	SIGNALF, Zend signaal, #P, #E
+	SWITCHF, Wanneer?, #E
 	SIGNALX, Anders zend, #P
 <SIGNALOUT>
 	SWITCHOUT, Actie

@@ -27,10 +27,10 @@
 	TOTAL, Totaal
 	COUNT, Aantal
 <SIGNALIN>
-	SIGNAL, Signaal
-	START, Start als, #P
-	STOP, Stop als
-	KEEP, Bewaar, #P
+	SIGNAL, Signaal, #P Bepaal voor
+	KEEP, Bewaar, #E
+	START, Start wanneer?, > Start direct, #P Start en stop, #E
+	STOP, Stop wanneer?, > Stop nooit, #E
 <SIGNALOUT>
 	MAX, Maximum, 0
 	MIN, Minimum, 0

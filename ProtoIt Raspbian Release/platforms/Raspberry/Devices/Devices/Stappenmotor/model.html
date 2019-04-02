@@ -23,12 +23,15 @@ h4 { color:#FF7F2F; }
 <hr/>
 
 <p><u>Beschrijving:</u><br/>
-Er bestaan twee soorten stappenmotoren: unipolaire en bipolaire. De unipolaire motor met 5 of 6 aansluitingen wordt nauwelijks meer gebruikt.
-De populaire bipolaire motor heeft 4 aansluitdraden. Deze wordt hier ondersteund.<br/>
-Verder zijn er veel <i>drivers</i> voor stappenmotoren op de markt. Deze zijn <u>niet</u> geschikt om met deze tegel samen te werken.
-De draden van de stappenmotor moeten via stroomverterkers (bijv. een ULN2003 chip) op de Raspberry worden aangesloten.
-De draden van de ene motorspoel worden op <i>In1</i> en <i>In2</i> aangesloten en van de andere spoel op <i>In3</i> en <i>In4</i>.
-<br/><br/> <i>LET OP! Je mag de draden van een stappenmotor niet rechtstreeks op de pinnen van de Raspberry aansluiten. Dan gaat de Raspberry stuk.</i>
+Er bestaan twee soorten stappenmotoren: unipolaire en bipolaire. Unipolaire motoren hebben meestal 5 of 6 draden.
+Bipolaire motoren hebben er 4. Beide types worden ondersteund. De unipolaire motor wordt rechtstreeks aangestuurd en
+de bipolaire alleen via een driver (een H-brug volstaat dus niet.)<br/>
+Er bestaan veel <i>drivers</i> voor stappenmotoren. Alleen het type A4988 (of compatibel ermee) is
+geschikt om met deze tegel samen te werken. Soms wordt de ULN2003 wel een  driver voor unipolaire motoren genoemd,
+maar deze chip is niet meer dan een <i>stroomversterker</i>. De aansturing verandert er niet door en dit wordt eveneens ondersteund.
+De draden van een stappenmotor mogen nooit rechtstreeks op de Raspberry worden aangesloten. Dan gaat de Raspberry stuk.</i>
+Bij een unipolaire motor worden de aansluitdraden <i>in 1</i>, <i>in 2</i>, <i>in 3</i> en <i>in 4</i> genoemd.
+De aansluitingen op de A4988 heten <i>step</i>, <i>direction</i> en <i>enable</i>.
 </p>
 
 <p><u>Onderdelen:</u><br/>
@@ -43,10 +46,17 @@ Stappenmotor
 
 <u>Instellingen:</u>
 <table>
-<tr><td class="left"><b>In1</b></td><td>GPIO-pin waarop een draad van &eacute;&eacute;n van de spoelen wordt aangesloten.</td></tr>
-<tr><td class="left"><b>In2</b></td><td>GPIO-pin waarop de andere draad van die spoel wordt aangesloten.</td></tr>
-<tr><td class="left"><b>In3</b></td><td>GPIO-pin waarop een draad van de andere spoel wordt aangesloten.</td></tr>
-<tr><td class="left"><b>In4</b></td><td>GPIO-pin waarop de andere draad van die spoel wordt aangesloten.</td></tr>
+<tr><td class="left"><b>Type (UNI of A4988)</b></td><td>Vul hier het type aandrijving in:<br/>
+&quot;UNI&quot; voor een unipolaire motor die direct met een stroomversterker wordt aangestuurd.<br/>
+&quot;A4988&quot; voor een bipolaire motor die via de driver A4988 (of compatibel) wordt aangestuurd.</i></td></tr>
+<tr><td class="left"><b>In1 of Step</b></td><td>UNI: GPIO-pin waarop een draad van &eacute;&eacute;n van de spoelen wordt aangesloten.<br/>
+A4988: GPIO-pin waarop de <i>step</i>-ingang van de A4988-driver is aangesloten.</i></td></tr>
+<tr><td class="left"><b>In2 of Dir</b></td><td>UNI: GPIO-pin waarop de andere draad van die spoel wordt aangesloten.<br/>
+A4988: GPIO-pin waarop de <i>dir</i>-ingang van de A4988-driver is aangesloten.</i></td></tr>
+<tr><td class="left"><b>In3 of Enable</b></td><td>UNI: GPIO-pin waarop een draad van de andere spoel wordt aangesloten.<br/>
+A4988: GPIO-pin waarop de <i>enable</i>-ingang van de A4988-driver is aangesloten.</i></td></tr>
+<tr><td class="left"><b>In4</b></td><td>UNI: GPIO-pin waarop de andere draad van die spoel wordt aangesloten.<br/>
+A4988: Niet aangesloten.</i></td></tr>
 <tr><td class="left"><b>Stappen/ronde</b></td><td>Aantal stappen die nodig zijn om een volledig rondje te draaien.</td></tr>
 <tr><td class="left"><b>Min. vertr. (mics)</b></td><td>Minimale vertraging in microseconden die nodig is om de motor te laten draaien.</td></tr>
 </table><br/>

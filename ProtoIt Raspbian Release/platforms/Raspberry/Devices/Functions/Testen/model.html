@@ -1,6 +1,4 @@
 <html>
-<meta name="copyright" content="(C) 2018 D.Kruithof">
-<meta name="license" content="Usage of this file is permitted under conditions of GNU-GPL version 3.0 / see 'GNU-GPL.txt' included in the packaging of this file">
 <head>
 <title> ProtoIt </title>
 <style type=text/css>
@@ -18,12 +16,13 @@ h4 { color:#FF7F2F; }
 
 <table>
 <tr><td width=400><h1>Testen</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
-<b>Platform:   RASPBERRY</b></td><td><img src="chooser.png" height=100 /></td></tr>
+<b>Platform:   ARDUINO</b></td><td><img src="chooser.png" height=100 /></td></tr>
 </table>
 <hr/>
 
 <p><u>Beschrijving:</u><br/>
-De tile <i>Testen</i> ontvangt twee signalen om door te geven. Een testsignaal kiest welk van de twee wordt doorgegeven. Het doorgegeven signaal wordt uitgezonden als signaal <i>Actie</i>.
+Met deze tile kun je ervoor zorgen, dat in de ene situatie het ene signaal en in de andere situatie een ander signaal wordt gebruikt.
+Er kunnen maximaal zes signalen worden toegewezen.
 </p>
 
 <p><u>Onderdelen:</u><br/>
@@ -38,14 +37,16 @@ Testen
 
 <u>Op de programmategel:</u>
 <table>
-<tr><td class="left"><b>Testsignaal</b></td><td>Dit signaal wordt getest. Wanneer het wordt uitgezonden is de test &quot;gelukt&quot; en zoniet, dan is de test &quot;mislukt&quot;.</td></tr>
-<tr><td class="left"><b>Als gelukt: Zend</b></td><td>Wanneer de test is &quot;gelukt&quot; wordt dit signaal verzonden via het signaal <i>Actie</i>.</td></tr>
-<tr><td class="left"><b>Als mislukt: Zend</b></td><td>Wanneer de test is &quot;mislukt&quot; wordt dit signaal verzonden via het signaal <i>Actie</i>.</td></tr>
+<tr><td class="left"><b>Testsignaal</b></td><td>Het signaal dat op mogelijke waardes moet worden getest.</td></tr>
+<tr><td class="left"><b>Als gelijk aan</b></td><td>Vul hier een mogelijke waarde in.</td></tr>
+<tr><td class="left"><b>Zend</b></td><td>Het signaal dat bij deze waarde wordt uitgezonden.</td></tr>
+<tr><td>(beide nog 5x)</td></tr>
+<tr><td class="left"><b>Anders zend</b></td><td>Dit signaal wordt uitgezonden als dit voor geen van voorgaande signalen geldt.</td></tr>
 </table><br/>
 
 <u>Zendt de signalen:</u>
 <table>
-<tr><td class="left"><b>Actie</b></td><td>Bevat het signaal dat moet worden uitgezonden bij een &quot;gelukte&quot; of &quot;mislukte&quot; test.</td></tr>
+<tr><td class="left"><b>Actie</b></td><td>Bevat het signaal dat wordt uitgezonden.</td></tr>
 </table><br/>
 
 <br/>

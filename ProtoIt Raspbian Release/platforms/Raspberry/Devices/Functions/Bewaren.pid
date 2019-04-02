@@ -1,0 +1,184 @@
+// Copyright (C) 2018 D. Kruithof
+//
+// GNU General Public License Usage
+// --------------------------------
+// This file may be used under the terms of the GNU General Public
+// License version 3.0 as published by the Free Software Foundation
+// and appearing in the file 'GNU-GPL.txt' included in the packaging
+// of this file.  Please review the following information to ensure
+// the GNU General Public License version 3.0 requirements will be
+// met: http://www.gnu.org/copyleft/gpl.html.
+
+<PLATFORM>
+	RASPBERRY
+<AUTHOR>
+	ProtoIt
+<YEAR>
+	2018
+
+<DEVICE>
+	FUNCTION, Bewaren
+<COPYRIGHT>
+	2018, ProtoIt
+<ICON>
+	:/file
+<SIGNALOUT>
+	VALOUTA, Waarde A, #P WAARDES
+	VALOUTB, Waarde B
+	VALOUTC, Waarde C
+	VALOUTD, Waarde D
+	VALOUTE, Waarde E
+	VALOUTF, Waarde F
+	TAGOUTA, Titel A, #P TITELS
+	TAGOUTB, Titel B
+	TAGOUTC, Titel C
+	TAGOUTD, Titel D
+	TAGOUTE, Titel E
+	TAGOUTF, Titel F
+<SIGNALIN>
+	TAGINA, Titel A, #P
+	VALINA, Waarde A
+	TAGINB, Titel B, #P Meer ..., #E
+	VALINB, Waarde , #E
+	TAGINC, Titel C, #P, #E
+	VALINC, Waarde C, #E
+	TAGIND, Titel D, #P, #E
+	VALIND, Waarde D, #E
+	TAGINE, Titel E, #P, #E
+	VALINE, Waarde E, #E
+	TAGINF, Titel F, #P, #E
+	VALINF, Waarde F, #E
+	SAVENOW, Bewaar wanneer?, #P Bewaar of lees
+	LOADNOW, Lees wanneer?
+	IOFILE, Bestand, #E
+<CALIBRATE>
+	CALFILE, Bestand
+<PRIVATE>
+	IS_SAVED, Is bewaard
+	IS_LOADED, Is gelezen
+<ROUTINE>
+void saveFile()
+{
+	char s[100];
+	if ( IOFILE.toString() == "" )
+		IOFILE = CALFILE;
+	String str = IOFILE.toString() + ".pif";
+	str.toCharArray( s, 100);
+	FILE *file = fopen( s, "w");
+	if ( file ) {
+		TAGOUTA = TAGINA;
+		VALOUTA = VALINA;
+		TAGOUTB = TAGINB;
+		VALOUTB = VALINB;
+		TAGOUTC = TAGINC;
+		VALOUTC = VALINC;
+		TAGOUTD = TAGIND;
+		VALOUTD = VALIND;
+		TAGOUTE = TAGINE;
+		VALOUTE = VALINE;
+		TAGOUTF = TAGINF;
+		VALOUTF = VALINF;
+
+		TAGINA.toString().toCharArray( s, 100);
+		s[TAGINA.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALINA.toString().toCharArray( s, 100);
+		s[VALINA.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		TAGINB.toString().toCharArray( s, 100);
+		s[TAGINB.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALINB.toString().toCharArray( s, 100);
+		s[VALINB.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		TAGINC.toString().toCharArray( s, 100);
+		s[TAGINC.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALINC.toString().toCharArray( s, 100);
+		s[VALINC.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		TAGIND.toString().toCharArray( s, 100);
+		s[TAGIND.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALIND.toString().toCharArray( s, 100);
+		s[VALIND.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		TAGINE.toString().toCharArray( s, 100);
+		s[TAGINE.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALINE.toString().toCharArray( s, 100);
+		s[VALINE.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		TAGINF.toString().toCharArray( s, 100);
+		s[TAGINF.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		VALINF.toString().toCharArray( s, 100);
+		s[VALINF.length()] = 0;
+		fprintf( file, "%s\n", s);
+
+		fclose( file);
+		IS_SAVED = 1;
+	}
+}
+void loadFile()
+{
+	char s[100];
+	if ( IOFILE.toString() == "" )
+		IOFILE = CALFILE;
+	String str = IOFILE.toString() + ".pif";
+	str.toCharArray( s, 100);
+	FILE *file = fopen( s, "r");
+	if ( file ) {
+		int ix = 0;
+		str = "";
+		char c = getc( file);
+		while ( c != 255 ) {
+			if ( c != '\n' )
+				str += c;
+			else {
+				switch ( ix ) {
+					case 0 : TAGOUTA = TAGINA = str; break;
+					case 1 : VALOUTA = VALINA = str; break;
+					case 2 : TAGOUTB = TAGINB = str; break;
+					case 3 : VALOUTB = VALINB = str; break;
+					case 4 : TAGOUTC = TAGINC = str; break;
+					case 5 : VALOUTC = VALINC = str; break;
+					case 6 : TAGOUTD = TAGIND = str; break;
+					case 7 : VALOUTD = VALIND = str; break;
+					case 8 : TAGOUTE = TAGINE = str; break;
+					case 9 : VALOUTE = VALINE = str; break;
+					case 10 : TAGOUTF = TAGINF = str; break;
+					case 11 : VALOUTF = VALINF = str; break;
+				}
+				ix++;
+				str = "";
+			}
+			c = getc( file);
+		}
+		fclose( file);
+		IS_LOADED = 1;
+	}
+} 
+<SETUP>
+	loadFile();
+<STEPINIT>
+	IS_SAVED = 0;
+	IS_LOADED = 0;
+<SENSORUPDATE>
+	if ( (int) LOADNOW && !(int) IS_LOADED )
+		loadFile();
+<ACTUATORUPDATE>
+	if ( (int) SAVENOW && !(int) IS_SAVED )
+		saveFile();
+<END>
