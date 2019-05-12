@@ -27,18 +27,17 @@
 	TOTAL, Totaal
 	COUNT, Aantal
 <SIGNALIN>
-	SIGNAL, Signaal, #P Te meten
-	START, Start wanneer?, #P Meting
-	STOP, Stop wanneer?
-	KEEP, Bewaar, #P
+	SIGNAL, Signaal, #P Bepaal voor
+	KEEP, Bewaar, #E
+	START, Start wanneer?, > Start direct, #P Start en stop, #E
+	STOP, Stop wanneer?, > Stop nooit, #E
 <SIGNALOUT>
 	MAX, Maximum, 0
 	MIN, Minimum, 0
 	AVG, Gemiddelde, 0
 <CONSTANT>
-	SET_NOW, Direct, 1, #P START EN STOP
-	SET_NEVER, Nooit, 1
-	SET_YES, Ja, 1, #P BEWAAR
+	SET_NOW, Start direct, 1
+	SET_YES, Ja, 1
 	SET_NO, Nee, 0
 <STEPINIT>
 	TOTAL = 0;

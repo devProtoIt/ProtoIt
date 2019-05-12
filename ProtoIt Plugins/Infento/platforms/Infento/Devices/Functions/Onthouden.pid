@@ -17,47 +17,37 @@
 	2018
 
 <DEVICE>
-	FUNCTION, Stopwatch
+	FUNCTION, Onthouden
 <COPYRIGHT>
 	2018, ProtoIt
 <ICON>
-	:/timer
-<PRIVATE>
-	REFTIME, RefTime
-	CURTIME, CurTime
-	ACTIVE, Active
+	:/memory
 <SIGNALIN>
-	TRIGGER, Tijd (ms)
-	START, Start wanneer?
+	SIGINA, Onthoud A, #P
+	SIGINB, Onthoud B, #P Meer ..., #E
+	SIGINC, Onthoud C, #E
+	SIGIND, Onthoud D, #E
+	SIGINE, Onthoud E, #E
+	SIGINF, Onthoud F, #E
 <SIGNALOUT>
-	READY, Klaar
-	TIMETOGO, Te gaan (ms)
-	TIMEGONE, Verstreken (ms)
-<CONSTANT>
-	SET_NOW, Start direct, 1
+	SIGOUTA, Waarde A
+	SIGOUTB, Waarde B
+	SIGOUTC, Waarde C
+	SIGOUTD, Waarde D
+	SIGOUTE, Waarde E
+	SIGOUTF, Waarde F
+<PRIVATE>
+	ACTIVE, Active
 <STEPINIT>
 	ACTIVE = 0;
-	READY = 0;
-	TIMETOGO = 0;
-	TIMEGONE = 0;
-	REFTIME = 0;
-	CURTIME = 0;
-<SENSORUPDATE>
-	if ( (long) ACTIVE ) {
-		CURTIME = (long) millis();
-		TIMEGONE = CURTIME - REFTIME;
-		TIMETOGO = TRIGGER - TIMEGONE;
-		if ( (long) TIMETOGO <= 0 ) {
-			TIMEGONE = TRIGGER;
-			TIMETOGO = 0;
-			READY = 1;
-		}
-	}
 <FUNCTIONUPDATE>
-	if ( (long) START && !(long) ACTIVE ) {
-		CURTIME = (long) millis();
-		REFTIME = CURTIME;
-		TIMETOGO = TRIGGER;
+	if ( !(int) ACTIVE ) {
+		SIGOUTA = SIGINA;
+		SIGOUTB = SIGINB;
+		SIGOUTC = SIGINC;
+		SIGOUTD = SIGIND;
+		SIGOUTE = SIGINE;
+		SIGOUTF = SIGINF;
 		ACTIVE = 1;
 	}
 <END>

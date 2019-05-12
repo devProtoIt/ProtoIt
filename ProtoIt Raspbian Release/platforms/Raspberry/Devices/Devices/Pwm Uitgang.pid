@@ -10,7 +10,7 @@
 // met: http://www.gnu.org/copyleft/gpl.html.
 
 <PLATFORM>
-	ARDUINO
+	RASPBERRY
 <AUTHOR>
 	ProtoIt
 <YEAR>
@@ -35,23 +35,26 @@
 	SET_NEVER, Nooit, 0
 <PRIVATE>
 	ACTIVE, Active
+<INCLUDE>
+#include <softPwm.h>
 <SETUP>
-	pinMode( PIN, OUTPUT);
+  softPwmCreate( PIN, 0, 100);
 <STEPINIT>
 	START = 0;
 	STOP = 0;
 	ACTIVE = 0;
 <FUNCTIONUPDATE>
-    if ( (int) START )
+    if ( (int) START ) {
         ACTIVE = 1;
-	if ( (int) STOP && (int) ACTIVE ) {
-		ACTIVE = 0;
-		analogWrite( PIN, 0);
 	}
+    if ( (int) STOP && (int) ACTIVE ) {
+        ACTIVE = 0;
+		pwmWrite( PIN, 0);
+    }
 <ACTUATORUPDATE>
-	if ( (int) ACTIVE ) {
-		if ( (int) VALUE < 0 ) VALUE = 0;
-		if ( (int) VALUE > 100 ) VALUE = 100;
-		analogWrite( PIN, (((long) VALUE) * 255) / 100);
-	}
+    if ( (int) ACTIVE ) {
+      if ( (int) VALUE < 0 ) VALUE = 0;
+      if ( (int) VALUE > 100 ) VALUE = 100;
+      softPwmWrite( PIN, VALUE);
+    }
 <END>

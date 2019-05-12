@@ -25,11 +25,11 @@
 <PRIVATE>
 	CALCV, Berekend
 <SIGNALIN>
-	SIGNALA, Waarde voor 'A'
+	SIGNALA, Waarde voor 'A', #P Waardes
 	SIGNALB, Waarde voor 'B'
 	SIGNALC, Waarde voor 'C'
 	SIGNALD, Waarde voor 'D'
-	CALC1, Berekening 1, #P
+	CALC1, Berekening 1, #P Berekeningen
 	CALC2, Berekening 2
 <SIGNALOUT>
 	ANS1, Antwoord 1
@@ -48,4 +48,4 @@
 	CALCV.replace( "D", SIGNALD);
 	ANS2 = calculate( CALCV);
 <END>
-<END>
+

@@ -23,11 +23,11 @@
 <ICON>
 	:/switcher
 <SIGNALIN>
-	SIGNALA, Zend signaal
+	SIGNALA, Zend signaal, #P
 	SWITCHA, Wanneer?
 	SIGNALB, Zend signaal, #P
 	SWITCHB, Wanneer?
-	SIGNALC, Zend signaal, #P, #E
+	SIGNALC, Zend signaal, #P Meer ..., #E
 	SWITCHC, Wanneer?, #E
 	SIGNALD, Zend signaal, #P, #E
 	SWITCHD, Wanneer?, #E
@@ -35,24 +35,24 @@
 	SWITCHE, Wanneer?, #E
 	SIGNALF, Zend signaal, #P, #E
 	SWITCHF, Wanneer?, #E
-	SIGNALG, Anders zend, #P
+	SIGNALX, Anders zend, #P
 <SIGNALOUT>
 	SWITCHOUT, Actie
 <STEPINIT>
 	SWITCHOUT = "";
 <FUNCTIONUPDATE>
 	SWITCHOUT = "";
-	if ( (long) SWITCHA ) SWITCHOUT = SIGNALA;
+	if ( SWITCHA.toString() != "" && SWITCHA.toString() != "0" ) SWITCHOUT = SIGNALA;
 	else
-	if ( (long) SWITCHB ) SWITCHOUT = SIGNALB;
+	if ( SWITCHB.toString() != "" && SWITCHB.toString() != "0" ) SWITCHOUT = SIGNALB;
 	else
-	if ( (long) SWITCHC ) SWITCHOUT = SIGNALC;
+	if ( SWITCHC.toString() != "" && SWITCHC.toString() != "0" ) SWITCHOUT = SIGNALC;
 	else
-	if ( (long) SWITCHD ) SWITCHOUT = SIGNALD;
+	if ( SWITCHD.toString() != "" && SWITCHD.toString() != "0" ) SWITCHOUT = SIGNALD;
 	else
-	if ( (long) SWITCHE ) SWITCHOUT = SIGNALE;
+	if ( SWITCHE.toString() != "" && SWITCHE.toString() != "0" ) SWITCHOUT = SIGNALE;
 	else
-	if ( (long) SWITCHF ) SWITCHOUT = SIGNALF;
+	if ( SWITCHF.toString() != "" && SWITCHF.toString() != "0" ) SWITCHOUT = SIGNALF;
 	else
-	SWITCHOUT = SIGNALG;
+		SWITCHOUT = SIGNALX;
 <END>

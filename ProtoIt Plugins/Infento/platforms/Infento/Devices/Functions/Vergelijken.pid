@@ -23,7 +23,7 @@
 <ICON>
 	:/comparator
 <SIGNALIN>
-	SIGNALA, Waarde A, #P Te vergelijken
+	SIGNALA, Waarde A
 	SIGNALB, Waarde B
 <SIGNALOUT>
 	AEQUALB, A gelijk aan B

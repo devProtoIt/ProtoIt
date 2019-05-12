@@ -97,11 +97,11 @@
 <ACTUATORUPDATE>
 	if ( (int) ACTIVE ) {
 		if ( OLDDIR != DIRECTION ) {
+			InfentoPort::wait( (int) PAUSE); // needed to let the motor run out (edrive internal)
 			if ( (int) DIRECTION )
 				id.setDirection( CONST_REVERSE);
 			else
 				id.setDirection( CONST_FORWARD);
-			InfentoPort::wait( (int) PAUSE); // needed to let the motor run out (edrive internal)
 			OLDSPEED = 0;
 			OLDDIR = DIRECTION;
 		}

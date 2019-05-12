@@ -23,17 +23,38 @@
 <ICON>
 	:/chooser
 <SIGNALIN>
-	SWITCHIN, Testsignaal, #P Te testen
-	SIGNALA, Als gelukt: Zend, #P Na de test
-	SIGNALB, Als mislukt: Zend
+	SWITCHIN, Testsignaal
+	SWITCHA, Als gelijk aan, #P
+	SIGNALA, Zend signaal
+	SWITCHB, Als gelijk aan, #P Meer ..., #E
+	SIGNALB, Zend signaal, #E
+	SWITCHC, Als gelijk aan, #P, #E
+	SIGNALC, Zend signaal, #E
+	SWITCHD, Als gelijk aan, #P, #E
+	SIGNALD, Zend signaal, #E
+	SWITCHE, Als gelijk aan, #P, #E
+	SIGNALE, Zend signaal, #E
+	SWITCHF, Als gelijk aan, #P, #E
+	SIGNALF, Zend signaal, #E
+	SIGNALX, Anders zend, #P
 <SIGNALOUT>
 	SWITCHOUT, Actie
 <STEPINIT>
 	SWITCHOUT = "";
 <SENSORUPDATE>
 	SWITCHOUT = "";
-	if ( SWITCHIN != "" )
+	if ( SWITCHIN == SWITCHA )
 		SWITCHOUT = SIGNALA;
-	else
+	else if ( SWITCHIN == SWITCHB )
 		SWITCHOUT = SIGNALB;
+	else if ( SWITCHIN == SWITCHC )
+		SWITCHOUT = SIGNALC;
+	else if ( SWITCHIN == SWITCHD )
+		SWITCHOUT = SIGNALD;
+	else if ( SWITCHIN == SWITCHE )
+		SWITCHOUT = SIGNALE;
+	else if ( SWITCHIN == SWITCHF )
+		SWITCHOUT = SIGNALF;
+	else
+		SWITCHOUT = SIGNALX;
 <END>

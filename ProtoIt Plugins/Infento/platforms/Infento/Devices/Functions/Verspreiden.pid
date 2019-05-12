@@ -23,7 +23,7 @@
 <ICON>
 	:/spreader
 <SIGNALIN>
-	SIGNALA, Zend signaal A, #P Te zenden
+	SIGNALA, Zend signaal A
 	SIGNALB, Zend signaal B
 	SIGNALC, Zend signaal C
 	SWITCHIN, Wanneer?, #P

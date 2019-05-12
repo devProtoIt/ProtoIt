@@ -1,0 +1,68 @@
+<html>
+<head>
+<title> ProtoIt </title>
+<style type=text/css>
+body { background-color:#D7EAF9; font-family:Century Gothic; font-size:14px; font-weight:400; }
+table { font-family:Century Gothic; font-size:14px; font-weight:400; }
+td { vertical-align:top; }
+td.left { width:150; font-family:Century Gothic; font-size:14px; font-weight:400; }
+td.right { width:350; font-family:Century Gothic; font-size:14px; font-weight:400; }
+h1 { color:#FF7F2F; }
+h4 { color:#FF7F2F; }
+</style>
+</head>
+
+<body>
+
+<table>
+<tr><td width=400><h1>Lijst</h1><br/><br/>&copy; 2018, ProtoIt<br/><br/>
+<b>Platform:   ARDUINO</b></td><td><img src="list.png" height=100 /></td></tr>
+</table>
+<hr/>
+
+<p><u>Beschrijving:</u><br/>
+De functie <i>Lijst</i> maakt het mogelijk een lijst van waardes bij te houden. Dat kunnen getallen en tekst zijn.
+Van de getallen in de lijst wordt de som, het gemiddelde, het hoogste en het laagste getal berekend.
+De waardes van de lijst zijn gedurende het hele programma geldig. Om te voorkomen dat gedurende een stap vele
+waardes aan de lijst worden toegevoegd of eruit verwijderd, is het maar &eacute;&eacute;n keer per stap mogelijk 
+om een waarde toe te voegen of eruit te verwijdertn.
+</p>
+
+<p><u>Onderdelen:</u><br/>
+Lijst
+</p>
+<hr/>
+
+<h4><img src="list.png" width=50> Lijst</h4>
+<p>
+
+</p>
+
+<u>Op de programmategel:</u>
+<table>
+<tr><td class="left"><b>Signaal index</b></td><td>Lijstindex waarvan de waarde wordt uitgezonden in het signaal <i>Waarde</i>.<br/>
+Standaard op het constante signaal <i>Laatste</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Invoeg index</b></td><td>Lijstindex waar <i>Invoeg waarde</i> zal worden toegevoegd.<br/>
+Standaard op het constante signaal <i>Aan eind</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Invoeg waarde</b></td><td>Waarde die aan de lijst zal worden toegevoegd op de positie van <i>Invoeg index</i></td></tr>
+<tr><td class="left"><b>Wanneer invoegen?</b></td><td>De <i>Invoeg waarde</i> wordt pas toegevoegd aan de lijst als het hier ingevulde signaal wordt uitgezonden.</td></tr>
+<tr><td class="left"><b>Wis index</b></td><td>Lijstindex waarvan de waarde uit de lijst zal worden geschrapt.<br/>
+Standaard op het constante signaal <i>Eerste</i> ingesteld.</td></tr>
+<tr><td class="left"><b>Wanneer wissen?</b></td><td>De waarde wordt pas uit de lijst geschrapt als het hier ingevulde signaal wordt uitgezonden.</td></tr>
+</table><br/>
+
+<u>Zendt de signalen:</u>
+<table>
+<tr><td class="left"><b>Waarde</b></td><td>Dit signaal bevat de waarde uit de lijst die hoort bij de index als opgegeven bij <i>Signaal index</i>.
+<i>Signaal index</i> is een veld op de programmategel van deze functie.</td></tr>
+<tr><td class="left"><b>Aantal</b></td><td>Geeft het aantal in de lijst opgeslagen waardes weer. Dit komt overeen met de hoogste index.</td></tr>
+<tr><td class="left"><b>Som</b></td><td>Geeft de som van de getallen in de lijst.</td></tr>
+<tr><td class="left"><b>Gemiddelde</b></td><td>Geeft het gemiddelde van de getallen in de lijst.</td></tr>
+<tr><td class="left"><b>Hoogste waarde</b></td><td>Geeft de hoogste waarde van de getallen in de lijst.</td></tr>
+<tr><td class="left"><b>Laagste waarde</b></td><td>Geeft de laagste waarde van de getallen in de lijst.</td></tr>
+</table><br/>
+</table><br/>
+
+<br/>
+</body>
+</html>

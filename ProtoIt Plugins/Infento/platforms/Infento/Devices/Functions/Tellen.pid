@@ -10,7 +10,7 @@
 // met: http://www.gnu.org/copyleft/gpl.html.
 
 <PLATFORM>
-	ARDUINO
+	INFENTO
 <AUTHOR>
 	ProtoIt
 <YEAR>
@@ -18,14 +18,14 @@
 
 <DEVICE>
 	FUNCTION, Tellen
-<<COPYRIGHT>
+<COPYRIGHT>
 	2018, ProtoIt
-ICON>
+<ICON>
 	:/counter
 <SIGNALIN>
 	STARTVAL, Begin bij, 0, #P Initialisatie
 	STOPVAL, Stop bij
-	RESET, Tel opnieuw?, > Begin programma, #E
+	RESET, Tel opnieuw?, > Nog niet, #E
 	INCRVAL, Verhoog met, 1, #P Teller
 	DOINCR, Verhoog wanneer?
 	DECRVAL, Verminder met, 1, #E
@@ -35,26 +35,21 @@ ICON>
 	COUNTVAL, Tellerstand
 	READY, Klaar
 <CONSTANT>
-	SET_ONCE, Begin programma, 0, #P TEL OPNIEUW
-	SET_EVER, Begin stap, 1
+	SET_CONT, Nog niet, 0, #P TEL OPNIEUW
+	SET_RESET, Nu wel, 1
 	SET_NOW, Direct, 1, #P START
 <PRIVATE>
 	ACTIVE, Actief, 0
-	MUSTINIT, Initialiseer, 1
 <STEPINIT>
-	if ( (int) RESET )
-		MUSTINIT = 1;
-<FUNCTIONUPDATE>
-	if ( (int) START ) {
-		ACTIVE = 1;
-		if ( (int) MUSTINIT ) {
+	if ( (int) RESET ) {
 			COUNTVAL = STARTVAL;
 			START = 0;
 			ACTIVE = 0;
 			READY = 0;
-			MUSTINIT = 0;
-		}
 	}
+<FUNCTIONUPDATE>
+	if ( (int) START )
+		ACTIVE = 1;
 <ACTUATORUPDATE>
 	if ( (int) ACTIVE && !((int) READY) ) {
 		if ( (int) DOINCR ) {
